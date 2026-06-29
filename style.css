@@ -101,6 +101,16 @@ font-weight:bold;
     max-width: 90%;
     height: auto;
     margin-bottom: 20px;
-    user-select: none;
-    pointer-events: none;
+}
+
+audio {
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+.status {
+    margin: 10px 0 20px;
+    font-weight: 600;
+    opacity: 0.9;
 }
