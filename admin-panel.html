@@ -1,0 +1,110 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantix Radio Admin Panel</title>
+
+    <style>
+        body{
+            font-family:Segoe UI,Arial,sans-serif;
+            background:#0f172a;
+            color:white;
+            padding:40px;
+        }
+
+        .card{
+            max-width:600px;
+            margin:auto;
+            background:#1e293b;
+            padding:30px;
+            border-radius:15px;
+        }
+
+        button{
+            width:100%;
+            padding:14px;
+            margin-top:10px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+
+        .live{
+            background:#16a34a;
+            color:white;
+        }
+
+        .maintenance{
+            background:#ea580c;
+            color:white;
+        }
+
+        .logout{
+            background:#dc2626;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+if (
+    sessionStorage.getItem("vantix_admin")
+    !== "true"
+){
+    location.href = "admin.html";
+}
+</script>
+
+<div class="card">
+
+    <h1>Vantix Radio Admin</h1>
+
+    <button
+        class="live"
+        onclick="setMode('live')">
+        Set Site Live
+    </button>
+
+    <button
+        class="maintenance"
+        onclick="setMode('maintenance')">
+        Set Maintenance Mode
+    </button>
+
+    <button
+        class="logout"
+        onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+<script>
+function setMode(mode){
+
+    localStorage.setItem(
+        "vantix_site_mode",
+        mode
+    );
+
+    alert(
+        "Mode changed to: " + mode
+    );
+}
+
+function logout(){
+    sessionStorage.removeItem(
+        "vantix_admin"
+    );
+
+    location.href = "admin.html";
+}
+</script>
+
+</body>
+</html>
+```
