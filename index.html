@@ -13,7 +13,7 @@
     >
 
     <link rel="stylesheet" href="style.css">
-</head> <body> <script> const mode = localStorage.getItem("vantix_site_mode"); if (mode === "maintenance") { window.location.href = "maintenance.html"; } </script>
+</head> <body> <script> fetch("./status.json") .then(response => response.json()) .then(data => { if ( data.mode === "maintenance" && !window.location.pathname.endsWith("maintenance.html") ) { window.location.href = "maintenance.html"; } }) .catch(error => { console.error( "Unable to load status.json", error ); }); </script>
 
     <div class="background"></div>
 
