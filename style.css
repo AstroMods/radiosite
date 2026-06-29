@@ -13,6 +13,7 @@ overflow:hidden;
 .background{
     position:fixed;
     inset:0;
+    z-index:-1;
 
     background:linear-gradient(
         180deg,
