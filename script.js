@@ -1,6 +1,7 @@
 const player = document.getElementById("radioPlayer");
-const volumeSlider = document.getElementById("volumeSlider");
-const volumeValue = document.getElementById("volumeValue");
+const volumeSlider = document.getElementById('volumeSlider');
+const volumeValue = document.getElementById('volumeValue');
+const audio = document.getElementById('audioPlayer'); // Your audio element ID
 const statusText = document.getElementById("status");
 
 volumeSlider.addEventListener("input", () => {
@@ -70,3 +71,19 @@ player.addEventListener("error", () => {
     statusText.textContent =
         "Stream Offline";
 });
+
+function updateVolume() {
+    const volume = parseFloat(volumeSlider.value);
+
+    // Update audio volume
+    audio.volume = volume;
+
+    // Update displayed percentage
+    volumeValue.textContent = `${Math.round(volume * 100)}%`;
+}
+
+// Set initial volume
+updateVolume();
+
+// Update while dragging
+volumeSlider.addEventListener('input', updateVolume);
