@@ -1,0 +1,89 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantix Radio Admin</title>
+
+    <style>
+        body{
+            font-family:Segoe UI,Arial,sans-serif;
+            background:#0f172a;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            margin:0;
+        }
+
+        .card{
+            width:400px;
+            max-width:90%;
+            padding:30px;
+            background:#1e293b;
+            border-radius:15px;
+            text-align:center;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:15px 0;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            background:#2563eb;
+            color:white;
+            font-weight:bold;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Admin Login</h1>
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter Password">
+
+    <button onclick="login()">
+        Login
+    </button>
+</div>
+
+<script>
+const encodedPassword = "Rm9ydG5pdGVHYW1lcjE2IQ==";
+
+function login() {
+    const entered =
+        document.getElementById("password").value;
+
+    if (btoa(entered) === encodedPassword) {
+        sessionStorage.setItem(
+            "vantix_admin",
+            "true"
+        );
+
+        window.location.href =
+            "admin-panel.html";
+    } else {
+        alert("Incorrect password");
+    }
+}
+</script>
+
+</body>
+</html>
+```
