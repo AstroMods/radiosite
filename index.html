@@ -4,62 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Loading...</title>
+    <title>Vantix Radio</title>
 
-    <link id="favicon" rel="icon">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"
+        href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png">
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="background"></div>
+<div class="background"></div>
 
-    <main class="player-card">
+<div class="player-card">
 
-        <div class="live-badge">
-            🔴 LIVE
-        </div>
+    <div class="live-badge">
+        🔴 LIVE 24/7
+    </div>
 
-        <img id="stationLogo" class="station-logo" alt="Station Logo">
+    <!-- Station Logo -->
+    <img
+        class="station-logo"
+        src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+        alt="Vantix Radio Logo"
+    >
 
-        <h1 id="stationName"></h1>
+    <h1>Vantix Radio</h1>
 
-        <p id="stationSubtitle" class="subtitle"></p>
+    <p class="subtitle">
+        The Official Radio Station of Andreas Initiative Roleplay
+    </p>
 
-        <audio id="radioPlayer" preload="none">
-            <source id="streamSource" src="" type="audio/mpeg">
-        </audio>
+    <!-- Hidden Audio Player -->
+    <audio id="radioPlayer" preload="none">
+        <source src="http://51.255.235.165:2128/stream.mp3" type="audio/mpeg">
+    </audio>
 
-        <div class="volume-section">
-            <label for="volumeSlider">Volume</label>
+    <div class="status" id="status">
+        Click anywhere to start listening
+    </div>
 
-            <input
-                type="range"
-                id="volumeSlider"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1"
-            >
-        </div>
+    <div class="volume-section">
+        <label for="volumeSlider">Volume</label>
 
-        <a
-            id="discordButton"
-            class="discord-btn"
-            target="_blank"
-            rel="noopener noreferrer"
+        <input
+            type="range"
+            id="volumeSlider"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
         >
-            Join Discord
-        </a>
+    </div>
 
-        <div id="status" class="status">
-            Click Anywhere to Start Listening
-        </div>
+    <a
+        class="discord-btn"
+        href="https://discord.com/invite/YaaEnHTSvk"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Join Discord
+    </a>
 
-    </main>
+</div>
 
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+<script>
+const player = document.getElementById("radioPlayer");
+const volumeSlider = document.getElementById("volumeSlider");
+const status = document.getElementById("status");
+
+player.volume = 1;
+
+volumeSlider.addEventListener("input", () => {
+    player.volume = volumeSlider.value;
+});
+
+let started = false;
+
+document.addEventListener("click", async () => {
+    if (started) return;
+
+    started = true;
+
+    try {
+        await player.play();
+        status.textContent = "🔴 Live Now Playing";
+    } catch (error) {
+        console.error(error);
+        status.textContent = "Unable to connect to stream";
+    }
+}, { once: true });
+
+player.addEventListener("error", () => {
+    status.textContent = "Stream Offline";
+});
+</script>
 
 </body>
 </html>
