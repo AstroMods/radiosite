@@ -6,7 +6,6 @@
 
     <title>Vantix Radio</title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png"
         href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png">
 
@@ -22,7 +21,6 @@
         🔴 LIVE 24/7
     </div>
 
-    <!-- Station Logo -->
     <img
         class="station-logo"
         src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
@@ -35,13 +33,20 @@
         The Official Radio Station of Andreas Initiative Roleplay
     </p>
 
-    <!-- Hidden Audio Player -->
-    <audio id="radioPlayer" preload="none">
-        <source src="http://51.255.235.165:2128/stream.mp3" type="audio/mpeg">
+    <!-- Stream Player -->
+    <audio
+        id="radioPlayer"
+        controls
+        preload="none"
+    >
+        <source
+            src="http://51.255.235.165:2128/stream.mp3"
+            type="audio/mpeg">
+        Your browser does not support HTML5 audio.
     </audio>
 
-    <div class="status" id="status">
-        Click anywhere to start listening
+    <div id="status" class="status">
+        Ready to Play
     </div>
 
     <div class="volume-section">
@@ -79,24 +84,20 @@ volumeSlider.addEventListener("input", () => {
     player.volume = volumeSlider.value;
 });
 
-let started = false;
+player.addEventListener("play", () => {
+    status.textContent = "🔴 Live Now Playing";
+});
 
-document.addEventListener("click", async () => {
-    if (started) return;
-
-    started = true;
-
-    try {
-        await player.play();
-        status.textContent = "🔴 Live Now Playing";
-    } catch (error) {
-        console.error(error);
-        status.textContent = "Unable to connect to stream";
-    }
-}, { once: true });
+player.addEventListener("pause", () => {
+    status.textContent = "Paused";
+});
 
 player.addEventListener("error", () => {
     status.textContent = "Stream Offline";
+});
+
+player.addEventListener("waiting", () => {
+    status.textContent = "Buffering...";
 });
 </script>
 
