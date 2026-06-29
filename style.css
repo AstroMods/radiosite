@@ -95,3 +95,12 @@ text-decoration:none;
 border-radius:12px;
 font-weight:bold;
 }
+
+.station-logo {
+    width: 250px;
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 20px;
+    user-select: none;
+    pointer-events: none;
+}
