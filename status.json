@@ -1,1 +1,10 @@
-
+{
+  "overall": "operational",
+  "services": {
+    "radio": "operational",
+    "website": "operational",
+    "requests": "operational",
+    "discord": "operational",
+    "downloads": "operational"
+  }
+}
