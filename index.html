@@ -176,94 +176,6 @@ document.getElementById('year').textContent =
     new Date().getFullYear();
     </script>
 
-<!-- Song Request Section -->
-<section class="request-section">
-    <div class="request-card">
-        <h2>🎵 Request a Song</h2>
-        <p>
-            Request your favorite song and it may be played live on Vantix Radio.
-        </p>
-
-        <form class="cc_request_form" data-username="vantixradio">
-            <div data-type="result"></div>
-
-            <input
-                type="text"
-                name="request[artist]"
-                placeholder="Song Artist"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[title]"
-                placeholder="Song Title"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[dedication]"
-                placeholder="Dedicated To (Optional)"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[sender]"
-                placeholder="Your Name"
-                maxlength="127"
-            >
-
-            <input
-                type="email"
-                name="request[email]"
-                placeholder="Your Email"
-                maxlength="127"
-            >
-
-            <input
-                type="button"
-                value="Submit Song Request"
-                data-type="submit"
-                class="request-btn"
-            >
-        </form>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-
-        <div class="footer-logo">
-            🎵 Vantix Radio
-        </div>
-
-        <div class="footer-tagline">
-            Your home for non-stop music, live DJs, song requests,
-            and entertainment 24 hours a day.
-        </div>
-
-        <div class="footer-status">
-            LIVE 24/7
-        </div>
-
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/download">Downloads</a>
-            <a href="/status">Status</a>
-            <a href="/discord">Discord</a>
-        </div>
-
-        <div class="footer-divider"></div>
-
-        <div class="footer-copy">
-            © <span id="year"></span> Vantix Radio • Powered by Vantix Development
-        </div>
-
-    </div>
-</footer>
 <section class="vr-request-wrapper">
 
     <div class="vr-request-bg"></div>
@@ -334,6 +246,39 @@ document.getElementById('year').textContent =
 
     </div>
 </section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+
+        <div class="footer-logo">
+            🎵 Vantix Radio
+        </div>
+
+        <div class="footer-tagline">
+            Your home for non-stop music, live DJs, song requests,
+            and entertainment 24 hours a day.
+        </div>
+
+        <div class="footer-status">
+            LIVE 24/7
+        </div>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/download">Downloads</a>
+            <a href="/status">Status</a>
+            <a href="/discord">Discord</a>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-copy">
+            © <span id="year"></span> Vantix Radio • Powered by Vantix Development
+        </div>
+
+    </div>
+</footer>
 
 </script>
 
