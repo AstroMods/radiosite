@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,17 +36,19 @@
         </p>
 
         <!-- Stream Player -->
-        <audio
-            id="radioPlayer"
-            controls
-            preload="none"
-        >
-            <source
-                src="http://51.255.235.165:2128/stream.mp3"
-                type="audio/mpeg"
-            >
-            Your browser does not support HTML5 audio.
-        </audio>
+<audio
+    id="radioPlayer"
+    controls
+    preload="metadata"
+    crossorigin="anonymous"
+>
+    <source
+        id="streamSource"
+        src="http://51.255.235.165:2128/stream.mp3"
+        type="audio/mpeg"
+    >
+    Your browser does not support HTML5 audio.
+ </audio>
 
         <div id="status" class="status">
             Ready to Play
@@ -112,4 +113,3 @@
 
 </body>
 </html>
-```
