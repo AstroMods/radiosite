@@ -1,1 +1,377 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Advanced Hello World v9999</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,sans-serif;
+}
+
+body{
+    overflow:hidden;
+    background:#050505;
+    color:white;
+    height:100vh;
+}
+
+#bg{
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    background:
+        radial-gradient(circle at 20% 20%,#00ffff44,transparent 30%),
+        radial-gradient(circle at 80% 80%,#ff00ff44,transparent 30%),
+        radial-gradient(circle at 50% 50%,#ffffff11,transparent 40%),
+        #050505;
+    animation:bgMove 15s linear infinite;
+}
+
+@keyframes bgMove{
+    from{filter:hue-rotate(0deg);}
+    to{filter:hue-rotate(360deg);}
+}
+
+#matrix{
+    position:fixed;
+    inset:0;
+    opacity:.15;
+    z-index:-4;
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+}
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+}
+
+.loader h1{
+    font-size:2rem;
+}
+
+.bar{
+    width:300px;
+    height:10px;
+    border-radius:999px;
+    overflow:hidden;
+    background:#222;
+    margin-top:20px;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,cyan,magenta);
+    animation:load 2s forwards;
+}
+
+@keyframes load{
+    to{width:100%;}
+}
+
+.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:min(900px,90vw);
+    backdrop-filter:blur(25px);
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:30px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 0 50px rgba(0,255,255,.2);
+}
+
+h1{
+    font-size:5rem;
+    background:linear-gradient(90deg,cyan,magenta);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.type{
+    font-size:1.2rem;
+    opacity:.8;
+    margin-top:10px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:15px;
+    margin-top:30px;
+}
+
+.card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:15px;
+}
+
+.label{
+    font-size:.75rem;
+    opacity:.6;
+}
+
+.value{
+    font-size:1.3rem;
+    margin-top:5px;
+}
+
+button{
+    margin-top:25px;
+    padding:12px 20px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,cyan,magenta);
+    color:white;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.mouse-glow{
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    pointer-events:none;
+    background:radial-gradient(circle,#00ffff55,transparent 70%);
+    transform:translate(-50%,-50%);
+}
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<canvas id="matrix"></canvas>
+<canvas id="particles"></canvas>
+
+<div class="loader" id="loader">
+    <h1>Initializing Hello World Engine...</h1>
+    <div class="bar"><span></span></div>
+</div>
+
+<div class="mouse-glow" id="glow"></div>
+
+<div class="container">
+    <h1 id="hello"></h1>
+    <div class="type" id="subtitle"></div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="label">TIME</div>
+            <div class="value" id="clock">--</div>
+        </div>
+
+        <div class="card">
+            <div class="label">FPS</div>
+            <div class="value" id="fps">0</div>
+        </div>
+
+        <div class="card">
+            <div class="label">CLICKS</div>
+            <div class="value" id="clicks">0</div>
+        </div>
+
+        <div class="card">
+            <div class="label">RANDOM FACT</div>
+            <div class="value" id="fact">...</div>
+        </div>
+    </div>
+
+    <button onclick="themeShift()">
+        Activate Unnecessary Feature
+    </button>
+</div>
+
+<script>
+setTimeout(()=>{
+    loader.style.display="none";
+},2200);
+
+const helloText="HELLO WORLD";
+let i=0;
+
+function typeHello(){
+    if(i<helloText.length){
+        hello.innerHTML+=helloText.charAt(i);
+        i++;
+        setTimeout(typeHello,150);
+    }
+}
+typeHello();
+
+const sub="A massively overengineered webpage whose only purpose is saying Hello World.";
+let j=0;
+
+function typeSub(){
+    if(j<sub.length){
+        subtitle.innerHTML+=sub.charAt(j);
+        j++;
+        setTimeout(typeSub,20);
+    }
+}
+typeSub();
+
+setInterval(()=>{
+    clock.innerText=new Date().toLocaleTimeString();
+},1000);
+
+const facts=[
+"Hello World originated in the 1970s.",
+"This page is unnecessarily complex.",
+"JavaScript can animate almost anything.",
+"You're looking at thousands of pointless pixels.",
+"The answer is still Hello World."
+];
+
+setInterval(()=>{
+    fact.innerText=facts[Math.floor(Math.random()*facts.length)];
+},3000);
+
+let clicks=0;
+document.body.addEventListener("click",()=>{
+    clicks++;
+    document.getElementById("clicks").innerText=clicks;
+});
+
+function themeShift(){
+    document.body.style.filter=
+        `hue-rotate(${Math.random()*360}deg)`;
+}
+
+const glow=document.getElementById("glow");
+
+document.addEventListener("mousemove",(e)=>{
+    glow.style.left=e.clientX+"px";
+    glow.style.top=e.clientY+"px";
+});
+
+let fpsCounter=0;
+let fps=0;
+
+function countFPS(){
+    fpsCounter++;
+    requestAnimationFrame(countFPS);
+}
+countFPS();
+
+setInterval(()=>{
+    fps=fpsCounter;
+    fpsCounter=0;
+    document.getElementById("fps").innerText=fps;
+},1000);
+
+const pCanvas=document.getElementById("particles");
+const pCtx=pCanvas.getContext("2d");
+
+function resize(){
+    pCanvas.width=innerWidth;
+    pCanvas.height=innerHeight;
+    mCanvas.width=innerWidth;
+    mCanvas.height=innerHeight;
+}
+addEventListener("resize",resize);
+
+const particles=[];
+for(let i=0;i<100;i++){
+    particles.push({
+        x:Math.random()*innerWidth,
+        y:Math.random()*innerHeight,
+        vx:(Math.random()-.5)*2,
+        vy:(Math.random()-.5)*2,
+        r:Math.random()*3+1
+    });
+}
+
+function animateParticles(){
+    pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+
+    particles.forEach(p=>{
+        p.x+=p.vx;
+        p.y+=p.vy;
+
+        if(p.x<0||p.x>innerWidth)p.vx*=-1;
+        if(p.y<0||p.y>innerHeight)p.vy*=-1;
+
+        pCtx.beginPath();
+        pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        pCtx.fillStyle="rgba(0,255,255,.7)";
+        pCtx.fill();
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+resize();
+animateParticles();
+
+const mCanvas=document.getElementById("matrix");
+const mCtx=mCanvas.getContext("2d");
+
+const chars="HELLOWORLD0123456789";
+const font=14;
+let columns;
+
+function initMatrix(){
+    columns=Math.floor(innerWidth/font);
+    drops=[];
+    for(let i=0;i<columns;i++) drops[i]=1;
+}
+
+let drops=[];
+
+function matrix(){
+    mCtx.fillStyle="rgba(0,0,0,.05)";
+    mCtx.fillRect(0,0,mCanvas.width,mCanvas.height);
+
+    mCtx.fillStyle="#0f0";
+    mCtx.font=font+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const text=chars[Math.floor(Math.random()*chars.length)];
+
+        mCtx.fillText(text,i*font,drops[i]*font);
+
+        if(drops[i]*font>innerHeight&&Math.random()>0.975){
+            drops[i]=0;
+        }
+
+        drops[i]++;
+    }
+}
+
+initMatrix();
+setInterval(matrix,35);
+
+console.log(`
+╔══════════════════════════════╗
+║ ADVANCED HELLO WORLD ENGINE ║
+║ VERSION 9999.0.0            ║
+║ PURPOSE: HELLO WORLD        ║
+╚══════════════════════════════╝
+`);
+</script>
+
+</body>
+</html>
