@@ -1,89 +1,144 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vantix Radio Admin</title>
+
+    <title>Vantix Admin Login</title>
+
+    <link
+        rel="icon"
+        href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+    >
+
+    <script
+        async
+        crossorigin="anonymous"
+        data-clerk-publishable-key="YOUR_CLERK_PUBLISHABLE_KEY"
+        src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+    </script>
 
     <style>
-        body{
-            font-family:Segoe UI,Arial,sans-serif;
-            background:#0f172a;
-            color:white;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            min-height:100vh;
+        *{
             margin:0;
-        }
-
-        .card{
-            width:400px;
-            max-width:90%;
-            padding:30px;
-            background:#1e293b;
-            border-radius:15px;
-            text-align:center;
-        }
-
-        input{
-            width:100%;
-            padding:12px;
-            margin:15px 0;
-            border:none;
-            border-radius:10px;
+            padding:0;
             box-sizing:border-box;
         }
 
-        button{
-            width:100%;
-            padding:12px;
-            border:none;
-            border-radius:10px;
-            background:#2563eb;
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:'Segoe UI',sans-serif;
+
+            background:
+                linear-gradient(
+                    -45deg,
+                    #0ea5e9,
+                    #2563eb,
+                    #7c3aed,
+                    #f97316,
+                    #dc2626
+                );
+
+            background-size:400% 400%;
+            animation:gradientShift 15s ease infinite;
+        }
+
+        .card{
+            width:450px;
+            max-width:90%;
+
+            padding:35px;
+
+            border-radius:25px;
+
+            background:rgba(15,23,42,.75);
+
+            backdrop-filter:blur(25px);
+
+            text-align:center;
+
+            border:1px solid rgba(255,255,255,.1);
+
+            box-shadow:
+                0 15px 50px rgba(0,0,0,.35);
+        }
+
+        .logo{
+            width:180px;
+            margin-bottom:20px;
+        }
+
+        h1{
             color:white;
-            font-weight:bold;
-            cursor:pointer;
+            margin-bottom:10px;
+        }
+
+        p{
+            color:#cbd5e1;
+            margin-bottom:25px;
+        }
+
+        #clerk-container{
+            display:flex;
+            justify-content:center;
+        }
+
+        @keyframes gradientShift{
+            0%{
+                background-position:0% 50%;
+            }
+
+            50%{
+                background-position:100% 50%;
+            }
+
+            100%{
+                background-position:0% 50%;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h1>Admin Login</h1>
+    <div class="card">
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Enter Password">
+        <img
+            class="logo"
+            src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+            alt="Vantix Radio"
+        >
 
-    <button onclick="login()">
-        Login
-    </button>
-</div>
+        <h1>Admin Login</h1>
 
-<script>
-const encodedPassword = "Rm9ydG5pdGVHYW1lcjE2IQ==";
+        <p>
+            Sign in to access the Vantix Radio Admin Panel.
+        </p>
 
-function login() {
-    const entered =
-        document.getElementById("password").value;
+        <div id="clerk-container"></div>
 
-    if (btoa(entered) === encodedPassword) {
-        sessionStorage.setItem(
-            "vantix_admin",
-            "true"
-        );
+    </div>
 
-        window.location.href =
-            "admin-panel.html";
-    } else {
-        alert("Incorrect password");
-    }
-}
-</script>
+    <script>
+        window.addEventListener("load", async () => {
+
+            await Clerk.load();
+
+            if (Clerk.user) {
+                window.location.href = "admin.html";
+                return;
+            }
+
+            Clerk.mountSignIn(
+                document.getElementById(
+                    "clerk-container"
+                )
+            );
+
+        });
+    </script>
 
 </body>
 </html>
-```
