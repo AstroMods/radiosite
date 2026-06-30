@@ -1,111 +1,300 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vantix Radio Admin Panel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script
-        async
-        crossorigin="anonymous"
-        data-clerk-publishable-key="pk_test_cGxlYXNhbnQtbW9uaXRvci03My5jbGVyay5hY2NvdW50cy5kZXYk"
-        src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
-    </script>
+<title>Vantix Radio Admin Panel</title>
 
-    <style>
-        body{
-            font-family:Segoe UI,Arial,sans-serif;
-            background:#0f172a;
-            color:white;
-            padding:40px;
-        }
+<script
+    defer
+    crossorigin="anonymous"
+    src="https://pleasant-monitor-73.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js">
+</script>
 
-        .card{
-            max-width:600px;
-            margin:auto;
-            background:#1e293b;
-            padding:30px;
-            border-radius:15px;
-            display:none;
-        }
+<script
+    defer
+    crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_cGxlYXNhbnQtbW9uaXRvci03My5jbGVyay5hY2NvdW50cy5kZXYk"
+    src="https://pleasant-monitor-73.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js">
+</script>
 
-        button{
-            width:100%;
-            padding:14px;
-            margin-top:10px;
-            border:none;
-            border-radius:10px;
-            cursor:pointer;
-            font-weight:bold;
-        }
+<style>
 
-        .live{
-            background:#16a34a;
-            color:white;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .maintenance{
-            background:#ea580c;
-            color:white;
-        }
+body{
+    min-height:100vh;
+    font-family:'Segoe UI',sans-serif;
+    color:white;
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #1e293b,
+            #0f172a
+        );
+}
 
-        .logout{
-            background:#dc2626;
-            color:white;
-        }
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-1;
+}
 
-        .loading{
-            text-align:center;
-            margin-top:100px;
-        }
-    </style>
+.background::before,
+.background::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+}
+
+.background::before{
+    width:500px;
+    height:500px;
+    background:#0ea5e9;
+    top:-100px;
+    left:-100px;
+    animation:float 18s infinite ease-in-out;
+}
+
+.background::after{
+    width:450px;
+    height:450px;
+    background:#f97316;
+    bottom:-100px;
+    right:-100px;
+    animation:float 22s infinite ease-in-out reverse;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:3rem;
+}
+
+.header p{
+    color:#94a3b8;
+    margin-top:8px;
+}
+
+.panel{
+    background:rgba(15,23,42,.75);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
+
+.status-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px;
+    border-radius:16px;
+    background:rgba(255,255,255,.04);
+    margin-bottom:25px;
+}
+
+.status-indicator{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#22c55e;
+    animation:pulse 1.5s infinite;
+}
+
+.mode{
+    font-weight:700;
+    font-size:1.1rem;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+button{
+    border:none;
+    border-radius:16px;
+    padding:18px;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+}
+
+.live{
+    background:linear-gradient(
+        135deg,
+        #16a34a,
+        #22c55e
+    );
+    color:white;
+}
+
+.maintenance{
+    background:linear-gradient(
+        135deg,
+        #ea580c,
+        #fb923c
+    );
+    color:white;
+}
+
+.logout{
+    background:linear-gradient(
+        135deg,
+        #dc2626,
+        #ef4444
+    );
+    color:white;
+}
+
+.loading{
+    text-align:center;
+    margin-top:120px;
+    font-size:1.2rem;
+}
+
+.footer{
+    margin-top:25px;
+    color:#94a3b8;
+    text-align:center;
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.2);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(100px);
+    }
+}
+
+</style>
+
 </head>
 <body>
 
-<div class="loading" id="loading">
-    Verifying access...
+<div class="background"></div>
+
+<div id="loading" class="loading">
+    Verifying Administrator Access...
 </div>
 
-<div class="card" id="adminPanel">
+<div
+    class="container"
+    id="adminPanel"
+    style="display:none;"
+>
 
-    <h1>Vantix Radio Admin</h1>
+```
+<div class="header">
+    <h1>🎙️ Vantix Radio</h1>
+    <p>Administration Dashboard</p>
+</div>
 
-    <button
-        class="live"
-        onclick="setMode('live')">
-        Set Site Live
-    </button>
+<div class="panel">
 
-    <button
-        class="maintenance"
-        onclick="setMode('maintenance')">
-        Set Maintenance Mode
-    </button>
+    <div class="status-card">
+        <div class="status-indicator">
+            <span class="dot"></span>
+            <span class="mode">
+                Current Mode:
+                <span id="currentMode">LIVE</span>
+            </span>
+        </div>
+    </div>
 
-    <button
-        class="logout"
-        onclick="logout()">
-        Logout
-    </button>
+    <div class="controls">
+
+        <button
+            class="live"
+            onclick="setMode('live')">
+            🟢 Set Site Live
+        </button>
+
+        <button
+            class="maintenance"
+            onclick="setMode('maintenance')">
+            🟠 Enable Maintenance
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🔴 Logout
+        </button>
+
+    </div>
+
+    <div class="footer">
+        Vantix Radio Administration Panel
+    </div>
+
+</div>
+```
 
 </div>
 
 <script>
+
 window.addEventListener("load", async () => {
 
-    await Clerk.load();
+    await window.Clerk.load();
 
-    if (!Clerk.user) {
+    if (!window.Clerk.user) {
         location.href = "login.html";
         return;
     }
 
     const ALLOWED_USERS = [
-        "YOUR_DISCORD_USER_ID"
+        "YOUR_DISCORD_ID"
     ];
 
     const discordAccount =
-        Clerk.user.externalAccounts?.find(
+        window.Clerk.user.externalAccounts?.find(
             account =>
                 account.provider === "oauth_discord"
         );
@@ -117,7 +306,7 @@ window.addEventListener("load", async () => {
 
         alert("Access Denied");
 
-        await Clerk.signOut();
+        await window.Clerk.signOut();
 
         location.href = "login.html";
 
@@ -126,7 +315,22 @@ window.addEventListener("load", async () => {
 
     document.getElementById("loading").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
+
+    const mode =
+        localStorage.getItem(
+            "vantix_site_mode"
+        ) || "live";
+
+    updateModeDisplay(mode);
 });
+
+function updateModeDisplay(mode){
+
+    document.getElementById(
+        "currentMode"
+    ).textContent =
+        mode.toUpperCase();
+}
 
 function setMode(mode){
 
@@ -135,17 +339,21 @@ function setMode(mode){
         mode
     );
 
+    updateModeDisplay(mode);
+
     alert(
-        "Mode changed to: " + mode
+        "Site mode changed to " +
+        mode.toUpperCase()
     );
 }
 
 async function logout(){
 
-    await Clerk.signOut();
+    await window.Clerk.signOut();
 
     location.href = "login.html";
 }
+
 </script>
 
 </body>
