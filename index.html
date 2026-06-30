@@ -3,16 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Vantix Radio</title>
 
     <link
+        id="favicon"
         rel="icon"
         type="image/png"
         href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
     >
 
     <link rel="stylesheet" href="style.css">
-</head> <body> <script> fetch("./status.json") .then(response => response.json()) .then(data => { if ( data.mode === "maintenance" && !window.location.pathname.endsWith("maintenance.html") ) { window.location.href = "maintenance.html"; } }) .catch(error => { console.error( "Unable to load status.json", error ); }); </script>
+
+    <script>
+        fetch("./status.json")
+            .then(response => response.json())
+            .then(data => {
+                if (
+                    data.mode === "maintenance" &&
+                    !window.location.pathname.endsWith("maintenance.html")
+                ) {
+                    window.location.href = "maintenance.html";
+                }
+            })
+            .catch(error => {
+                console.error(
+                    "Unable to load status.json",
+                    error
+                );
+            });
+    </script>
+</head>
+
+<body>
 
     <div class="background"></div>
 
@@ -24,30 +47,37 @@
         </div>
 
         <img
+            id="stationLogo"
             class="station-logo"
             src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
             alt="Vantix Radio Logo"
         >
 
-        <h1>Vantix Radio</h1>
+        <h1 id="stationName">
+            Vantix Radio
+        </h1>
 
-        <p class="subtitle">
+        <p
+            id="stationSubtitle"
+            class="subtitle"
+        >
             The Official Radio Station of Andreas Initiative Roleplay
         </p>
 
-        <!-- Stream Player -->
-<audio
-    id="radioPlayer"
-    controls
-    preload="metadata"
-    crossorigin="anonymous">
-    <source
-        id="streamSource"
-        src="https://eu8.fastcast4u.com/proxy/vantixradio/stream"
-        type="audio/mpeg">
-</audio>
+        <!-- Radio Player -->
+        <audio
+            id="radioPlayer"
+            controls
+            preload="auto"
+            crossorigin="anonymous"
+        >
+            Your browser does not support HTML5 audio.
+        </audio>
 
-        <div id="status" class="status">
+        <div
+            id="status"
+            class="status"
+        >
             Ready to Play
         </div>
 
@@ -55,7 +85,9 @@
 
             <label for="volumeSlider">
                 Volume
-                <span id="volumeValue">100%</span>
+                <span id="volumeValue">
+                    100%
+                </span>
             </label>
 
             <input
@@ -70,8 +102,9 @@
         </div>
 
         <a
+            id="discordButton"
             class="discord-btn"
-            href="http://radio.vantixurbex.shop/discord"
+            href="https://radio.vantixurbex.shop/discord"
             target="_blank"
             rel="noopener noreferrer"
         >
@@ -80,33 +113,8 @@
 
     </div>
 
-    <script>
-        const player = document.getElementById("radioPlayer");
-        const volumeSlider = document.getElementById("volumeSlider");
-        const status = document.getElementById("status");
-
-        player.volume = 1;
-
-        volumeSlider.addEventListener("input", () => {
-            player.volume = volumeSlider.value;
-        });
-
-        player.addEventListener("play", () => {
-            status.textContent = "🔴 Live Now Playing";
-        });
-
-        player.addEventListener("pause", () => {
-            status.textContent = "Paused";
-        });
-
-        player.addEventListener("error", () => {
-            status.textContent = "Stream Offline";
-        });
-
-        player.addEventListener("waiting", () => {
-            status.textContent = "Buffering...";
-        });
-    </script>
+    <!-- Player Logic -->
+    <script src="player.js"></script>
 
 </body>
 </html>
