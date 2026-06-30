@@ -13,7 +13,7 @@
         href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
     >
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <script>
         fetch("./status.json")
@@ -38,22 +38,17 @@
 <body>
 
     <!-- Animated Background -->
-   <div class="background">
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
 
-    <div class="gradient-orb orb-1"></div>
+        <canvas id="particles"></canvas>
+    </div>
 
-    <div class="gradient-orb orb-2"></div>
-
-    <div class="gradient-orb orb-3"></div>
-
-    <canvas id="particles"></canvas>
-
-</div>
-
-    <!-- Radio Player Card -->
+    <!-- Radio Card -->
     <div class="player-card">
 
-        <!-- Station Logo -->
         <img
             id="stationLogo"
             class="station-logo"
@@ -61,18 +56,15 @@
             alt="Vantix Radio Logo"
         >
 
-        <!-- Live Badge -->
         <div class="live-badge">
             <span class="live-dot"></span>
             LIVE 24/7
         </div>
 
-        <!-- Station Name -->
         <h1 id="stationName">
             Vantix Radio
         </h1>
 
-        <!-- Subtitle -->
         <p
             id="stationSubtitle"
             class="subtitle"
@@ -80,17 +72,32 @@
             The Official Radio Station of Andreas Initiative Roleplay
         </p>
 
-        <!-- Radio Player -->
+        <!-- Animated Now Playing -->
+        <div class="now-playing">
+            <div class="radio-wave"></div>
+            <div class="radio-wave"></div>
+            <div class="radio-wave"></div>
+
+            <span>Live Radio Stream</span>
+        </div>
+
+        <!-- Custom Play Button -->
+        <div class="radio-controls">
+            <button
+                id="playBtn"
+                class="play-btn"
+            >
+                ▶ Play Radio
+            </button>
+        </div>
+
+        <!-- Hidden Audio Element -->
         <audio
             id="radioPlayer"
-            controls
             preload="auto"
             crossorigin="anonymous"
-        >
-            Your browser does not support HTML5 audio.
-        </audio>
+        ></audio>
 
-        <!-- Status -->
         <div
             id="status"
             class="status"
@@ -98,7 +105,6 @@
             Ready to Play
         </div>
 
-        <!-- Volume Control -->
         <div class="volume-section">
 
             <label for="volumeSlider">
@@ -119,7 +125,6 @@
 
         </div>
 
-        <!-- Discord Button -->
         <a
             id="discordButton"
             class="discord-btn"
@@ -132,10 +137,7 @@
 
     </div>
 
-    <!-- Background Animation (optional) -->
     <script src="background.js"></script>
-
-    <!-- Radio Player Logic -->
     <script src="player.js"></script>
 
 </body>
