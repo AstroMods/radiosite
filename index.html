@@ -167,5 +167,37 @@
     <script src="background.js"></script>
     <script src="player.js"></script>
 
+<!-- FastCast Request System -->
+<div class="request-section">
+    <h2>🎵 Request a Song</h2>
+    <p>Submit your favorite track and our DJs may play it live.</p>
+
+    <script src="https://eu8.fastcast4u.com/system/request.js"></script>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            🎵 Vantix Radio
+        </div>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/downloads.html">Downloads</a>
+            <a href="/discord/index.html" target="_blank">Discord</a>
+        </div>
+
+        <div class="footer-copy">
+            © <span id="year"></span> Vantix Radio • Streaming 24/7
+        </div>
+    </div>
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
 </body>
 </html>
