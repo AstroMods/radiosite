@@ -1,86 +1,167 @@
-<script>
-const player = document.getElementById("radioPlayer");
-const volumeSlider = document.getElementById("volumeSlider");
-const volumeValue = document.getElementById("volumeValue");
-const status = document.getElementById("status");
+// Vantix Radio Player
 
-const STREAM_URL = "http://51.255.235.165:2128/stream.mp3";
+document.addEventListener("DOMContentLoaded", () => {
+    const player = document.getElementById("radioPlayer");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const volumeValue = document.getElementById("volumeValue");
+    const status = document.getElementById("status");
 
-/* Initial Volume */
-player.volume = 1;
-volumeValue.textContent = "100%";
+    const STREAM_URL =
+        "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
 
-/* Volume Control */
-function updateVolume() {
-    const volume = parseFloat(volumeSlider.value);
+    let reconnecting = false;
+    let started = false;
 
-    player.volume = volume;
-    volumeValue.textContent =
-        Math.round(volume * 100) + "%";
-}
-
-volumeSlider.addEventListener(
-    "input",
-    updateVolume
-);
-
-updateVolume();
-
-/* Status Updates */
-player.addEventListener("loadstart", () => {
-    status.textContent = "Connecting...";
-});
-
-player.addEventListener("playing", () => {
-    status.textContent = "🔴 Live Now Playing";
-});
-
-player.addEventListener("pause", () => {
-    status.textContent = "Paused";
-});
-
-player.addEventListener("waiting", () => {
-    status.textContent = "Buffering...";
-});
-
-player.addEventListener("stalled", () => {
-    status.textContent = "Reconnecting...";
-});
-
-player.addEventListener("suspend", () => {
-    status.textContent = "Loading Stream...";
-});
-
-/* Reconnect Logic */
-function reconnectStream() {
-    status.textContent = "Reconnecting...";
-
-    const wasPlaying = !player.paused;
-
-    player.src =
-        STREAM_URL +
-        "?t=" +
-        Date.now();
-
+    /* Load Stream */
+    player.src = STREAM_URL;
+    player.preload = "auto";
     player.load();
 
-    if (wasPlaying) {
-        player.play().catch(() => {});
+    /* Default Volume */
+    player.volume = 1;
+
+    if (volumeValue) {
+        volumeValue.textContent = "100%";
     }
-}
 
-player.addEventListener("error", () => {
-    reconnectStream();
-});
+    /* Volume Control */
+    function updateVolume() {
+        const volume = parseFloat(volumeSlider.value);
 
-/* Periodic Health Check */
-setInterval(() => {
-    if (
-        player.readyState === 0 ||
-        player.networkState ===
-        HTMLMediaElement.NETWORK_NO_SOURCE
-    ) {
+        player.volume = volume;
+
+        if (volumeValue) {
+            volumeValue.textContent =
+                `${Math.round(volume * 100)}%`;
+        }
+
+        localStorage.setItem(
+            "vantix_volume",
+            volume
+        );
+    }
+
+    /* Restore Saved Volume */
+    const savedVolume =
+        localStorage.getItem("vantix_volume");
+
+    if (savedVolume !== null) {
+        volumeSlider.value = savedVolume;
+        player.volume = parseFloat(savedVolume);
+    }
+
+    updateVolume();
+
+    volumeSlider.addEventListener(
+        "input",
+        updateVolume
+    );
+
+    /* Status Updates */
+    player.addEventListener("loadstart", () => {
+        status.textContent = "Connecting...";
+    });
+
+    player.addEventListener("loadedmetadata", () => {
+        status.textContent = "Connected";
+    });
+
+    player.addEventListener("playing", () => {
+        reconnecting = false;
+        status.textContent =
+            "🔴 Live Now Playing";
+    });
+
+    player.addEventListener("pause", () => {
+        status.textContent = "Paused";
+    });
+
+    player.addEventListener("waiting", () => {
+        status.textContent = "Buffering...";
+    });
+
+    player.addEventListener("stalled", () => {
+        status.textContent = "Reconnecting...";
         reconnectStream();
+    });
+
+    player.addEventListener("suspend", () => {
+        status.textContent = "Loading Stream...";
+    });
+
+    /* Auto Start After User Interaction */
+    async function startRadio() {
+        if (started) return;
+
+        started = true;
+
+        try {
+            await player.play();
+        } catch (err) {
+            console.error(err);
+            status.textContent =
+                "Click Play To Start";
+            started = false;
+        }
     }
-}, 10000);
-</script>
+
+    document.addEventListener(
+        "click",
+        startRadio,
+        { once: true }
+    );
+
+    document.addEventListener(
+        "touchstart",
+        startRadio,
+        { once: true }
+    );
+
+    /* Reconnect Logic */
+    function reconnectStream() {
+        if (reconnecting) return;
+
+        reconnecting = true;
+
+        status.textContent =
+            "Reconnecting...";
+
+        const wasPlaying =
+            !player.paused &&
+            !player.ended;
+
+        player.src =
+            STREAM_URL +
+            "?nocache=" +
+            Date.now();
+
+        player.load();
+
+        if (wasPlaying) {
+            player.play().catch(() => {});
+        }
+
+        setTimeout(() => {
+            reconnecting = false;
+        }, 5000);
+    }
+
+    player.addEventListener("error", () => {
+        console.warn(
+            "Stream error detected. Reconnecting..."
+        );
+
+        reconnectStream();
+    });
+
+    /* Health Check */
+    setInterval(() => {
+        if (
+            player.networkState ===
+                HTMLMediaElement.NETWORK_NO_SOURCE ||
+            player.readyState === 0
+        ) {
+            reconnectStream();
+        }
+    }, 15000);
+});
