@@ -3,8 +3,8 @@ const CACHE_NAME = 'vantix-radio-v1';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/styles.css',
-    '/script.js',
+    '/css/page.css',
+    '/player.js',
 ];
 
 self.addEventListener('install', event => {
