@@ -1,3 +1,65 @@
+.request-section{
+    max-width:900px;
+    margin:60px auto 40px;
+    padding:30px;
+
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+
+    text-align:center;
+}
+
+.request-section h2{
+    margin-bottom:10px;
+    color:#fff;
+    font-size:2rem;
+}
+
+.request-section p{
+    color:#cbd5e1;
+    margin-bottom:20px;
+}
+
+/* Style elements injected by FastCast */
+.request-section input,
+.request-section select,
+.request-section textarea{
+    width:100%;
+    max-width:500px;
+    padding:12px;
+    margin:8px 0;
+
+    border:none;
+    border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+    color:white;
+}
+
+.request-section input[type="submit"],
+.request-section button{
+    cursor:pointer;
+
+    background:linear-gradient(
+        135deg,
+        #38bdf8,
+        #f97316
+    );
+
+    color:white;
+    font-weight:700;
+
+    transition:transform .3s ease;
+}
+
+.request-section input[type="submit"]:hover,
+.request-section button:hover{
+    transform:translateY(-2px);
+}
+
 /* =========================
    RESET
 ========================= */
