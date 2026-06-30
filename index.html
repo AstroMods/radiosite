@@ -176,76 +176,48 @@ document.getElementById('year').textContent =
     new Date().getFullYear();
     </script>
 
-<section class="vr-request-wrapper">
+    <section class="vr-request-wrapper">
 
-    <div class="vr-request-bg"></div>
+        <div class="vr-request-bg"></div>
 
-    <div class="vr-request-card">
+        <div class="vr-request-card">
 
-        <div class="vr-request-header">
+            <div class="vr-request-header">
 
-            <span class="vr-request-badge">
-                LIVE REQUESTS
-            </span>
+                <span class="vr-request-badge">
+                    LIVE REQUESTS
+                </span>
 
-            <h2>🎵 Song Request Center</h2>
+                <h2>🎵 Song Request Center</h2>
 
-            <p>
-                Request your favorite song and it could be played live on Vantix Radio.
-            </p>
+                <p>
+                    Request your favorite song and it could be played live on Vantix Radio.
+                </p>
+
+            </div>
+
+            <form class="cc_request_form" data-username="vantixradio">
+
+                <div data-type="result"></div>
+
+                <input type="text" name="request[artist]" placeholder="🎤 Artist Name" maxlength="127">
+                <input type="text" name="request[title]" placeholder="🎵 Song Title" maxlength="127">
+                <input type="text" name="request[dedication]" placeholder="💙 Dedicated To" maxlength="127">
+                <input type="text" name="request[sender]" placeholder="👤 Your Name" maxlength="127">
+                <input type="email" name="request[email]" placeholder="📧 Your Email" maxlength="127">
+
+                <input
+                    type="button"
+                    value="Submit Song Request"
+                    data-type="submit"
+                    class="vr-submit-btn"
+                >
+
+            </form>
 
         </div>
 
-        <form class="cc_request_form" data-username="vantixradio">
-
-            <div data-type="result"></div>
-
-            <input
-                type="text"
-                name="request[artist]"
-                placeholder="🎤 Artist Name"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[title]"
-                placeholder="🎵 Song Title"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[dedication]"
-                placeholder="💙 Dedicated To"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[sender]"
-                placeholder="👤 Your Name"
-                maxlength="127"
-            >
-
-            <input
-                type="email"
-                name="request[email]"
-                placeholder="📧 Your Email"
-                maxlength="127"
-            >
-
-            <input
-                type="button"
-                value="Submit Song Request"
-                data-type="submit"
-                class="vr-submit-btn"
-            >
-
-        </form>
-
-    </div>
-</section>
+    </section>
 
 <!-- Footer -->
 <footer class="footer">
