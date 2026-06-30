@@ -1,110 +1,65 @@
+<script>
 const player = document.getElementById("radioPlayer");
 const volumeSlider = document.getElementById("volumeSlider");
 const volumeValue = document.getElementById("volumeValue");
-const statusText = document.getElementById("status");
+const status = document.getElementById("status");
 
-/* Station Config */
-document.title = CONFIG.stationName;
+const STREAM_URL = "http://51.255.235.165:2128/stream.mp3";
 
-document.getElementById("stationName").textContent =
-    CONFIG.stationName;
+/* Initial Volume */
+player.volume = 1;
+volumeValue.textContent = "100%";
 
-document.getElementById("stationSubtitle").textContent =
-    CONFIG.stationSubtitle;
-
-document.getElementById("stationLogo").src =
-    CONFIG.logo;
-
-document.getElementById("favicon").href =
-    CONFIG.favicon;
-
-document.getElementById("discordButton").href =
-    CONFIG.discordInvite;
-
-/* Load Stream */
-player.src = CONFIG.streamUrl;
-player.load();
-
-/* Volume */
-player.volume = parseFloat(volumeSlider.value);
-
+/* Volume Control */
 function updateVolume() {
     const volume = parseFloat(volumeSlider.value);
 
     player.volume = volume;
     volumeValue.textContent =
-        `${Math.round(volume * 100)}%`;
+        Math.round(volume * 100) + "%";
 }
+
+volumeSlider.addEventListener(
+    "input",
+    updateVolume
+);
 
 updateVolume();
-volumeSlider.addEventListener("input", updateVolume);
 
-/* Auto Start */
-let started = false;
-
-async function startRadio() {
-    if (started) return;
-
-    started = true;
-
-    try {
-        statusText.textContent = "Connecting...";
-        await player.play();
-    } catch (err) {
-        console.error(err);
-        statusText.textContent =
-            "Unable to connect to stream";
-    }
-}
-
-if (CONFIG.autoPlayOnInteraction) {
-    document.addEventListener(
-        "click",
-        startRadio,
-        { once: true }
-    );
-
-    document.addEventListener(
-        "touchstart",
-        startRadio,
-        { once: true }
-    );
-}
-
-/* Status Events */
+/* Status Updates */
 player.addEventListener("loadstart", () => {
-    statusText.textContent = "Connecting...";
+    status.textContent = "Connecting...";
 });
 
 player.addEventListener("playing", () => {
-    statusText.textContent = "🔴 Live";
-});
-
-player.addEventListener("waiting", () => {
-    statusText.textContent = "Buffering...";
-});
-
-player.addEventListener("stalled", () => {
-    statusText.textContent = "Reconnecting...";
-});
-
-player.addEventListener("suspend", () => {
-    statusText.textContent = "Loading Stream...";
+    status.textContent = "🔴 Live Now Playing";
 });
 
 player.addEventListener("pause", () => {
-    statusText.textContent = "Paused";
+    status.textContent = "Paused";
 });
 
-/* Auto Reconnect */
+player.addEventListener("waiting", () => {
+    status.textContent = "Buffering...";
+});
+
+player.addEventListener("stalled", () => {
+    status.textContent = "Reconnecting...";
+});
+
+player.addEventListener("suspend", () => {
+    status.textContent = "Loading Stream...";
+});
+
+/* Reconnect Logic */
 function reconnectStream() {
-    statusText.textContent = "Reconnecting...";
+    status.textContent = "Reconnecting...";
 
     const wasPlaying = !player.paused;
 
     player.src =
-        CONFIG.streamUrl +
-        "?nocache=" +
+        STREAM_URL +
+        "?t=" +
         Date.now();
 
     player.load();
@@ -118,12 +73,14 @@ player.addEventListener("error", () => {
     reconnectStream();
 });
 
+/* Periodic Health Check */
 setInterval(() => {
     if (
         player.readyState === 0 ||
         player.networkState ===
-            HTMLMediaElement.NETWORK_NO_SOURCE
+        HTMLMediaElement.NETWORK_NO_SOURCE
     ) {
         reconnectStream();
     }
 }, 10000);
+</script>
