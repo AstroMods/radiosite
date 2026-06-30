@@ -81,22 +81,27 @@
             <span>Live Radio Stream</span>
         </div>
 
-        <!-- Custom Play Button -->
-        <div class="radio-controls">
-            <button
-                id="playBtn"
-                class="play-btn"
-            >
-                ▶ Play Radio
-            </button>
-        </div>
+<!-- Radio Controls -->
+<div class="radio-controls">
 
-        <!-- Hidden Audio Element -->
-        <audio
-            id="radioPlayer"
-            preload="auto"
-            crossorigin="anonymous"
-        ></audio>
+    <button
+        id="playBtn"
+        class="play-btn"
+        type="button"
+    >
+        ▶ Play Radio
+    </button>
+
+</div>
+
+<!-- Audio Player -->
+<audio
+    id="radioPlayer"
+    preload="auto"
+    crossorigin="anonymous"
+>
+    Your browser does not support HTML5 audio.
+</audio>
 
         <div
             id="status"
