@@ -1,53 +1,71 @@
 // Vantix Radio Player
 
 document.addEventListener("DOMContentLoaded", () => {
-    const player = document.getElementById("radioPlayer");
-    const volumeSlider = document.getElementById("volumeSlider");
-    const volumeValue = document.getElementById("volumeValue");
-    const status = document.getElementById("status");
+
+    const player =
+        document.getElementById("radioPlayer");
+
+    const playBtn =
+        document.getElementById("playBtn");
+
+    const volumeSlider =
+        document.getElementById("volumeSlider");
+
+    const volumeValue =
+        document.getElementById("volumeValue");
+
+    const status =
+        document.getElementById("status");
 
     const STREAM_URL =
         "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
 
     let reconnecting = false;
-    let started = false;
 
-    /* Load Stream */
     player.src = STREAM_URL;
     player.preload = "auto";
-    player.load();
 
-    /* Default Volume */
-    player.volume = 1;
+    /* =========================
+       VOLUME
+    ========================= */
 
-    if (volumeValue) {
-        volumeValue.textContent = "100%";
+    const savedVolume =
+        localStorage.getItem(
+            "vantix_volume"
+        );
+
+    if (savedVolume !== null) {
+
+        player.volume =
+            parseFloat(savedVolume);
+
+        volumeSlider.value =
+            savedVolume;
+
+    } else {
+
+        player.volume = 1;
+        volumeSlider.value = 1;
     }
 
-    /* Volume Control */
     function updateVolume() {
-        const volume = parseFloat(volumeSlider.value);
+
+        const volume =
+            parseFloat(
+                volumeSlider.value
+            );
 
         player.volume = volume;
 
-        if (volumeValue) {
-            volumeValue.textContent =
-                `${Math.round(volume * 100)}%`;
-        }
+        volumeValue.textContent =
+            Math.round(
+                volume * 100
+            ) + "%";
 
         localStorage.setItem(
             "vantix_volume",
             volume
         );
-    }
-
-    /* Restore Saved Volume */
-    const savedVolume =
-        localStorage.getItem("vantix_volume");
-
-    if (savedVolume !== null) {
-        volumeSlider.value = savedVolume;
-        player.volume = parseFloat(savedVolume);
     }
 
     updateVolume();
@@ -57,69 +75,123 @@ document.addEventListener("DOMContentLoaded", () => {
         updateVolume
     );
 
-    /* Status Updates */
-    player.addEventListener("loadstart", () => {
-        status.textContent = "Connecting...";
-    });
+    /* =========================
+       PLAY BUTTON
+    ========================= */
 
-    player.addEventListener("loadedmetadata", () => {
-        status.textContent = "Connected";
-    });
-
-    player.addEventListener("playing", () => {
-        reconnecting = false;
-        status.textContent =
-            "🔴 Live Now Playing";
-    });
-
-    player.addEventListener("pause", () => {
-        status.textContent = "Paused";
-    });
-
-    player.addEventListener("waiting", () => {
-        status.textContent = "Buffering...";
-    });
-
-    player.addEventListener("stalled", () => {
-        status.textContent = "Reconnecting...";
-        reconnectStream();
-    });
-
-    player.addEventListener("suspend", () => {
-        status.textContent = "Loading Stream...";
-    });
-
-    /* Auto Start After User Interaction */
-    async function startRadio() {
-        if (started) return;
-
-        started = true;
+    async function playRadio() {
 
         try {
+
             await player.play();
+
         } catch (err) {
+
             console.error(err);
+
             status.textContent =
-                "Click Play To Start";
-            started = false;
+                "Unable to Start Stream";
         }
     }
 
-    document.addEventListener(
+    function stopRadio() {
+
+        player.pause();
+    }
+
+    playBtn.addEventListener(
         "click",
-        startRadio,
-        { once: true }
+        async () => {
+
+            if (player.paused) {
+
+                await playRadio();
+
+            } else {
+
+                stopRadio();
+            }
+        }
     );
 
-    document.addEventListener(
-        "touchstart",
-        startRadio,
-        { once: true }
+    /* =========================
+       PLAYER EVENTS
+    ========================= */
+
+    player.addEventListener(
+        "loadstart",
+        () => {
+
+            status.textContent =
+                "Connecting...";
+        }
     );
 
-    /* Reconnect Logic */
+    player.addEventListener(
+        "playing",
+        () => {
+
+            status.textContent =
+                "🔴 Live Now Playing";
+
+            playBtn.textContent =
+                "⏹ Stop Radio";
+
+            playBtn.classList.add(
+                "playing"
+            );
+        }
+    );
+
+    player.addEventListener(
+        "pause",
+        () => {
+
+            status.textContent =
+                "Stopped";
+
+            playBtn.textContent =
+                "▶ Play Radio";
+
+            playBtn.classList.remove(
+                "playing"
+            );
+        }
+    );
+
+    player.addEventListener(
+        "waiting",
+        () => {
+
+            status.textContent =
+                "Buffering...";
+        }
+    );
+
+    player.addEventListener(
+        "stalled",
+        () => {
+
+            reconnectStream();
+        }
+    );
+
+    player.addEventListener(
+        "error",
+        () => {
+
+            reconnectStream();
+        }
+    );
+
+    /* =========================
+       RECONNECT
+    ========================= */
+
     function reconnectStream() {
-        if (reconnecting) return;
+
+        if (reconnecting)
+            return;
 
         reconnecting = true;
 
@@ -127,41 +199,44 @@ document.addEventListener("DOMContentLoaded", () => {
             "Reconnecting...";
 
         const wasPlaying =
-            !player.paused &&
-            !player.ended;
+            !player.paused;
 
         player.src =
             STREAM_URL +
-            "?nocache=" +
+            "?t=" +
             Date.now();
 
         player.load();
 
         if (wasPlaying) {
-            player.play().catch(() => {});
+
+            player.play()
+                .catch(() => {});
         }
 
         setTimeout(() => {
+
             reconnecting = false;
+
         }, 5000);
     }
 
-    player.addEventListener("error", () => {
-        console.warn(
-            "Stream error detected. Reconnecting..."
-        );
+    /* =========================
+       HEALTH CHECK
+    ========================= */
 
-        reconnectStream();
-    });
-
-    /* Health Check */
     setInterval(() => {
+
         if (
+            player.readyState === 0 ||
             player.networkState ===
-                HTMLMediaElement.NETWORK_NO_SOURCE ||
-            player.readyState === 0
+            HTMLMediaElement
+                .NETWORK_NO_SOURCE
         ) {
+
             reconnectStream();
         }
+
     }, 15000);
+
 });
