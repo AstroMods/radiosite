@@ -139,26 +139,31 @@ fetch("./status.json")
 
         <div class="vr-request-header">
 
-            <span class="vr-request-badge">
-                LIVE REQUESTS
-            </span>
+            <span class="vr-request-badge">LIVE REQUESTS</span>
 
             <h2>🎵 Song Request Center</h2>
 
-            <p>
-                Send a request directly to our Discord server.
-            </p>
+            <p>Send a request directly to our Discord server.</p>
 
         </div>
 
-        <form id="requestForm">
+        <form id="requestForm" class="vr-form">
 
-            <input type="text" id="artist" placeholder="🎤 Artist Name" maxlength="127" required>
-            <input type="text" id="title" placeholder="🎵 Song Title" maxlength="127" required>
-            <input type="text" id="sender" placeholder="👤 Your Name" maxlength="127" required>
+            <div class="vr-input-group">
+                <input type="text" id="artist" placeholder="🎤 Artist Name" maxlength="127" required>
+            </div>
+
+            <div class="vr-input-group">
+                <input type="text" id="title" placeholder="🎵 Song Title" maxlength="127" required>
+            </div>
+
+            <div class="vr-input-group">
+                <input type="text" id="sender" placeholder="👤 Your Name" maxlength="127" required>
+            </div>
 
             <button type="submit" class="vr-submit-btn">
-                Send Request to Discord
+                Send Request
+                <span class="vr-btn-glow"></span>
             </button>
 
             <div id="result"></div>
