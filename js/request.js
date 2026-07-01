@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     const badge = document.querySelector(".vr-request-badge");
-
     if (!badge) return;
 
+    // smooth animation instead of stacking timers
+    badge.style.transition = "opacity 0.5s ease";
+
+    let visible = true;
+
     setInterval(() => {
-        badge.style.opacity = "0.6";
-
-        setTimeout(() => {
-            badge.style.opacity = "1";
-        }, 500);
-
+        visible = !visible;
+        badge.style.opacity = visible ? "1" : "0.6";
     }, 2000);
 
 });
