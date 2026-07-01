@@ -1,5 +1,5 @@
 /* =========================
-   RESET (MUST BE FIRST)
+   RESET
 ========================= */
 
 *{
@@ -20,6 +20,8 @@ body{
     position:relative;
 
     padding-top:120px;
+
+    background:#0b1220;
 }
 
 /* =========================
@@ -32,77 +34,75 @@ body{
     left:50%;
     transform:translateX(-50%);
 
-    width:min(1200px,95%);
+    width:min(1100px,92%);
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
-    padding:15px 25px;
+    padding:12px 18px;
 
-    background:rgba(15,23,42,.75);
-    backdrop-filter:blur(15px);
+    background:rgba(15,23,42,.85);
+    backdrop-filter:blur(12px);
 
     border:1px solid rgba(255,255,255,.08);
-    border-radius:18px;
+    border-radius:14px;
 
     z-index:9999;
 
-    box-shadow:0 0 25px rgba(0,0,0,.25);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
 
 .logo-link{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:10px;
 
     text-decoration:none;
     color:white;
 
-    font-weight:700;
-    font-size:1.1rem;
+    font-weight:600;
+    font-size:1rem;
 }
 
 .logo-link img{
-    width:42px;
-    height:42px;
+    width:36px;
+    height:36px;
     border-radius:50%;
 }
 
 .site-nav{
     display:flex;
-    gap:10px;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
 .site-nav a{
-    color:white;
+    color:rgba(255,255,255,.85);
     text-decoration:none;
 
-    padding:10px 16px;
+    padding:8px 12px;
 
-    border-radius:10px;
+    border-radius:8px;
 
     transition:.2s ease;
 
-    font-weight:600;
+    font-weight:500;
+    font-size:.9rem;
 }
 
 .site-nav a:hover{
-    background:rgba(255,255,255,.1);
-    transform:translateY(-2px);
+    background:rgba(255,255,255,.08);
+    color:white;
 }
 
 /* Mobile */
 @media (max-width:700px){
     .site-header{
         flex-direction:column;
-        gap:15px;
-        padding:20px;
-    }
-
-    .site-nav{
-        flex-wrap:wrap;
-        justify-content:center;
+        gap:10px;
+        padding:12px;
     }
 }
 
@@ -113,12 +113,11 @@ body{
 .site-footer{
     text-align:center;
 
-    padding:20px;
-    margin-top:50px;
+    padding:18px;
+    margin-top:40px;
 
-    color:rgba(255,255,255,.7);
-    font-size:.9rem;
-    font-weight:500;
+    color:rgba(255,255,255,.6);
+    font-size:.85rem;
 
     border-top:1px solid rgba(255,255,255,.08);
 
@@ -127,7 +126,7 @@ body{
 }
 
 /* =========================
-   BACKGROUND SYSTEM (FIXED)
+   BACKGROUND (SOFT)
 ========================= */
 
 .background{
@@ -143,62 +142,61 @@ body{
 
     background: linear-gradient(
         -45deg,
-        #0ea5e9,
-        #2563eb,
-        #7c3aed,
-        #f97316,
-        #dc2626
+        #0b1220,
+        #0f172a,
+        #111827,
+        #0b1220
     );
 
     background-size:400% 400%;
-    animation: gradientShift 18s ease infinite;
+    animation: gradientShift 25s ease infinite;
 
     pointer-events:none;
 }
 
-/* GRID LAYER */
+/* SOFT ORBS (LESS INTENSE) */
+.gradient-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(140px);
+    opacity:.25;
+}
+
+.orb-1{
+    width:500px;
+    height:500px;
+    background:#3b82f6;
+    animation:floatOne 30s ease-in-out infinite;
+}
+
+.orb-2{
+    width:450px;
+    height:450px;
+    background:#f97316;
+    animation:floatTwo 35s ease-in-out infinite;
+}
+
+.orb-3{
+    width:400px;
+    height:400px;
+    background:#8b5cf6;
+    animation:floatThree 40s ease-in-out infinite;
+}
+
+/* GRID (VERY LIGHT) */
 .background::after{
     content:"";
     position:absolute;
     inset:0;
 
     background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
 
-    background-size:60px 60px;
-    opacity:.3;
+    background-size:70px 70px;
+    opacity:.2;
 
-    animation:gridMove 25s linear infinite;
-}
-
-/* ORBS */
-.gradient-orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-    opacity:.45;
-}
-
-.orb-1{
-    width:700px;
-    height:700px;
-    background:#38bdf8;
-    animation:floatOne 20s ease-in-out infinite;
-}
-
-.orb-2{
-    width:600px;
-    height:600px;
-    background:#f97316;
-    animation:floatTwo 24s ease-in-out infinite;
-}
-
-.orb-3{
-    width:500px;
-    height:500px;
-    background:#8b5cf6;
-    animation:floatThree 28s ease-in-out infinite;
+    animation:gridMove 35s linear infinite;
 }
 
 /* PARTICLES */
@@ -221,65 +219,41 @@ body{
 }
 
 /* =========================
-   SCHEDULE HERO
+   CONTENT LAYOUT HELPERS
 ========================= */
 
-.schedule-hero{
+.schedule-hero,
+.container,
+.section{
     position:relative;
-    z-index:100;
-
-    text-align:center;
-
-    width:min(1000px,95%);
-    margin:0 auto 40px;
-}
-
-.hero-logo{
-    width:180px;
-    max-width:90%;
-
-    display:block;
-    margin:0 auto 20px;
-
-    animation:logoFloat 5s ease-in-out infinite;
-}
-
-.schedule-hero p{
-    color:#cbd5e1;
-    max-width:700px;
-    margin:0 auto;
-
-    line-height:1.6;
+    z-index:10;
 }
 
 /* =========================
-   TABS
+   TABS (CLEAN)
 ========================= */
 
 .tabs{
-    position:relative;
-    z-index:100;
-
     display:flex;
     justify-content:center;
-    gap:12px;
+    gap:10px;
 
-    margin:0 auto 25px;
+    margin:0 auto 20px;
+    flex-wrap:wrap;
 }
 
 .tab-btn{
     border:none;
     cursor:pointer;
 
-    padding:12px 20px;
+    padding:10px 14px;
 
-    border-radius:10px;
+    border-radius:8px;
 
-    background:rgba(15,23,42,.65);
-    backdrop-filter:blur(15px);
+    background:rgba(15,23,42,.7);
 
-    color:white;
-    font-weight:600;
+    color:rgba(255,255,255,.85);
+    font-weight:500;
 
     border:1px solid rgba(255,255,255,.08);
 
@@ -287,12 +261,12 @@ body{
 }
 
 .tab-btn:hover{
-    background:rgba(255,255,255,.1);
-    transform:translateY(-2px);
+    background:rgba(255,255,255,.08);
+    color:white;
 }
 
 .tab-btn.active{
-    background:rgba(255,255,255,.15);
+    background:rgba(255,255,255,.12);
 }
 
 /* =========================
@@ -300,23 +274,20 @@ body{
 ========================= */
 
 .container{
-    position:relative;
-    z-index:100;
-
-    width:min(1200px,95%);
-    margin:0 auto 50px;
+    width:min(1100px,92%);
+    margin:0 auto 40px;
 }
 
 .section{
     display:none;
 
-    padding:30px;
+    padding:22px;
 
     background:rgba(15,23,42,.65);
-    backdrop-filter:blur(30px);
+    backdrop-filter:blur(20px);
 
     border:1px solid rgba(255,255,255,.08);
-    border-radius:25px;
+    border-radius:18px;
 }
 
 .section.active{
@@ -324,7 +295,7 @@ body{
 }
 
 /* =========================
-   ANIMATIONS
+   ANIMATIONS (SOFT)
 ========================= */
 
 @keyframes gradientShift{
@@ -334,26 +305,21 @@ body{
 }
 
 @keyframes floatOne{
-    0%,100%{transform:translate(-150px,-150px);}
-    50%{transform:translate(400px,250px);}
+    0%,100%{transform:translate(-120px,-120px);}
+    50%{transform:translate(250px,150px);}
 }
 
 @keyframes floatTwo{
-    0%,100%{transform:translate(110vw,10vh);}
-    50%{transform:translate(55vw,75vh);}
+    0%,100%{transform:translate(90vw,10vh);}
+    50%{transform:translate(55vw,60vh);}
 }
 
 @keyframes floatThree{
-    0%,100%{transform:translate(50vw,100vh);}
-    50%{transform:translate(10vw,20vh);}
-}
-
-@keyframes logoFloat{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-6px);}
+    0%,100%{transform:translate(40vw,90vh);}
+    50%{transform:translate(10vw,25vh);}
 }
 
 @keyframes gridMove{
     from{transform:translateY(0);}
-    to{transform:translateY(60px);}
+    to{transform:translateY(70px);}
 }
