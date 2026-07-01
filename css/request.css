@@ -1,5 +1,5 @@
 /* =========================
-   SONG REQUEST SYSTEM
+   SONG REQUEST SYSTEM (VANTIX CLEAN)
 ========================= */
 
 .vr-request-wrapper{
@@ -7,11 +7,11 @@
     width:100%;
     display:flex;
     justify-content:center;
-    padding:40px 20px;
+    padding:60px 20px;
     box-sizing:border-box;
 }
 
-/* background layer (safe, non-blocking) */
+/* background layer */
 .vr-request-bg{
     position:absolute;
     inset:0;
@@ -22,23 +22,35 @@
 
 .vr-request-card{
     width:100%;
-    max-width:700px;
+    max-width:650px;
 
     position:relative;
     z-index:2;
 
-    background:rgba(15,23,42,.85);
-    backdrop-filter:blur(15px);
+    background:rgba(15,23,42,.75);
+    backdrop-filter:blur(18px);
 
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:25px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
 
-    padding:35px;
+    padding:30px;
 
     color:white;
 
-    box-shadow:0 0 40px rgba(37,99,235,.25);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        0 0 25px rgba(37,99,235,.15);
+
     box-sizing:border-box;
+
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.vr-request-card:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45),
+        0 0 35px rgba(37,99,235,.25);
 }
 
 /* ========================= HEADER ========================= */
@@ -51,121 +63,128 @@
 .vr-request-badge{
     display:inline-block;
 
-    padding:8px 16px;
+    padding:6px 14px;
 
-    background:rgba(239,68,68,.15);
-    border:1px solid rgba(239,68,68,.4);
+    background:rgba(56,189,248,.12);
+    border:1px solid rgba(56,189,248,.35);
 
     border-radius:999px;
 
-    font-size:.8rem;
+    font-size:.75rem;
     font-weight:700;
     letter-spacing:1px;
 
-    margin-bottom:15px;
+    margin-bottom:12px;
 
-    transition:opacity .3s ease;
+    color:#38bdf8;
 }
 
 .vr-request-header h2{
-    margin-bottom:10px;
-    font-size:2rem;
+    margin-bottom:8px;
+    font-size:1.7rem;
+    font-weight:800;
 }
 
 .vr-request-header p{
     color:#94a3b8;
-    line-height:1.6;
+    line-height:1.5;
+    font-size:.95rem;
 }
 
 /* ========================= FORM ========================= */
 
-.cc_request_form{
+#requestForm{
     display:flex;
     flex-direction:column;
-    gap:15px;
+    gap:12px;
 
-    margin:0;
-    padding:0;
+    margin-top:10px;
 }
 
 /* inputs */
-.cc_request_form input[type="text"],
-.cc_request_form input[type="email"]{
+#requestForm input{
     width:100%;
 
-    padding:14px 16px;
+    padding:13px 14px;
 
     border:none;
     outline:none;
 
     border-radius:12px;
 
-    background:rgba(255,255,255,.08);
+    background:rgba(255,255,255,.06);
     color:white;
 
-    font-size:15px;
+    font-size:14px;
+
+    border:1px solid rgba(255,255,255,.06);
 
     transition:.2s ease;
-
-    box-sizing:border-box;
 }
 
-/* placeholder */
-.cc_request_form input::placeholder{
-    color:rgba(255,255,255,.6);
+#requestForm input::placeholder{
+    color:rgba(255,255,255,.5);
 }
 
-/* focus state */
-.cc_request_form input:focus{
-    background:rgba(255,255,255,.12);
-    box-shadow:0 0 0 2px rgba(37,99,235,.35);
+#requestForm input:focus{
+    background:rgba(255,255,255,.1);
+    border-color:rgba(56,189,248,.4);
+    box-shadow:0 0 0 3px rgba(56,189,248,.15);
 }
 
 /* ========================= BUTTON ========================= */
 
 .vr-submit-btn{
-    margin-top:10px;
+    margin-top:8px;
 
-    padding:15px;
+    padding:14px;
 
     border:none;
     border-radius:12px;
 
-    background:#2563eb;
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);
     color:white;
 
     font-size:1rem;
-    font-weight:700;
+    font-weight:800;
 
     cursor:pointer;
 
-    transition:.2s ease;
+    transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+
+    box-shadow:0 12px 30px rgba(37,99,235,.25);
 }
 
 .vr-submit-btn:hover{
     transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(37,99,235,.35);
+    box-shadow:0 18px 40px rgba(37,99,235,.35);
+    filter:brightness(1.05);
+}
+
+.vr-submit-btn:active{
+    transform:translateY(0px) scale(.99);
 }
 
 /* ========================= RESULT ========================= */
 
-[data-type="result"]{
-    margin-bottom:10px;
+#result{
+    margin-top:10px;
     text-align:center;
     font-weight:600;
     color:#cbd5e1;
     min-height:18px;
+    font-size:.9rem;
 }
 
 /* ========================= MOBILE ========================= */
 
 @media (max-width:768px){
-
     .vr-request-card{
-        padding:25px;
+        padding:22px;
+        border-radius:16px;
     }
 
     .vr-request-header h2{
-        font-size:1.6rem;
+        font-size:1.4rem;
     }
 }
