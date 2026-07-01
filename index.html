@@ -281,9 +281,14 @@ document.getElementById('year').textContent =
 
 <!-- Footer -->
 <footer class="site-footer">
-    &copy; 2026 Vantix Radio. All Rights Reserved.
+    &copy; <span id="year"></span> Vantix Radio. All Rights Reserved.
 </footer>
 
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+        
 <script>
 window.addEventListener("DOMContentLoaded", () => {
     const year = document.getElementById("year");
