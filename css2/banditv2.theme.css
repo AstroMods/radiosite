@@ -1,0 +1,26 @@
+/**
+ * @name banditv2
+ * @author Elisniper
+ * @version 1.2.0
+ * @description Discord Glass Wave Theme
+ * @source https://github.com/Elisniper/Glass-Wave
+ * @website https://xbased.net
+ * @BDEditor Glass Wave
+*/
+
+@import url('https://elisniper.github.io/Glass-Wave/release/import.css');
+
+:root {
+  --var-background: url('https://i.imgur.com/N163LVg.png');
+  --var-background-size: cover;
+  --var-background-position: center;
+  --var-accent: #A225B7;
+  --var-popout-color: rgba(10, 21, 21, 1);
+  --var-chat-bubbles-background: #650475;
+  --var-chat-mentioned: #AC10C7;
+  --var-font: gg sans;
+}
+
+/* Any custom CSS below here */
+
+
