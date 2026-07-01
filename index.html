@@ -109,6 +109,12 @@ if ("serviceWorker" in navigator) {
 <!-- ✅ FIX: WRAPPER ADDED (THIS FIXES YOUR “NOT FULLY LOADING” ISSUE) -->
 <main class="page-content">
 
+<!-- LAYOUT WRAPPER (ADDED) -->
+<div class="layout">
+
+<!-- LEFT SIDE (UNCHANGED CONTENT) -->
+<div class="main-content">
+
 <!-- PLAYER -->
 <div class="player-card">
 
@@ -196,6 +202,25 @@ if ("serviceWorker" in navigator) {
     </div>
 
 </section>
+
+</div> <!-- END LEFT SIDE -->
+
+<!-- 📢 ANNOUNCEMENTS (NEW RIGHT PANEL) -->
+<aside class="announcements">
+
+    <div class="announcements-header">
+        📢 Live Announcements
+    </div>
+
+    <div id="announcementList">
+        <div class="announcement-item">
+            Loading announcements...
+        </div>
+    </div>
+
+</aside>
+
+</div> <!-- END LAYOUT -->
 
 </main>
 
