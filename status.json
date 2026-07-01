@@ -6,5 +6,15 @@
     "requests": "operational",
     "discord": "operational",
     "downloads": "operational"
+  },
+  "radioStatus": {
+    "online": true,
+    "nowPlaying": "Vantix Radio - Live Broadcast",
+    "artist": "Unknown",
+    "title": "Unknown Track",
+    "dj": "AutoDJ",
+    "listeners": 0,
+    "bitrate": "128kbps",
+    "genre": "Mixed"
   }
 }
