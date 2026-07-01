@@ -1,213 +1,459 @@
-/* =========================
-   GLOBAL
-========================= */
+/* ========================================
+   VANTIX RADIO SCHEDULE / PRESENTERS
+======================================== */
+
+:root {
+    --primary: #0EA5E9;
+    --primary-dark: #0284C7;
+    --accent: #38BDF8;
+    --bg: #050816;
+    --card: rgba(15, 23, 42, 0.75);
+    --border: rgba(255,255,255,.08);
+    --text: #F8FAFC;
+    --muted: #94A3B8;
+}
+
+/* ========================================
+   RESET
+======================================== */
 
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  background: radial-gradient(circle at top, #111a33, #070a12);
-  color: white;
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
 }
 
-/* =========================
-   HEADER (GLASS STYLE)
-========================= */
+/* ========================================
+   BACKGROUND
+======================================== */
 
-header {
-  padding: 30px;
-  background: rgba(17, 24, 42, 0.7);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(43,108,255,0.25);
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
 }
 
-.brand {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+#particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.logo {
-  width: 45px;
-  height: 45px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #2b6cff, #ff2bd6);
-  box-shadow: 0 0 20px rgba(43,108,255,0.5);
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .25;
 }
 
-h1 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+.orb-1 {
+    width: 450px;
+    height: 450px;
+    background: #0EA5E9;
+    top: -120px;
+    left: -120px;
+    animation: float1 18s ease-in-out infinite;
 }
 
-header p {
-  margin: 3px 0 0;
-  font-size: 13px;
-  opacity: 0.7;
+.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: #2563EB;
+    right: -100px;
+    top: 150px;
+    animation: float2 20s ease-in-out infinite;
 }
 
-/* =========================
+.orb-3 {
+    width: 400px;
+    height: 400px;
+    background: #06B6D4;
+    bottom: -150px;
+    left: 30%;
+    animation: float3 25s ease-in-out infinite;
+}
+
+@keyframes float1 {
+    50% { transform: translateY(80px); }
+}
+
+@keyframes float2 {
+    50% { transform: translateX(-80px); }
+}
+
+@keyframes float3 {
+    50% { transform: translate(50px,-50px); }
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    backdrop-filter: blur(16px);
+    background: rgba(5,8,22,.75);
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 30px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: white;
+
+    font-family: Orbitron, sans-serif;
+    font-weight: 700;
+}
+
+.logo-link img {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+
+    box-shadow:
+        0 0 20px rgba(14,165,233,.4);
+}
+
+.listener-counter {
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--border);
+
+    padding: 10px 16px;
+    border-radius: 999px;
+
+    font-size: .9rem;
+}
+
+/* ========================================
+   NAV
+======================================== */
+
+.site-nav {
+    display: flex;
+    gap: 18px;
+}
+
+.site-nav a {
+    text-decoration: none;
+    color: var(--muted);
+    transition: .2s;
+    font-weight: 500;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+    color: var(--primary);
+}
+
+/* ========================================
+   HERO
+======================================== */
+
+.schedule-hero {
+    text-align: center;
+    max-width: 1000px;
+    margin: 60px auto 30px;
+    padding: 0 20px;
+}
+
+.hero-logo {
+    width: 130px;
+    height: 130px;
+    border-radius: 28px;
+
+    box-shadow:
+        0 0 40px rgba(14,165,233,.35);
+
+    margin-bottom: 20px;
+}
+
+.schedule-hero h1 {
+    font-family: Orbitron, sans-serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.schedule-hero p {
+    max-width: 700px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* ========================================
+   LIVE BADGE
+======================================== */
+
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+    padding: 10px 18px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ef4444;
+
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(239,68,68,.8);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 12px rgba(239,68,68,0);
+    }
+}
+
+/* ========================================
    TABS
-========================= */
+======================================== */
 
 .tabs {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 25px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    margin: 35px 0;
 }
 
 .tab-btn {
-  padding: 10px 18px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-  color: white;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.25s ease;
-  backdrop-filter: blur(8px);
+    border: none;
+    cursor: pointer;
+
+    padding: 14px 24px;
+
+    border-radius: 14px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid var(--border);
+
+    transition: .25s;
 }
 
 .tab-btn:hover {
-  transform: translateY(-2px);
-  border-color: rgba(43,108,255,0.5);
+    transform: translateY(-2px);
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, #2b6cff, #4a8dff);
-  box-shadow: 0 10px 25px rgba(43,108,255,0.3);
+    background: var(--primary);
+
+    box-shadow:
+        0 0 25px rgba(14,165,233,.4);
 }
 
-/* =========================
-   LAYOUT
-========================= */
+/* ========================================
+   CONTENT
+======================================== */
 
 .container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
 
 .section {
-  display: none;
-  animation: fade 0.3s ease-in-out;
+    display: none;
 }
 
 .section.active {
-  display: block;
+    display: block;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* ========================================
+   SCHEDULE
+======================================== */
 
-/* =========================
-   SCHEDULE CARDS (NEON GLASS)
-========================= */
-
+.schedule-card,
 .card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  padding: 16px 18px;
-  margin-bottom: 12px;
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
-  transition: 0.25s ease;
-  position: relative;
-  overflow: hidden;
+    background: var(--card);
+
+    backdrop-filter: blur(14px);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+
+    transition: .25s;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(#2b6cff, #ff2bd6);
-}
-
+.schedule-card:hover,
 .card:hover {
-  transform: translateX(6px);
-  border-color: rgba(43,108,255,0.4);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(14,165,233,.4);
 }
 
+.show-time,
 .time {
-  font-size: 13px;
-  font-weight: 600;
-  color: #4ea1ff;
-  margin-bottom: 5px;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 8px;
 }
 
-/* =========================
-   PRESENTERS GRID
-========================= */
+/* ========================================
+   PRESENTERS
+======================================== */
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 20px;
 }
 
-/* PRESENTER CARD */
 .presenter {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px;
-  padding: 18px;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  transition: 0.25s ease;
-  position: relative;
-  overflow: hidden;
+    background: var(--card);
+
+    backdrop-filter: blur(14px);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 22px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition: .25s;
 }
 
 .presenter:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 43, 214, 0.4);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transform: translateY(-6px);
+
+    border-color:
+        rgba(14,165,233,.4);
 }
 
-/* IMAGE */
 .avatar {
-  width: 85px;
-  height: 85px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid transparent;
-  background: linear-gradient(#2b6cff, #ff2bd6);
-  padding: 2px;
-  margin-bottom: 10px;
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    margin-bottom: 15px;
+
+    border: 3px solid var(--primary);
+
+    box-shadow:
+        0 0 25px rgba(14,165,233,.35);
 }
 
-/* TEXT */
 .name {
-  font-size: 16px;
-  font-weight: 700;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .role {
-  font-size: 12px;
-  opacity: 0.7;
-  margin-top: 4px;
+    color: var(--muted);
+    margin-top: 6px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ========================================
+   FOOTER
+======================================== */
+
+.site-footer {
+    text-align: center;
+
+    margin-top: 80px;
+    padding: 30px;
+
+    border-top:
+        1px solid var(--border);
+
+    color: var(--muted);
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 900px) {
+
+    .site-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .site-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .schedule-hero h1 {
+        font-size: 2rem;
+    }
+}
 
 @media (max-width: 600px) {
-  .brand {
-    flex-direction: column;
-    text-align: center;
-  }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-btn {
+        width: 220px;
+    }
+
+    .hero-logo {
+        width: 100px;
+        height: 100px;
+    }
 }
