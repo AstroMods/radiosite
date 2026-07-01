@@ -141,32 +141,46 @@ fetch("./status.json")
 
         <div class="vr-request-header">
 
-            <span class="vr-request-badge">
-                LIVE REQUESTS
-            </span>
+            <span class="vr-request-badge">LIVE REQUESTS</span>
 
             <h2>🎵 Song Request Center</h2>
 
-            <p>
-                Request your favorite song and it could be played live.
-            </p>
+            <p>Request your favorite song and it could be played live.</p>
 
         </div>
 
-<!-- CENTOVA COMPATIBLE FORM (SAFE ORIGINAL STYLE) -->
-<form class="cc_request_form" data-username="vantixradio" method="post">
+        <!-- CENTOVA SAFE FORM -->
+        <form method="post" class="cc_request_form" data-username="vantixradio">
 
-    <div data-type="result"></div>
+            <div data-type="result"></div>
 
-    <input type="text" name="request[artist]" placeholder="🎤 Artist Name" maxlength="127" required>
-    <input type="text" name="request[title]" placeholder="🎵 Song Title" maxlength="127" required>
-    <input type="text" name="request[dedication]" placeholder="💙 Dedicated To" maxlength="127">
-    <input type="text" name="request[sender]" placeholder="👤 Your Name" maxlength="127" required>
-    <input type="email" name="request[email]" placeholder="📧 Your Email" maxlength="127" required>
+            <div class="form-group">
+                <input type="text" name="request[artist]" placeholder="Artist Name" required>
+            </div>
 
-    <input type="submit" value="Submit Song Request" class="vr-submit-btn">
+            <div class="form-group">
+                <input type="text" name="request[title]" placeholder="Song Title" required>
+            </div>
 
-</form>
+            <div class="form-group">
+                <input type="text" name="request[dedication]" placeholder="Dedicated To">
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="request[sender]" placeholder="Your Name" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" name="request[email]" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="vr-submit-btn">
+                    Submit Song Request
+                </button>
+            </div>
+
+        </form>
 
     </div>
 
