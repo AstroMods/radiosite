@@ -97,65 +97,17 @@ fetch("./status.json")
             LIVE 24/7
         </div>
 
-    </div>
-
-    <!-- TITLE AREA -->
-    <div class="player-info">
-
-        <h1>Vantix Radio</h1>
-
-        <p class="subtitle">
-            The Official Radio Station of Andreas Initiative Roleplay
-        </p>
-
-        <div class="now-playing">
-            🔴 Live Radio Stream
-        </div>
-
-    </div>
-
-    <!-- CONTROLS WRAP -->
-    <div class="player-controls">
-
-        <div class="radio-controls">
-            <button id="playBtn" class="play-btn" type="button">
-                ▶ Play Radio
-            </button>
-        </div>
-
-        <div id="status" class="status">
-            Ready to Play
-        </div>
-
-        <!-- VISUALIZER HOOK (optional but recommended) -->
-        <div class="audio-visualizer" id="visualizer">
-            <div></div><div></div><div></div><div></div><div></div>
-            <div></div><div></div><div></div><div></div><div></div>
-        </div>
-
-    </div>
-
-    <!-- VOLUME -->
-    <div class="volume-section">
-
-        <label>
-            Volume <span id="volumeValue">100%</span>
-        </label>
-
-        <input
-            type="range"
-            id="volumeSlider"
-            min="0"
-            max="1"
-            step="0.01"
-            value="1"
-        >
-
-    </div>
-
-    <!-- AUDIO -->
-    <audio id="radioPlayer" preload="auto" crossorigin="anonymous"></audio>
-
+    <!-- PLAYER --> 
+<div class="player-card">
+   <img class="station-logo" src="https://radio.vantixurbex.shop/assets/ChatGPT%20Image%20Jun%2029,%202026,%2012_47_34%20PM.png" alt="Vantix Radio Logo" > 
+   <div class="live-badge"> <span class="live-dot"></span> LIVE 24/7 </div>
+   <h1>Vantix Radio</h1>
+   <p class="subtitle"> The Official Radio Station of Andreas Initiative Roleplay </p>
+   <div class="now-playing"> <span>🔴 Live Radio Stream</span> </div>
+   <div class="radio-controls"> <button id="playBtn" class="play-btn" type="button"> ▶ Play Radio </button> </div>
+   <audio id="radioPlayer" preload="auto" crossorigin="anonymous"></audio>
+   <div id="status" class="status"> Ready to Play </div>
+   <div class="volume-section"> <label> Volume <span id="volumeValue">100%</span> </label> <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" > </div>
 </div>
 
 <!-- REQUEST SECTION (DISCORD ONLY) -->
