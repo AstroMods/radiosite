@@ -46,54 +46,71 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================
-       VOLUME
+   VOLUME
+========================= */
+
+const savedVolume =
+    localStorage.getItem(
+        "vantix_volume"
+    );
+
+if (savedVolume !== null) {
+
+    player.volume =
+        parseFloat(savedVolume);
+
+    volumeSlider.value =
+        savedVolume;
+
+} else {
+
+    player.volume = 1;
+    volumeSlider.value = 1;
+}
+
+function updateVolume() {
+
+    const volume =
+        parseFloat(
+            volumeSlider.value
+        );
+
+    player.volume = volume;
+
+    volumeValue.textContent =
+        Math.round(
+            volume * 100
+        ) + "%";
+
+    localStorage.setItem(
+        "vantix_volume",
+        volume
+    );
+
+    /* =========================
+       FIX: VISUAL SLIDER FILL
     ========================= */
 
-    const savedVolume =
-        localStorage.getItem(
-            "vantix_volume"
-        );
+    const percent = volume * 100;
 
-    if (savedVolume !== null) {
+    volumeSlider.style.background =
+        `linear-gradient(
+            to right,
+            #38bdf8 0%,
+            #2563eb ${percent}%,
+            rgba(255,255,255,.15) ${percent}%,
+            rgba(255,255,255,.15) 100%
+        )`;
+}
 
-        player.volume =
-            parseFloat(savedVolume);
+/* IMPORTANT: initial sync fix */
+updateVolume();
+volumeSlider.dispatchEvent(new Event("input"));
 
-        volumeSlider.value =
-            savedVolume;
-
-    } else {
-
-        player.volume = 1;
-        volumeSlider.value = 1;
-    }
-
-    function updateVolume() {
-
-        const volume =
-            parseFloat(
-                volumeSlider.value
-            );
-
-        player.volume = volume;
-
-        volumeValue.textContent =
-            Math.round(
-                volume * 100
-            ) + "%";
-
-        localStorage.setItem(
-            "vantix_volume",
-            volume
-        );
-    }
-
-    updateVolume();
-
-    volumeSlider.addEventListener(
-        "input",
-        updateVolume
-    );
+volumeSlider.addEventListener(
+    "input",
+    updateVolume
+);
 
     /* =========================
        PLAY BUTTON
