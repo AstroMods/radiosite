@@ -147,3 +147,9 @@
     height:10px;
     border-radius:999px;
 }
+
+#volumeValue{
+    color:#38bdf8;
+    font-weight:700;
+    text-shadow:0 0 10px rgba(56,189,248,.8);
+}
