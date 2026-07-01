@@ -6,13 +6,14 @@
     display:flex;
     justify-content:center;
     align-items:center;
-
+    width:100%;
     margin:16px 0;
 }
 
 /* badge container */
 .now-playing span{
     display:inline-flex;
+    justify-content:center;
     align-items:center;
     gap:8px;
 
@@ -21,6 +22,7 @@
     font-size:.9rem;
     font-weight:800;
     letter-spacing:.6px;
+    text-align:center;
 
     color:#e2e8f0;
 
@@ -40,6 +42,9 @@
     overflow:hidden;
 
     animation:fadeInUp .6s ease;
+
+    transition:transform .2s ease, box-shadow .2s ease;
+    will-change:transform;
 }
 
 /* glowing red LIVE dot */
@@ -58,7 +63,7 @@
     animation:livePulse 1.5s infinite;
 }
 
-/* subtle moving shine */
+/* shine effect (fixed looping behavior) */
 .now-playing span::after{
     content:"";
     position:absolute;
@@ -75,7 +80,7 @@
     );
 
     transform:skewX(-20deg);
-    animation:shine 4s infinite;
+    animation:shine 4s infinite linear;
 }
 
 /* animations */
@@ -87,7 +92,6 @@
 
 @keyframes shine{
     0%{ left:-60%; }
-    50%{ left:120%; }
     100%{ left:120%; }
 }
 
@@ -105,7 +109,6 @@
 /* hover effect */
 .now-playing span:hover{
     transform:translateY(-2px);
-    transition:.2s ease;
     box-shadow:
         0 15px 35px rgba(0,0,0,.3),
         0 0 20px rgba(239,68,68,.15);
