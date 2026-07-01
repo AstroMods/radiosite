@@ -283,10 +283,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data && data.nowPlaying) {
 
-                status.textContent =
-                    "🎧 Now Playing: " +
-                    data.nowPlaying;
-            }
+    status.textContent =
+        "🎧 Now Playing: " +
+        data.nowPlaying;
+}
 
         } catch (err) {
 
