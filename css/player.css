@@ -1,292 +1,220 @@
 /* =========================
-   VANTIX RADIO - PRO PLAYER UI
+   SONG REQUEST - PREMIUM UI
 ========================= */
 
-:root{
-    --bg:#0b1220;
-    --panel:rgba(15,23,42,.55);
-    --border:rgba(255,255,255,.08);
+.vr-request-wrapper{
+    padding:40px 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    --primary:#0ea5e9;
-    --primary2:#2563eb;
-
-    --danger:#ef4444;
-    --danger2:#dc2626;
-
-    --text:#e2e8f0;
-    --muted:#94a3b8;
-
-    --glow:0 0 25px rgba(56,189,248,.35);
+    position:relative;
 }
 
-/* ========================= WRAPPER ========================= */
+/* animated background energy (same style as player) */
+.vr-request-wrapper::before{
+    content:"";
+    position:absolute;
+    inset:-30%;
 
-.radio-controls{
-    margin:20px 0;
-    padding:18px;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(14,165,233,.25), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(37,99,235,.18), transparent 60%);
+
+    animation:requestGlow 10s ease-in-out infinite alternate;
+    pointer-events:none;
+    filter:blur(20px);
+}
+
+@keyframes requestGlow{
+    from{
+        transform:translateY(-10px) scale(1);
+        opacity:.6;
+    }
+    to{
+        transform:translateY(10px) scale(1.08);
+        opacity:.9;
+    }
+}
+
+/* ========================= CARD ========================= */
+
+.vr-request-card{
+    width:100%;
+    max-width:520px;
+
+    padding:22px;
     border-radius:18px;
 
     background:linear-gradient(180deg, rgba(15,23,42,.65), rgba(2,6,23,.45));
-    border:1px solid var(--border);
-
-    backdrop-filter:blur(14px);
-    box-shadow:
-        0 20px 50px rgba(0,0,0,.35),
-        inset 0 0 0 1px rgba(255,255,255,.04);
-
-    position:relative;
-    overflow:hidden;
-}
-
-/* animated ambient glow */
-.radio-controls::before{
-    content:"";
-    position:absolute;
-    inset:-40%;
-    background:radial-gradient(circle at 30% 30%, rgba(14,165,233,.25), transparent 60%),
-               radial-gradient(circle at 70% 70%, rgba(37,99,235,.18), transparent 55%);
-    animation:floatGlow 10s ease-in-out infinite alternate;
-    pointer-events:none;
-}
-
-@keyframes floatGlow{
-    from{ transform:translateY(-10px) scale(1); }
-    to{ transform:translateY(10px) scale(1.05); }
-}
-
-/* ========================= PLAY BUTTON ========================= */
-
-.play-btn{
-    width:100%;
-    border:none;
-    padding:18px 22px;
-
-    border-radius:18px;
-    cursor:pointer;
-
-    color:white;
-    font-size:1rem;
-    font-weight:900;
-    letter-spacing:.6px;
-
-    background:linear-gradient(135deg,var(--primary),var(--primary2));
-    background-size:200% 200%;
-
-    box-shadow:
-        0 12px 30px rgba(37,99,235,.25),
-        inset 0 0 0 1px rgba(255,255,255,.08);
-
-    transition:all .25s ease;
-
-    position:relative;
-    overflow:hidden;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* animated gradient shift */
-.play-btn:hover{
-    transform:translateY(-3px);
-    background-position:right center;
-    box-shadow:
-        0 18px 50px rgba(37,99,235,.35),
-        0 0 30px rgba(14,165,233,.25);
-}
-
-/* click feel */
-.play-btn:active{
-    transform:translateY(-1px) scale(.99);
-}
-
-/* shine sweep */
-.play-btn::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-80%;
-    width:60%;
-    height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
-    transform:skewX(-20deg);
-    transition:0.6s ease;
-}
-
-.play-btn:hover::after{
-    left:120%;
-}
-
-/* playing state */
-.play-btn.playing{
-    background:linear-gradient(135deg,var(--danger2),var(--danger));
-    box-shadow:
-        0 0 35px rgba(239,68,68,.35),
-        inset 0 0 0 1px rgba(255,255,255,.08);
-
-    animation:pulse 1.6s infinite;
-}
-
-@keyframes pulse{
-    0%{ box-shadow:0 0 20px rgba(239,68,68,.25); }
-    50%{ box-shadow:0 0 40px rgba(239,68,68,.45); }
-    100%{ box-shadow:0 0 20px rgba(239,68,68,.25); }
-}
-
-/* ========================= STATUS ========================= */
-
-.status{
-    margin:14px 0 0;
-    color:var(--muted);
-    font-weight:600;
-    min-height:24px;
-    opacity:.95;
-
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-/* optional dot indicator */
-.status::before{
-    content:"";
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--primary);
-    box-shadow:0 0 10px rgba(14,165,233,.6);
-}
-
-/* ========================= VOLUME SECTION ========================= */
-
-.volume-section{
-    margin:22px 0 0;
-    padding:16px;
-
-    border-radius:18px;
-    background:var(--panel);
-    border:1px solid var(--border);
+    border:1px solid rgba(255,255,255,.08);
 
     backdrop-filter:blur(16px);
 
     box-shadow:
-        0 15px 40px rgba(0,0,0,.25),
+        0 20px 50px rgba(0,0,0,.4),
         inset 0 0 0 1px rgba(255,255,255,.04);
 
     position:relative;
     overflow:hidden;
+
+    transition:transform .25s ease, box-shadow .25s ease;
 }
 
-/* subtle highlight line */
-.volume-section::after{
+.vr-request-card:hover{
+    transform:translateY(-4px);
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.55),
+        0 0 30px rgba(14,165,233,.15);
+}
+
+/* top highlight line */
+.vr-request-card::before{
     content:"";
     position:absolute;
     top:0;
     left:0;
     width:100%;
     height:1px;
+
     background:linear-gradient(90deg,transparent,rgba(56,189,248,.6),transparent);
 }
 
-.volume-section label{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+/* ========================= HEADER ========================= */
 
-    margin-bottom:12px;
-
-    font-weight:800;
-    color:var(--text);
-    font-size:.95rem;
-}
-
-#volumeValue{
-    color:#38bdf8;
+.vr-request-header h2{
+    margin:10px 0 6px;
+    font-size:1.3rem;
     font-weight:900;
-    text-shadow:0 0 12px rgba(56,189,248,.6);
+    color:#e2e8f0;
 }
 
-/* ========================= SLIDER ========================= */
+.vr-request-header p{
+    margin:0 0 16px;
+    color:#94a3b8;
+    font-weight:500;
+    font-size:.9rem;
+}
 
-#volumeSlider{
-    -webkit-appearance:none;
-    appearance:none;
-
-    width:100%;
-    height:10px;
+/* badge */
+.vr-request-badge{
+    display:inline-block;
+    padding:6px 10px;
 
     border-radius:999px;
+
+    font-size:.7rem;
+    font-weight:800;
+    letter-spacing:1.4px;
+
+    color:white;
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);
+
+    box-shadow:0 0 18px rgba(14,165,233,.35);
+}
+
+/* ========================= INPUTS ========================= */
+
+#requestForm input{
+    width:100%;
+    padding:14px 14px;
+    margin-bottom:10px;
+
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:rgba(255,255,255,.04);
+
+    color:#e2e8f0;
+    font-size:.95rem;
+
     outline:none;
+
+    transition:all .2s ease;
+    backdrop-filter:blur(10px);
+}
+
+/* input glow focus */
+#requestForm input:focus{
+    border-color:rgba(14,165,233,.6);
+    box-shadow:0 0 0 3px rgba(14,165,233,.15);
+    background:rgba(255,255,255,.06);
+    transform:translateY(-1px);
+}
+
+/* placeholder */
+#requestForm input::placeholder{
+    color:rgba(148,163,184,.7);
+}
+
+/* ========================= SUBMIT BUTTON ========================= */
+
+.vr-submit-btn{
+    width:100%;
+    padding:14px;
+
+    border:none;
+    border-radius:14px;
+
     cursor:pointer;
 
-    background:rgba(255,255,255,.10);
+    font-weight:900;
+    letter-spacing:.5px;
 
-    transition:box-shadow .2s ease;
-}
+    color:white;
 
-/* glow track on hover */
-#volumeSlider:hover{
-    box-shadow:0 0 18px rgba(56,189,248,.25);
-}
-
-/* track fill effect (webkit only visual trick) */
-#volumeSlider::-webkit-slider-runnable-track{
-    height:10px;
-    border-radius:999px;
-    background:linear-gradient(90deg,var(--primary),var(--primary2));
-}
-
-/* thumb - chrome */
-#volumeSlider::-webkit-slider-thumb{
-    -webkit-appearance:none;
-
-    width:22px;
-    height:22px;
-
-    border-radius:50%;
-
-    background:radial-gradient(circle at 30% 30%, #ffffff, #38bdf8);
-    border:2px solid white;
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);
+    background-size:200% 200%;
 
     box-shadow:
-        0 0 14px rgba(56,189,248,.7),
-        0 0 30px rgba(37,99,235,.3);
+        0 12px 30px rgba(37,99,235,.25),
+        inset 0 0 0 1px rgba(255,255,255,.08);
 
-    cursor:pointer;
-    transition:transform .2s ease;
+    position:relative;
+    overflow:hidden;
+
+    transition:all .25s ease;
 }
 
-#volumeSlider::-webkit-slider-thumb:hover{
-    transform:scale(1.15);
+/* hover animation */
+.vr-submit-btn:hover{
+    transform:translateY(-3px);
+    background-position:right center;
+    box-shadow:
+        0 18px 50px rgba(37,99,235,.35),
+        0 0 25px rgba(14,165,233,.25);
 }
 
-/* firefox */
-#volumeSlider::-moz-range-track{
-    height:10px;
-    border-radius:999px;
-    background:rgba(255,255,255,.12);
+/* click feel */
+.vr-submit-btn:active{
+    transform:scale(.98);
 }
 
-#volumeSlider::-moz-range-thumb{
-    width:22px;
-    height:22px;
+/* shine sweep */
+.vr-submit-btn::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-80%;
+    width:60%;
+    height:100%;
 
-    border-radius:50%;
-    background:linear-gradient(135deg,#38bdf8,#2563eb);
-    border:2px solid white;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+    transform:skewX(-20deg);
 
-    box-shadow:0 0 14px rgba(56,189,248,.7);
-
-    cursor:pointer;
+    transition:0.6s ease;
 }
 
-/* ========================= SMALL POLISH ========================= */
+.vr-submit-btn:hover::after{
+    left:120%;
+}
 
-@media (max-width:600px){
-    .radio-controls{
-        padding:14px;
-    }
+/* ========================= RESULT TEXT ========================= */
 
-    .play-btn{
-        font-size:.95rem;
-        padding:16px;
-    }
+#result{
+    margin-top:12px;
+    font-size:.85rem;
+    color:#94a3b8;
+    min-height:18px;
 }
