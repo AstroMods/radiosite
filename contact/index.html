@@ -1,196 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Contact Us | Vantix Radio</title>
-
-    <link rel="icon" type="image/png"
-        href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png">
-
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        body{
-            min-height:100vh;
-            font-family:Segoe UI,Arial,sans-serif;
-            overflow-x:hidden;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            padding:40px 20px;
-        }
-
-        .background{
-            position:fixed;
-            inset:0;
-            z-index:-1;
-
-            background:linear-gradient(
-                180deg,
-                #38BDF8 0%,
-                #0EA5E9 35%,
-                #F97316 75%,
-                #DC2626 100%
-            );
-
-            background-size:400% 400%;
-            animation:gradientMove 15s ease infinite;
-        }
-
-        @keyframes gradientMove{
-            0%{background-position:0% 50%;}
-            50%{background-position:100% 50%;}
-            100%{background-position:0% 50%;}
-        }
-
-        .contact-card{
-            width:700px;
-            max-width:95%;
-
-            background:rgba(15,23,42,.85);
-            backdrop-filter:blur(15px);
-
-            border-radius:25px;
-            border:1px solid rgba(255,255,255,.1);
-
-            padding:40px;
-
-            color:white;
-
-            box-shadow:0 0 40px rgba(37,99,235,.3);
-        }
-
-        .live-badge{
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-
-            padding:10px 18px;
-            border-radius:999px;
-
-            background:rgba(0,0,0,.2);
-            border:1px solid rgba(255,255,255,.15);
-
-            font-weight:700;
-            letter-spacing:1px;
-
-            margin-bottom:25px;
-        }
-
-        .live-dot{
-            width:10px;
-            height:10px;
-            border-radius:50%;
-            background:#22c55e;
-
-            animation:pulse 1.5s infinite;
-        }
-
-        @keyframes pulse{
-            0%{
-                transform:scale(1);
-                box-shadow:0 0 0 0 rgba(34,197,94,.8);
-            }
-            70%{
-                transform:scale(1.15);
-                box-shadow:0 0 0 12px rgba(34,197,94,0);
-            }
-            100%{
-                transform:scale(1);
-                box-shadow:0 0 0 0 rgba(34,197,94,0);
-            }
-        }
-
-        .station-logo{
-            width:180px;
-            display:block;
-            margin:0 auto 20px;
-        }
-
-        h1{
-            text-align:center;
-            font-size:3rem;
-            margin-bottom:10px;
-        }
-
-        .subtitle{
-            text-align:center;
-            color:#cbd5e1;
-            margin-bottom:35px;
-        }
-
-        .contact-grid{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:20px;
-        }
-
-        .contact-box{
-            background:rgba(255,255,255,.05);
-            border:1px solid rgba(255,255,255,.08);
-            border-radius:15px;
-            padding:20px;
-        }
-
-        .contact-box h3{
-            margin-bottom:10px;
-        }
-
-        .contact-box p{
-            color:#cbd5e1;
-            line-height:1.6;
-        }
-
-        .contact-btn{
-            display:block;
-            margin-top:15px;
-            padding:12px;
-            text-align:center;
-            text-decoration:none;
-            color:white;
-            background:#5865F2;
-            border-radius:10px;
-            font-weight:bold;
-            transition:.2s;
-        }
-
-        .contact-btn:hover{
-            transform:translateY(-2px);
-        }
-
-        .footer-note{
-            margin-top:30px;
-            text-align:center;
-            color:#94a3b8;
-        }
-
-        @media(max-width:700px){
-
-            .contact-grid{
-                grid-template-columns:1fr;
-            }
-
-            h1{
-                font-size:2.2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
 <div class="background"></div>
 
 <div class="contact-card">
 
     <div class="live-badge">
         <span class="live-dot"></span>
-        CONTACT VANTIX RADIO
+        VANTIX RADIO CONTACT
     </div>
 
     <img
@@ -198,11 +12,11 @@
         src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
         alt="Vantix Radio Logo">
 
-    <h1>Get In Touch</h1>
+    <h1>Contact Vantix Radio</h1>
 
     <p class="subtitle">
-        Questions, partnership requests, song suggestions, or community support?
-        We'd love to hear from you.
+        Need support, have a song request, want to advertise, or interested in a partnership?
+        Reach out to the Vantix Radio team using one of the options below.
     </p>
 
     <div class="contact-grid">
@@ -211,32 +25,30 @@
             <h3>🎧 Discord Community</h3>
 
             <p>
-                Join our Discord server for support,
-                community events, radio updates,
-                and server announcements.
+                Join the official Vantix Radio Discord community for live updates,
+                announcements, support, events, and discussions with listeners.
             </p>
 
             <a
                 class="contact-btn"
-                href="http://radio.vantixurbex.shop/discord"
+                href="/discord"
                 target="_blank">
                 Join Discord
             </a>
         </div>
 
         <div class="contact-box">
-            <h3>📧 Email Support</h3>
+            <h3>📧 General Support</h3>
 
             <p>
-                Need help with the station,
-                partnerships, advertising,
-                or technical support?
+                Questions about the station, website issues, advertising,
+                partnerships, or technical support can be sent directly to us.
             </p>
 
             <a
                 class="contact-btn"
                 href="mailto:radio@vantixurbex.shop">
-                Send Email
+                radio@vantixurbex.shop
             </a>
         </div>
 
@@ -244,9 +56,8 @@
             <h3>🎵 Song Requests</h3>
 
             <p>
-                Have a song you'd like to hear?
-                Use our request system while
-                listening live.
+                Want to hear your favorite track? Open the radio player and use
+                the built-in request system while listening live.
             </p>
 
             <a
@@ -257,28 +68,29 @@
         </div>
 
         <div class="contact-box">
-            <h3>🤝 Partnerships</h3>
+            <h3>🤝 Advertising & Partnerships</h3>
 
             <p>
-                Interested in collaborating
-                with Vantix Radio or sponsoring
-                community events?
+                Interested in promoting your brand, sponsoring content,
+                or collaborating with Vantix Radio? We'd love to hear from you.
             </p>
 
             <a
                 class="contact-btn"
                 href="mailto:radio@vantixurbex.shop">
-                Contact Us
+                Contact Our Team
             </a>
         </div>
 
     </div>
 
     <div class="footer-note">
-        Vantix Radio • Andreas Initiative Roleplay
+        © <span id="year"></span> Vantix Radio • Broadcasting 24/7
     </div>
 
 </div>
 
-</body>
-</html>
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
