@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("listenerCount");
 
     const STATS_URL =
-        "https://eu8.fastcast4u.com/stats?json=1";
+        "https://eu8.fastcast4u.com/proxy/vantixradio/stats?json=1";
 
     async function updateListeners() {
 
