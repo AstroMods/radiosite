@@ -1,74 +1,82 @@
+
 /* =========================
-   SONG REQUEST - PREMIUM UI
+   SONG REQUEST - PREMIUM FIXED UI
 ========================= */
 
 .vr-request-wrapper{
-    padding:40px 20px;
+    width:100%;
     display:flex;
     justify-content:center;
     align-items:center;
 
+    padding:60px 20px;
+
     position:relative;
+
+    /* IMPORTANT: lets it behave like part of layout */
+    flex-direction:column;
+    gap:20px;
 }
 
-/* animated background energy (same style as player) */
+/* animated background (cleaner + lighter performance) */
 .vr-request-wrapper::before{
     content:"";
     position:absolute;
-    inset:-30%;
+    inset:0;
 
     background:
-        radial-gradient(circle at 20% 30%, rgba(14,165,233,.25), transparent 55%),
-        radial-gradient(circle at 80% 70%, rgba(37,99,235,.18), transparent 60%);
+        radial-gradient(circle at 25% 30%, rgba(14,165,233,.18), transparent 60%),
+        radial-gradient(circle at 75% 70%, rgba(37,99,235,.14), transparent 65%);
 
-    animation:requestGlow 10s ease-in-out infinite alternate;
+    filter:blur(30px);
+    opacity:.9;
+
+    animation:requestGlow 12s ease-in-out infinite alternate;
     pointer-events:none;
-    filter:blur(20px);
 }
 
 @keyframes requestGlow{
-    from{
-        transform:translateY(-10px) scale(1);
-        opacity:.6;
+    0%{
+        transform:translateY(-8px) scale(1);
     }
-    to{
-        transform:translateY(10px) scale(1.08);
-        opacity:.9;
+    100%{
+        transform:translateY(8px) scale(1.05);
     }
 }
 
-/* ========================= CARD ========================= */
+/* ========================= CARD (FIXED RESPONSIVE SYSTEM) ========================= */
 
 .vr-request-card{
-    width:100%;
-    max-width:520px;
+    width:clamp(320px, 90vw, 560px);
 
-    padding:22px;
-    border-radius:18px;
+    padding:26px;
 
-    background:linear-gradient(180deg, rgba(15,23,42,.65), rgba(2,6,23,.45));
+    border-radius:20px;
+
+    background:linear-gradient(180deg, rgba(15,23,42,.72), rgba(2,6,23,.55));
     border:1px solid rgba(255,255,255,.08);
 
-    backdrop-filter:blur(16px);
+    backdrop-filter:blur(18px);
 
     box-shadow:
-        0 20px 50px rgba(0,0,0,.4),
+        0 25px 60px rgba(0,0,0,.45),
         inset 0 0 0 1px rgba(255,255,255,.04);
 
     position:relative;
     overflow:hidden;
 
-    transition:transform .25s ease, box-shadow .25s ease;
+    transition:all .3s ease;
 }
 
+/* hover lift feels more "app-like" */
 .vr-request-card:hover{
-    transform:translateY(-4px);
+    transform:translateY(-6px) scale(1.01);
     box-shadow:
-        0 30px 70px rgba(0,0,0,.55),
-        0 0 30px rgba(14,165,233,.15);
+        0 35px 90px rgba(0,0,0,.6),
+        0 0 30px rgba(14,165,233,.18);
 }
 
-/* top highlight line */
+/* top glow line */
 .vr-request-card::before{
     content:"";
     position:absolute;
@@ -77,48 +85,61 @@
     width:100%;
     height:1px;
 
-    background:linear-gradient(90deg,transparent,rgba(56,189,248,.6),transparent);
+    background:linear-gradient(90deg,transparent,rgba(56,189,248,.7),transparent);
 }
 
 /* ========================= HEADER ========================= */
 
+.vr-request-header{
+    margin-bottom:14px;
+}
+
 .vr-request-header h2{
     margin:10px 0 6px;
-    font-size:1.3rem;
+    font-size:1.4rem;
     font-weight:900;
     color:#e2e8f0;
+    letter-spacing:.2px;
 }
 
 .vr-request-header p{
-    margin:0 0 16px;
+    margin:0 0 10px;
     color:#94a3b8;
-    font-weight:500;
     font-size:.9rem;
 }
 
-/* badge */
+/* badge improved */
 .vr-request-badge{
-    display:inline-block;
-    padding:6px 10px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    padding:6px 12px;
 
     border-radius:999px;
 
     font-size:.7rem;
-    font-weight:800;
-    letter-spacing:1.4px;
+    font-weight:900;
+    letter-spacing:1.5px;
 
     color:white;
     background:linear-gradient(135deg,#0ea5e9,#2563eb);
 
-    box-shadow:0 0 18px rgba(14,165,233,.35);
+    box-shadow:
+        0 0 18px rgba(14,165,233,.35);
 }
 
-/* ========================= INPUTS ========================= */
+/* ========================= INPUTS (FIXED SPACING SYSTEM) ========================= */
+
+#requestForm{
+    display:flex;
+    flex-direction:column;
+    gap:12px; /* IMPORTANT FIX */
+}
 
 #requestForm input{
     width:100%;
     padding:14px 14px;
-    margin-bottom:10px;
 
     border-radius:14px;
 
@@ -135,10 +156,10 @@
     backdrop-filter:blur(10px);
 }
 
-/* input glow focus */
+/* better focus */
 #requestForm input:focus{
-    border-color:rgba(14,165,233,.6);
-    box-shadow:0 0 0 3px rgba(14,165,233,.15);
+    border-color:rgba(14,165,233,.7);
+    box-shadow:0 0 0 3px rgba(14,165,233,.18);
     background:rgba(255,255,255,.06);
     transform:translateY(-1px);
 }
@@ -148,7 +169,7 @@
     color:rgba(148,163,184,.7);
 }
 
-/* ========================= SUBMIT BUTTON ========================= */
+/* ========================= BUTTON (MORE RESPONSIVE FEEL) ========================= */
 
 .vr-submit-btn{
     width:100%;
@@ -168,7 +189,7 @@
     background-size:200% 200%;
 
     box-shadow:
-        0 12px 30px rgba(37,99,235,.25),
+        0 14px 35px rgba(37,99,235,.25),
         inset 0 0 0 1px rgba(255,255,255,.08);
 
     position:relative;
@@ -177,26 +198,26 @@
     transition:all .25s ease;
 }
 
-/* hover animation */
+/* hover */
 .vr-submit-btn:hover{
     transform:translateY(-3px);
     background-position:right center;
     box-shadow:
-        0 18px 50px rgba(37,99,235,.35),
+        0 20px 60px rgba(37,99,235,.35),
         0 0 25px rgba(14,165,233,.25);
 }
 
-/* click feel */
+/* click */
 .vr-submit-btn:active{
     transform:scale(.98);
 }
 
-/* shine sweep */
+/* shine */
 .vr-submit-btn::after{
     content:"";
     position:absolute;
     top:0;
-    left:-80%;
+    left:-90%;
     width:60%;
     height:100%;
 
@@ -210,11 +231,24 @@
     left:120%;
 }
 
-/* ========================= RESULT TEXT ========================= */
+/* ========================= RESULT ========================= */
 
 #result{
-    margin-top:12px;
+    margin-top:6px;
     font-size:.85rem;
     color:#94a3b8;
     min-height:18px;
+}
+
+/* ========================= MOBILE FIX ========================= */
+
+@media (max-width:600px){
+    .vr-request-card{
+        padding:18px;
+        width:95vw;
+    }
+
+    .vr-request-header h2{
+        font-size:1.2rem;
+    }
 }
