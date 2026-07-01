@@ -1,9 +1,6 @@
-// Vantix Radio - Live Listener Counter
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    const counter =
-        document.getElementById("listenerCount");
+    const counter = document.getElementById("listenerCount");
 
     const STATS_URL =
         "https://eu8.fastcast4u.com/proxy/vantixradio/stats?json=1";
@@ -11,35 +8,40 @@ document.addEventListener("DOMContentLoaded", () => {
     async function updateListeners() {
 
         try {
+            const res = await fetch(STATS_URL, {
+                cache: "no-store"
+            });
 
-            const res =
-                await fetch(STATS_URL, {
-                    cache: "no-store"
-                });
+            // ❗ handle bad responses like 404 properly
+            if (!res.ok) {
+                throw new Error("HTTP Error: " + res.status);
+            }
 
-            const data =
-                await res.json();
+            const data = await res.json().catch(() => ({}));
 
             const listeners =
-                data?.currentlisteners ??
-                data?.listeners ??
-                data?.active_listeners ??
-                0;
+                Number(
+                    data?.currentlisteners ??
+                    data?.listeners ??
+                    data?.active_listeners ??
+                    0
+                );
 
             if (counter) {
-                counter.textContent = listeners;
+                counter.textContent = isNaN(listeners) ? 0 : listeners;
             }
 
         } catch (err) {
-
-            // safe fallback
+            // silent safe fallback (no console spam)
             if (counter) {
                 counter.textContent = "0";
             }
         }
     }
 
+    // initial run
     updateListeners();
-    setInterval(updateListeners, 10000);
 
+    // interval loop
+    setInterval(updateListeners, 10000);
 });
