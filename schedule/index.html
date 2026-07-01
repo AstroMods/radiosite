@@ -3,36 +3,240 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vantix Radio</title>
+
+<title>📻 Vantix Radio | Schedule & Presenters</title>
+
+<meta name="theme-color" content="#0EA5E9">
+
+<link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+>
 
 <link rel="stylesheet" href="css/app.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<header>
-  <div class="brand">
-    <div class="logo"></div>
-    <div>
-      <h1>Vantix Radio</h1>
-      <p>Live • Music • Requests • 24/7</p>
+<!-- Animated Background -->
+<div class="background">
+
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
+    <canvas id="particles"></canvas>
+
+</div>
+
+<!-- Header -->
+<header class="site-header">
+
+    <a href="/" class="logo-link">
+
+        <img
+            src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+            alt="Vantix Radio"
+        >
+
+        <span>Vantix Radio</span>
+
+    </a>
+
+    <div class="listener-counter">
+        📡 <span id="listenerCount">0</span> users online
     </div>
-  </div>
+
+    <nav class="site-nav">
+
+        <a href="/">Home</a>
+
+        <a href="/about">
+            About Us
+        </a>
+
+        <a href="/schedule" class="active">
+            Schedule
+        </a>
+
+        <a href="/contact">
+            Contact
+        </a>
+
+        <a href="/download">
+            Download
+        </a>
+
+        <a
+            href="/discord"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Discord
+        </a>
+
+    </nav>
+
 </header>
 
+<!-- Hero -->
+<section class="schedule-hero">
+
+    <img
+        class="hero-logo"
+        src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+        alt="Vantix Radio Logo"
+    >
+
+    <div class="live-badge">
+
+        <span class="live-dot"></span>
+
+        LIVE 24/7
+
+    </div>
+
+    <h1>
+        Schedule & Presenters
+    </h1>
+
+    <p>
+        Meet the voices behind Vantix Radio and discover what's playing throughout the week.
+    </p>
+
+</section>
+
+<!-- Tabs -->
 <div class="tabs">
-  <button class="tab-btn active" data-tab="schedule">Schedule</button>
-  <button class="tab-btn" data-tab="presenters">Presenters</button>
+
+    <button
+        class="tab-btn active"
+        data-tab="schedule"
+    >
+        📅 Schedule
+    </button>
+
+    <button
+        class="tab-btn"
+        data-tab="presenters"
+    >
+        🎙️ Presenters
+    </button>
+
 </div>
 
+<!-- Content -->
 <div class="container">
-  <div id="schedule" class="section active"></div>
-  <div id="presenters" class="section"></div>
+
+    <div
+        id="schedule"
+        class="section active"
+    ></div>
+
+    <div
+        id="presenters"
+        class="section"
+    ></div>
+
 </div>
 
+<!-- Footer -->
+<footer class="site-footer">
+
+    © <span id="year"></span>
+    Vantix Radio. All Rights Reserved.
+
+</footer>
+
+<!-- Scripts -->
 <script src="js/app.js"></script>
+
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
+<!-- Optional particle background -->
+<script>
+const canvas = document.getElementById("particles");
+
+if (canvas) {
+
+    const ctx = canvas.getContext("2d");
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resize();
+
+    window.addEventListener("resize", resize);
+
+    const particles = [];
+
+    for (let i = 0; i < 50; i++) {
+
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 1,
+            dx: (Math.random() - 0.5) * 0.3,
+            dy: (Math.random() - 0.5) * 0.3
+        });
+
+    }
+
+    function animate() {
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        particles.forEach(p => {
+
+            p.x += p.dx;
+            p.y += p.dy;
+
+            if (p.x < 0 || p.x > canvas.width)
+                p.dx *= -1;
+
+            if (p.y < 0 || p.y > canvas.height)
+                p.dy *= -1;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                p.x,
+                p.y,
+                p.r,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "rgba(14,165,233,.4)";
+
+            ctx.fill();
+
+        });
+
+        requestAnimationFrame(animate);
+
+    }
+
+    animate();
+}
+</script>
+
 </body>
 </html>
