@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", () => {
 
-        // Delay ensures Centova already captured the request
+        // Wait so Centova / backend captures submission first
         setTimeout(() => {
 
             const data = new FormData(form);
@@ -16,24 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 sender: data.get("request[sender]")
             };
 
-            console.log("Song Request:", payload);
-
-             const webhook = "https://discord.com/api/webhooks/1521948838078976200/3yjzbQfZnE1NBzJnBKe9sM9oRXZwS8W6x-0lGtPvIlg1_JYQqDQIcJw2M-PMtCu72gYJ";
-
-            if (webhook) {
-                fetch(webhook, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        content:
-`🎵 New Song Request
-🎤 ${payload.artist}
-🎶 ${payload.title}
-👤 ${payload.sender}`
-                    })
-                }).catch(() => {});
-            }
+            // Optional debug only (safe for GitHub Pages)
+            console.log("Song Request Submitted:", payload);
 
         }, 500);
+
+        // DO NOT prevent default → Centova still receives form
     });
 });
