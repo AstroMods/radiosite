@@ -56,19 +56,32 @@ body{
 .logo-link{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:8px;
 
     text-decoration:none;
     color:white;
 
     font-weight:600;
-    font-size:1rem;
+    font-size:.95rem;
+
+    /* makes it feel more centered/contained */
+    padding:6px 10px;
+    border-radius:10px;
+
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.06);
+    backdrop-filter:blur(8px);
 }
 
 .logo-link img{
-    width:36px;
-    height:36px;
+    width:30px;
+    height:30px;
     border-radius:50%;
+
+    object-fit:cover;
+
+    /* subtle glow so it feels centered not floating */
+    box-shadow:0 0 10px rgba(56,189,248,.25);
 }
 
 .site-nav{
