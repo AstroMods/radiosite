@@ -2,103 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Authenticating...</title>
+<title>Auth Callback</title>
 
 <style>
 body{
     margin:0;
     height:100vh;
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-family:Segoe UI, Arial, sans-serif;
+    justify-content:center;
+    font-family:Segoe UI;
     background:#0f172a;
     color:white;
 }
-
-.card{
+.box{
     text-align:center;
     padding:30px;
     background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
     border-radius:16px;
-    backdrop-filter:blur(10px);
-}
-
-.loader{
-    width:40px;
-    height:40px;
-    border:4px solid rgba(255,255,255,0.2);
-    border-top:4px solid #5865F2;
-    border-radius:50%;
-    margin:0 auto 15px;
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-    to{ transform:rotate(360deg); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <div class="loader"></div>
-    <h2>Authenticating Discord...</h2>
-    <p>Please wait</p>
+<div class="box">
+    <h2>Logging you in...</h2>
+    <p id="status">Please wait</p>
 </div>
 
 <script>
-const CLIENT_ID = "YOUR_CLIENT_ID";
-const CLIENT_SECRET = "YOUR_CLIENT_SECRET"; // ⚠️ NEVER expose in real frontend (use backend!)
-const REDIRECT_URI = "https://radio.vantixurbex.shop/auth/callback.html";
 
-// Get code from URL
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
+const CLIENT_ID = "YOUR_DISCORD_CLIENT_ID";
+const REDIRECT_URI = "https://YOUR_SITE.github.io/auth/callback.html";
 
-if (!code) {
-    document.body.innerHTML = "<h2>Missing OAuth Code</h2>";
-    throw new Error("No code");
-}
+const code = new URLSearchParams(window.location.search).get("code");
 
-// 🔥 Send to backend (YOU MUST CREATE THIS)
-async function exchangeCode() {
-    try {
-        const res = await fetch("/api/discord-exchange", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+async function login(){
+
+    if(!code){
+        document.getElementById("status").innerText =
+            "Missing OAuth code";
+        return;
+    }
+
+    try{
+
+        // STEP 1: exchange code for token
+        const tokenRes = await fetch("https://discord.com/api/oauth2/token", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
             },
-            body: JSON.stringify({
+            body:new URLSearchParams({
+                client_id: CLIENT_ID,
+                grant_type: "authorization_code",
                 code: code,
-                redirect_uri: REDIRECT_URI
+                redirect_uri: REDIRECT_URI,
+                scope: "identify"
             })
         });
 
-        const data = await res.json();
+        const tokenData = await tokenRes.json();
 
-        if (!data || !data.user) {
-            throw new Error("Auth failed");
+        if(!tokenData.access_token){
+            throw new Error("Token failed");
         }
 
-        // Save session (simple client-side session)
-        localStorage.setItem("vantix_user", JSON.stringify(data.user));
+        // STEP 2: get user info
+        const userRes = await fetch("https://discord.com/api/users/@me", {
+            headers:{
+                Authorization:`Bearer ${tokenData.access_token}`
+            }
+        });
 
-        // Redirect to admin panel
+        const user = await userRes.json();
+
+        // STEP 3: save session
+        localStorage.setItem("vantix_user", JSON.stringify({
+            id: user.id,
+            username: user.username,
+            avatar: user.avatar
+        }));
+
+        // STEP 4: redirect
         window.location.href = "/admin-panel.html";
 
-    } catch (err) {
+    } catch(err){
+
         console.error(err);
-        document.body.innerHTML =
-            "<h2>Authentication Failed</h2><p>Check backend</p>";
+
+        document.getElementById("status").innerText =
+            "Login failed. Check OAuth settings.";
     }
 }
 
-exchangeCode();
+login();
+
 </script>
 
 </body>
