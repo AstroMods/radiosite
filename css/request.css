@@ -1,6 +1,77 @@
 /* =========================
-   INPUTS (VANTIX PRO UI v2)
+   REQUEST SECTION - PREMIUM UI
 ========================= */
+
+.vr-request-wrapper{
+    min-height: 100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px 20px;
+    background:
+        radial-gradient(circle at top, rgba(14,165,233,0.25), transparent 60%),
+        radial-gradient(circle at bottom, rgba(99,102,241,0.18), transparent 60%),
+        #050816;
+}
+
+/* CARD */
+.vr-request-card{
+    width:100%;
+    max-width:520px;
+    padding:32px;
+    border-radius:24px;
+
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+
+    color:#fff;
+
+    transform: translateY(0);
+    transition: 0.3s ease;
+}
+
+.vr-request-card:hover{
+    transform: translateY(-4px);
+}
+
+/* HEADER */
+.vr-request-header h2{
+    margin:10px 0 6px;
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:0.3px;
+}
+
+.vr-request-header p{
+    margin:0 0 20px;
+    opacity:0.75;
+    font-size:14px;
+}
+
+/* BADGE */
+.vr-request-badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:999px;
+
+    font-size:11px;
+    letter-spacing:1.5px;
+
+    background: linear-gradient(90deg, #0ea5e9, #6366f1);
+    box-shadow: 0 0 20px rgba(14,165,233,0.3);
+}
+
+/* INPUT GROUP */
+.vr-input-group{
+    margin-bottom:14px;
+}
 
 #requestForm input{
     width:100%;
@@ -8,89 +79,89 @@
 
     border-radius:14px;
 
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,0.10);
 
-    background:
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    background: rgba(255,255,255,0.05);
 
-    color:#f8fafc;
-
+    color:#fff;
     font-size:14px;
-    font-weight:500;
-    letter-spacing:.2px;
 
     outline:none;
 
-    transition:
-        transform .15s ease,
-        box-shadow .25s ease,
-        border-color .25s ease,
-        background .25s ease;
+    transition: 0.25s ease;
 
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        0 10px 25px rgba(0,0,0,.25);
-
-    position:relative;
+    box-shadow: inset 0 0 0 rgba(0,0,0,0);
 }
 
-/* placeholder */
 #requestForm input::placeholder{
-    color:rgba(255,255,255,.4);
-    transition:all .2s ease;
+    color: rgba(255,255,255,0.45);
 }
-
-/* hover (subtle lift) */
-#requestForm input:hover{
-    border-color:rgba(56,189,248,.25);
-
-    transform:translateY(-1px);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 12px 28px rgba(0,0,0,.35);
-}
-
-/* =========================
-   FOCUS (PREMIUM GLOW)
-========================= */
 
 #requestForm input:focus{
-    border-color:transparent;
-
-    background:
-        linear-gradient(180deg, rgba(56,189,248,.12), rgba(255,255,255,.03));
-
-    transform:translateY(-1px);
-
-    box-shadow:
-        0 0 0 3px rgba(56,189,248,.18),
-        0 15px 40px rgba(0,0,0,.45),
-        0 0 25px rgba(56,189,248,.12);
+    border-color: rgba(14,165,233,0.8);
+    box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+    background: rgba(255,255,255,0.07);
 }
 
-/* animated focus ring effect */
-#requestForm input:focus::after{
-    content:"";
-    position:absolute;
-    inset:-2px;
+/* BUTTON */
+.vr-submit-btn{
+    width:100%;
+    margin-top:10px;
+
+    padding:14px 16px;
+    border:none;
     border-radius:14px;
-    background:linear-gradient(90deg,#0ea5e9,#2563eb);
-    opacity:.15;
-    filter:blur(8px);
+
+    font-weight:600;
+    font-size:14px;
+    color:#fff;
+
+    cursor:pointer;
+
+    background: linear-gradient(90deg, #0ea5e9, #6366f1);
+    position:relative;
+
+    overflow:hidden;
+
+    transition: 0.25s ease;
+
+    box-shadow: 0 10px 30px rgba(14,165,233,0.25);
 }
 
-/* placeholder fade on focus */
-#requestForm input:focus::placeholder{
-    color:rgba(255,255,255,.2);
+.vr-submit-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(99,102,241,0.35);
 }
 
-/* active press feel */
-#requestForm input:active{
-    transform:scale(0.99);
+.vr-submit-btn:active{
+    transform: scale(0.98);
 }
 
-/* accessibility improvement */
-#requestForm input:focus-visible{
-    outline:none;
+/* glowing sweep effect */
+.vr-btn-glow{
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+    );
+
+    transition: 0.5s;
+}
+
+.vr-submit-btn:hover .vr-btn-glow{
+    left:100%;
+}
+
+/* RESULT TEXT */
+#result{
+    margin-top:12px;
+    font-size:13px;
+    opacity:0.8;
 }
