@@ -9,13 +9,6 @@
 <link rel="icon"
     href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png">
 
-<script
-    async
-    crossorigin="anonymous"
-    data-clerk-publishable-key="pk_test_cGxlYXNhbnQtbW9uaXRvci03My5jbGVyay5hY2NvdW50cy5kZXYk"
-    src="https://pleasant-monitor-73.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js">
-</script>
-
 <style>
 *{
     margin:0;
@@ -66,8 +59,24 @@ p{
     margin-bottom:20px;
 }
 
-#sign-in{
-    min-height:350px;
+.discord-btn{
+    display:inline-block;
+    padding:12px 18px;
+
+    background:#5865F2;
+    color:white;
+
+    border-radius:12px;
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.2s ease;
+}
+
+.discord-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 25px rgba(88,101,242,.5);
 }
 
 @keyframes bgMove{
@@ -89,36 +98,28 @@ p{
 
     <h1>Admin Login</h1>
 
-    <p>Sign in with your Discord account to access the admin panel.</p>
+    <p>Sign in with Discord to access the admin panel.</p>
 
-    <div id="sign-in"></div>
+    <!-- DISCORD OAUTH BUTTON -->
+    <a id="loginBtn" class="discord-btn">
+        Login with Discord
+    </a>
 
 </div>
 
 <script>
-window.addEventListener("load", async () => {
+/*
+⚠️ YOU MUST REPLACE THESE:
+*/
+const CLIENT_ID = "YOUR_DISCORD_CLIENT_ID";
+const REDIRECT_URI = "https://radio.vantixurbex.shop/auth/callback.html";
 
-    await Clerk.load();
+const OAUTH_URL =
+    `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+    `&response_type=code&scope=identify`;
 
-    const user = Clerk.user;
-
-    // If already logged in → redirect immediately
-    if (user) {
-        window.location.href =
-            "https://radio.vantixurbex.shop/admin-panel.html";
-        return;
-    }
-
-    // Mount sign-in properly
-    Clerk.mountSignIn(document.getElementById("sign-in"), {
-        appearance: {
-            variables: {
-                colorPrimary: "#5865F2"
-            }
-        }
-    });
-
-});
+document.getElementById("loginBtn").href = OAUTH_URL;
 </script>
 
 </body>
