@@ -8,6 +8,7 @@ body{
     font-family:Inter, Arial, sans-serif;
 
     min-height:100vh;
+
     overflow-x:hidden;
     overflow-y:auto;
 
@@ -48,7 +49,7 @@ body{
 }
 
 /* =========================
-   LAYOUT
+   LAYOUT FIX (IMPORTANT)
 ========================= */
 
 .container{
@@ -56,9 +57,11 @@ body{
 
     display:flex;
     justify-content:center;
-    align-items:center;
 
-    padding:40px 20px;
+    /* ❌ removed vertical centering that breaks long pages */
+    align-items:flex-start;
+
+    padding:60px 20px;
 }
 
 /* =========================
@@ -214,6 +217,7 @@ button{
 
     .container{
         align-items:flex-start;
+        padding:40px 15px;
     }
 
     .card{
