@@ -3,235 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📻 Vantix Radio | Non-Stop Music 24/7</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Vantix Radio">
-<meta name="title" content="📻 Vantix Radio | Non-Stop Music 24/7">
-<meta name="description" content="Listen live to Vantix Radio — the official radio station of Andreas Initiative Roleplay. Streaming music, community updates, and entertainment 24/7.">
-<meta name="author" content="Vantix Development">
-<meta name="application-name" content="Vantix Radio">
-<meta name="keywords" content="radio, music, live radio, online radio, Vantix Radio, Andreas Initiative Roleplay, DJs, song requests">
-<!-- Open Graph / Discord -->
-<!-- Open Graph / Discord Embed -->
 
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://radio.vantixurbex.shop/">
-<meta property="og:site_name" content="Vantix Radio">
-<meta property="og:title"
-content="📻 Vantix Radio • LIVE 24/7 Music & Entertainment">
-<meta property="og:description"
-content="🎵 Non-stop music • 🎙️ Live DJs • 🎮 Andreas Initiative Roleplay • 💙 Song Requests • 🔴 Broadcasting 24/7">
-<meta property="og:image"
-content="https://radio.vantixurbex.shop/assets/banner1.png">
-<meta property="og:image:width"
-content="1200">
-<meta property="og:image:height"
-content="630">
-<meta property="og:image:alt"
-content="Vantix Radio - Live 24/7">
-<meta property="og:locale"
-content="en_US">
-<!-- Twitter / X -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title"
-content="📻 Vantix Radio • LIVE 24/7">
-<meta name="twitter:description"
-content="🎵 Music • 🎙️ Live DJs • 🎮 Andreas Initiative Roleplay • 💙 Song Requests">
-<meta name="twitter:image"
-content="https://radio.vantixurbex.shop/assets/banner1.png">
-<!-- Theme Color -->
+<title>📻 Vantix Radio | Non-Stop Music 24/7</title>
+
 <meta name="theme-color" content="#0EA5E9">
 
-    <link
-        id="favicon"
-        rel="icon"
-        type="image/png"
-        href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
-    >
+<link
+    id="favicon"
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+/>
 
-    <link rel="stylesheet" href="css/page.css">
-    <link rel="stylesheet" href="css/request.css">
-    <link rel="stylesheet" href="css/player.css">
-    <link rel="stylesheet" href="css/live.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- GLOBAL LAYOUT -->
+<link rel="stylesheet" href="css/page.css">
 
-    <script>
-        fetch("./status.json")
-            .then(response => response.json())
-            .then(data => {
-                if (
-                    data.mode === "maintenance" &&
-                    !window.location.pathname.endsWith("maintenance.html")
-                ) {
-                    window.location.href = "maintenance.html";
-                }
-            })
-            .catch(error => {
-                console.error(
-                    "Unable to load status.json",
-                    error
-                );
-            });
-    </script>
+<!-- PLAYER ONLY (IMPORTANT) -->
+<link rel="stylesheet" href="css/player.css">
+<link rel="stylesheet" href="css/request.css">
+<link rel="stylesheet" href="css/live.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+fetch("./status.json")
+    .then(res => res.json())
+    .then(data => {
+        if (
+            data.mode === "maintenance" &&
+            !window.location.pathname.endsWith("maintenance.html")
+        ) {
+            window.location.href = "maintenance.html";
+        }
+    })
+    .catch(err => console.error("status.json error", err));
+</script>
+
 </head>
 
+<body>
+
+<!-- BACKGROUND -->
+<div class="background">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <canvas id="particles"></canvas>
+</div>
+
+<!-- HEADER -->
 <header class="site-header">
 
     <a href="/" class="logo-link">
-
         <img
             src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
             alt="Vantix Radio"
         >
-
         <span>Vantix Radio</span>
-
     </a>
 
-<div class="listener-counter">
-    📡 <span id="listenerCount">0</span> users online
-</div>
+    <div class="listener-counter">
+        📡 <span id="listenerCount">0</span> users online
+    </div>
 
-<script type="module" src="js/ls.js"></script>
-    
     <nav class="site-nav">
-
-        <a href="/">
-            Home
-        </a>
-
-         <a href="/about">
-            About us
-        </a>
-
-        <a href="/schedule">
-            Schedule
-        </a>
-        
-        <a href="/contact">
-            Contact
-        </a>
-
-         <a href="/download">
-            Download
-        </a>
-
-        <a
-            href="/discord"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Discord
-        </a>
-
+        <a href="/">Home</a>
+        <a href="/about">About us</a>
+        <a href="/schedule">Schedule</a>
+        <a href="/contact">Contact</a>
+        <a href="/download">Download</a>
+        <a href="/discord" target="_blank" rel="noopener noreferrer">Discord</a>
     </nav>
 
 </header>
 
-<body>
+<!-- PLAYER (CONTROLLED BY player.css) -->
+<div class="player-card">
 
-    <!-- Animated Background -->
-    <div class="background">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
+    <img
+        class="station-logo"
+        src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+        alt="Vantix Radio Logo"
+    >
 
-        <canvas id="particles"></canvas>
+    <div class="live-badge">
+        <span class="live-dot"></span>
+        LIVE 24/7
     </div>
 
-    <!-- Radio Card -->
-    <div class="player-card">
+    <h1>Vantix Radio</h1>
 
-        <img
-            id="stationLogo"
-            class="station-logo"
-            src="https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
-            alt="Vantix Radio Logo"
+    <p class="subtitle">
+        The Official Radio Station of Andreas Initiative Roleplay
+    </p>
+
+    <div class="now-playing">
+        <span>🔴 Live Radio Stream</span>
+    </div>
+
+    <div class="radio-controls">
+        <button id="playBtn" class="play-btn" type="button">
+            ▶ Play Radio
+        </button>
+    </div>
+
+    <audio id="radioPlayer" preload="auto" crossorigin="anonymous"></audio>
+
+    <div id="status" class="status">
+        Ready to Play
+    </div>
+
+    <div class="volume-section">
+        <label>
+            Volume <span id="volumeValue">100%</span>
+        </label>
+
+        <input
+            type="range"
+            id="volumeSlider"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
         >
-
-        <div class="live-badge">
-            <span class="live-dot"></span>
-            LIVE 24/7
-        </div>
-
-        <h1 id="stationName">
-            Vantix Radio
-        </h1>
-
-        <p
-            id="stationSubtitle"
-            class="subtitle"
-        >
-            The Official Radio Station of Andreas Initiative Roleplay
-        </p>
-
-        <!-- Animated Now Playing -->
-        <div class="now-playing">
-            <div class="radio-wave"></div>
-            <div class="radio-wave"></div>
-            <div class="radio-wave"></div>
-
-            <span>🔴 Live Radio Stream</span>
-        </div>
-
-<!-- Radio Controls -->
-<div class="radio-controls">
-
-    <button
-        id="playBtn"
-        class="play-btn"
-        type="button"
-    >
-        ▶ Play Radio
-    </button>
+    </div>
 
 </div>
 
-<!-- Audio Player (JS controls stream source) -->
-<audio
-    id="radioPlayer"
-    preload="auto"
-    crossorigin="anonymous"
-></audio>
-
-<!-- Status -->
-<div id="status" class="status">
-    Ready to Play
-</div>
-
-<!-- Volume Control -->
-<div class="volume-section">
-
-    <label for="volumeSlider">
-        Volume
-        <span id="volumeValue">100%</span>
-    </label>
-
-    <input
-        type="range"
-        id="volumeSlider"
-        min="0"
-        max="1"
-        step="0.01"
-        value="1"
-    >
-
-</div>
-
-    <script src="js/background.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/request.js"></script>
-    <script src="js/live.js"></script>
-    <script src="https://eu8.fastcast4u.com/system/request.js"></script>
-
-    <script>
-document.getElementById('year').textContent =
-    new Date().getFullYear();
-    </script>
-
+<!-- REQUEST SECTION -->
 <section class="vr-request-wrapper">
 
     <div class="vr-request-bg"></div>
@@ -247,7 +149,7 @@ document.getElementById('year').textContent =
             <h2>🎵 Song Request Center</h2>
 
             <p>
-                Request your favorite song and it could be played live on Vantix Radio.
+                Request your favorite song and it could be played live.
             </p>
 
         </div>
@@ -256,47 +158,13 @@ document.getElementById('year').textContent =
 
             <div data-type="result"></div>
 
-            <input
-                type="text"
-                name="request[artist]"
-                placeholder="🎤 Artist Name"
-                maxlength="127"
-            >
+            <input type="text" name="request[artist]" placeholder="🎤 Artist Name" maxlength="127">
+            <input type="text" name="request[title]" placeholder="🎵 Song Title" maxlength="127">
+            <input type="text" name="request[dedication]" placeholder="💙 Dedicated To" maxlength="127">
+            <input type="text" name="request[sender]" placeholder="👤 Your Name" maxlength="127">
+            <input type="email" name="request[email]" placeholder="📧 Your Email" maxlength="127">
 
-            <input
-                type="text"
-                name="request[title]"
-                placeholder="🎵 Song Title"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[dedication]"
-                placeholder="💙 Dedicated To"
-                maxlength="127"
-            >
-
-            <input
-                type="text"
-                name="request[sender]"
-                placeholder="👤 Your Name"
-                maxlength="127"
-            >
-
-            <input
-                type="email"
-                name="request[email]"
-                placeholder="📧 Your Email"
-                maxlength="127"
-            >
-
-            <input
-                type="button"
-                value="Submit Song Request"
-                data-type="submit"
-                class="vr-submit-btn"
-            >
+            <input type="button" value="Submit Song Request" class="vr-submit-btn">
 
         </form>
 
@@ -304,23 +172,22 @@ document.getElementById('year').textContent =
 
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer class="site-footer">
     &copy; <span id="year"></span> Vantix Radio. All Rights Reserved.
 </footer>
 
-<script>
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-</script>
-        
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-    const year = document.getElementById("year");
+<!-- SCRIPTS -->
+<script src="js/background.js"></script>
+<script src="js/player.js"></script>
+<script src="js/request.js"></script>
+<script src="js/live.js"></script>
+<script src="https://eu8.fastcast4u.com/system/request.js"></script>
 
-    if (year) {
-        year.textContent = new Date().getFullYear();
-    }
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const year = document.getElementById("year");
+    if (year) year.textContent = new Date().getFullYear();
 });
 </script>
 
