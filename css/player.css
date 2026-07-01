@@ -1,5 +1,5 @@
 /* =========================
-   RADIO PLAYER ONLY
+   RADIO PLAYER (VANTIX THEME)
 ========================= */
 
 .radio-controls{
@@ -12,29 +12,55 @@
     width:100%;
 
     border:none;
-    padding:18px;
+    padding:18px 20px;
 
-    border-radius:18px;
+    border-radius:16px;
 
     cursor:pointer;
 
     color:white;
     font-size:1rem;
-    font-weight:700;
+    font-weight:800;
+    letter-spacing:.5px;
 
     background:linear-gradient(135deg,#0ea5e9,#2563eb);
 
-    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
 
-    box-shadow:0 10px 25px rgba(37,99,235,.25);
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.25),
+        inset 0 0 0 1px rgba(255,255,255,.08);
 
     user-select:none;
     -webkit-tap-highlight-color: transparent;
+
+    position:relative;
+    overflow:hidden;
+}
+
+/* subtle shine effect */
+.play-btn::after{
+    content:"";
+    position:absolute;
+    top:-50%;
+    left:-60%;
+    width:40%;
+    height:200%;
+    background:rgba(255,255,255,.15);
+    transform:rotate(25deg);
+    transition:all .6s ease;
+}
+
+.play-btn:hover::after{
+    left:120%;
 }
 
 .play-btn:hover{
     transform:translateY(-3px);
-    box-shadow:0 15px 35px rgba(37,99,235,.35);
+    box-shadow:
+        0 18px 40px rgba(37,99,235,.35),
+        inset 0 0 0 1px rgba(255,255,255,.1);
+    filter:brightness(1.05);
 }
 
 .play-btn:active{
@@ -43,32 +69,38 @@
 
 .play-btn.playing{
     background:linear-gradient(135deg,#dc2626,#ef4444);
-    box-shadow:0 0 30px rgba(239,68,68,.4);
+    box-shadow:
+        0 0 35px rgba(239,68,68,.35),
+        inset 0 0 0 1px rgba(255,255,255,.1);
 }
 
 /* ========================= STATUS ========================= */
 
 .status{
-    margin:15px 0;
+    margin:14px 0 0;
 
     color:#cbd5e1;
     font-weight:600;
 
     min-height:24px;
+
+    opacity:.9;
 }
 
 /* ========================= VOLUME SECTION ========================= */
 
 .volume-section{
-    margin:25px 0;
-    padding:15px;
+    margin:22px 0;
+    padding:16px;
 
     border-radius:16px;
 
-    background:rgba(255,255,255,.05);
+    background:rgba(15,23,42,.55);
     border:1px solid rgba(255,255,255,.08);
 
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(12px);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
 .volume-section label{
@@ -78,8 +110,8 @@
 
     margin-bottom:12px;
 
-    font-weight:600;
-    color:#cbd5e1;
+    font-weight:700;
+    color:#e2e8f0;
 
     font-size:.95rem;
 }
@@ -87,11 +119,11 @@
 #volumeValue{
     color:#38bdf8;
 
-    font-weight:700;
+    font-weight:800;
 
     text-shadow:
-        0 0 10px rgba(56,189,248,.8),
-        0 0 20px rgba(37,99,235,.4);
+        0 0 8px rgba(56,189,248,.8),
+        0 0 18px rgba(37,99,235,.35);
 }
 
 /* ========================= SLIDER BASE ========================= */
@@ -112,24 +144,19 @@
         90deg,
         #38bdf8 0%,
         #2563eb 50%,
-        rgba(255,255,255,.15) 50%,
-        rgba(255,255,255,.15) 100%
+        rgba(255,255,255,.12) 50%,
+        rgba(255,255,255,.12) 100%
     );
 
-    background-size:100% 100%;
-    background-repeat:no-repeat;
-
-    transition:box-shadow .2s ease;
+    transition:box-shadow .2s ease, transform .2s ease;
 }
 
-/* hover glow */
 #volumeSlider:hover{
-    box-shadow:0 0 15px rgba(56,189,248,.3);
+    box-shadow:0 0 14px rgba(56,189,248,.25);
 }
 
-/* focus fix (keyboard + mobile) */
-#volumeSlider:focus{
-    outline:none;
+#volumeSlider:active{
+    transform:scale(1.01);
 }
 
 /* ========================= CHROME / EDGE THUMB ========================= */
@@ -146,7 +173,9 @@
 
     border:2px solid white;
 
-    box-shadow:0 0 12px rgba(56,189,248,.8);
+    box-shadow:
+        0 0 10px rgba(56,189,248,.7),
+        0 0 20px rgba(37,99,235,.3);
 
     cursor:pointer;
 
@@ -154,7 +183,7 @@
 }
 
 #volumeSlider::-webkit-slider-thumb:hover{
-    transform:scale(1.25);
+    transform:scale(1.2);
 }
 
 /* ========================= FIREFOX THUMB ========================= */
