@@ -17,11 +17,10 @@
 />
 
 <!-- CSS -->
-<script src="js/background.js"></script>
-<script src="js/player.js"></script>
-<script src="js/request.js"></script>
-<script src="js/live.js"></script>
-<script src="https://eu8.fastcast4u.com/system/request.js"></script>
+<script src="css/background.css"></script>
+<script src="css/player.css"></script>
+<script src="css/request.css"></script>
+<script src="css/live.css"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -154,18 +153,31 @@ fetch("./status.json")
 
         </div>
 
-        <!-- FIXED FORM STRUCTURE -->
-        <form class="cc_request_form" data-username="vantixradio">
+        <!-- FIX: MUST BE STANDARD FORM (Centova-safe) -->
+        <form
+            class="cc_request_form"
+            data-username="vantixradio"
+            method="post"
+            action="#"
+        >
 
+            <!-- REQUIRED result container -->
             <div data-type="result"></div>
 
-            <input type="text" name="request[artist]" placeholder="🎤 Artist Name" maxlength="127">
-            <input type="text" name="request[title]" placeholder="🎵 Song Title" maxlength="127">
+            <input type="text" name="request[artist]" placeholder="🎤 Artist Name" maxlength="127" required>
+            <input type="text" name="request[title]" placeholder="🎵 Song Title" maxlength="127" required>
             <input type="text" name="request[dedication]" placeholder="💙 Dedicated To" maxlength="127">
-            <input type="text" name="request[sender]" placeholder="👤 Your Name" maxlength="127">
-            <input type="email" name="request[email]" placeholder="📧 Your Email" maxlength="127">
+            <input type="text" name="request[sender]" placeholder="👤 Your Name" maxlength="127" required>
+            <input type="email" name="request[email]" placeholder="📧 Your Email" maxlength="127" required>
 
-            <input type="button" value="Submit Song Request" class="vr-submit-btn">
+            <!-- IMPORTANT FIX: must be button with data-type submit -->
+            <button
+                type="button"
+                class="vr-submit-btn"
+                data-type="submit"
+            >
+                Submit Song Request
+            </button>
 
         </form>
 
