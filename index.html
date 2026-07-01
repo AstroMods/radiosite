@@ -179,41 +179,36 @@ content="https://radio.vantixurbex.shop/assets/banner1.png">
 
 </div>
 
-<!-- Audio Player -->
+<!-- Audio Player (JS controls stream source) -->
 <audio
     id="radioPlayer"
     preload="auto"
     crossorigin="anonymous"
->
-    Your browser does not support HTML5 audio.
-</audio>
+></audio>
 
-        <div
-            id="status"
-            class="status"
-        >
-            Ready to Play
-        </div>
+<!-- Status -->
+<div id="status" class="status">
+    Ready to Play
+</div>
 
-        <div class="volume-section">
+<!-- Volume Control -->
+<div class="volume-section">
 
-            <label for="volumeSlider">
-                Volume
-                <span id="volumeValue">
-                    100%
-                </span>
-            </label>
+    <label for="volumeSlider">
+        Volume
+        <span id="volumeValue">100%</span>
+    </label>
 
-            <input
-                type="range"
-                id="volumeSlider"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1"
-            >
-            
-    </div>
+    <input
+        type="range"
+        id="volumeSlider"
+        min="0"
+        max="1"
+        step="0.01"
+        value="1"
+    >
+
+</div>
 
     <script src="background.js"></script>
     <script src="player.js"></script>
