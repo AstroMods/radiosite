@@ -1,190 +1,72 @@
 /* =========================
-   SONG REQUEST SYSTEM (VANTIX CLEAN)
+   INPUTS (IMPROVED VANTIX STYLE)
 ========================= */
 
-.vr-request-wrapper{
-    position:relative;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding:60px 20px;
-    box-sizing:border-box;
-}
-
-/* background layer */
-.vr-request-bg{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-}
-
-/* ========================= CARD ========================= */
-
-.vr-request-card{
-    width:100%;
-    max-width:650px;
-
-    position:relative;
-    z-index:2;
-
-    background:rgba(15,23,42,.75);
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:20px;
-
-    padding:30px;
-
-    color:white;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.35),
-        0 0 25px rgba(37,99,235,.15);
-
-    box-sizing:border-box;
-
-    transition:transform .2s ease, box-shadow .2s ease;
-}
-
-.vr-request-card:hover{
-    transform:translateY(-3px);
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        0 0 35px rgba(37,99,235,.25);
-}
-
-/* ========================= HEADER ========================= */
-
-.vr-request-header{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.vr-request-badge{
-    display:inline-block;
-
-    padding:6px 14px;
-
-    background:rgba(56,189,248,.12);
-    border:1px solid rgba(56,189,248,.35);
-
-    border-radius:999px;
-
-    font-size:.75rem;
-    font-weight:700;
-    letter-spacing:1px;
-
-    margin-bottom:12px;
-
-    color:#38bdf8;
-}
-
-.vr-request-header h2{
-    margin-bottom:8px;
-    font-size:1.7rem;
-    font-weight:800;
-}
-
-.vr-request-header p{
-    color:#94a3b8;
-    line-height:1.5;
-    font-size:.95rem;
-}
-
-/* ========================= FORM ========================= */
-
-#requestForm{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-
-    margin-top:10px;
-}
-
-/* inputs */
 #requestForm input{
     width:100%;
 
-    padding:13px 14px;
+    padding:14px 16px;
 
-    border:none;
-    outline:none;
+    border-radius:14px;
 
-    border-radius:12px;
+    border:1px solid rgba(255,255,255,.08);
 
-    background:rgba(255,255,255,.06);
-    color:white;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+
+    color:#fff;
 
     font-size:14px;
+    font-weight:500;
+    letter-spacing:.2px;
 
-    border:1px solid rgba(255,255,255,.06);
+    outline:none;
 
-    transition:.2s ease;
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 8px 20px rgba(0,0,0,.25);
 }
 
+/* placeholder */
 #requestForm input::placeholder{
-    color:rgba(255,255,255,.5);
+    color:rgba(255,255,255,.45);
+    transition:color .2s ease;
 }
 
+/* hover */
+#requestForm input:hover{
+    border-color:rgba(56,189,248,.25);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 10px 25px rgba(0,0,0,.35);
+    transform:translateY(-1px);
+}
+
+/* focus (main glow effect) */
 #requestForm input:focus{
-    background:rgba(255,255,255,.1);
-    border-color:rgba(56,189,248,.4);
-    box-shadow:0 0 0 3px rgba(56,189,248,.15);
+    border-color:rgba(56,189,248,.55);
+
+    background:
+        linear-gradient(180deg, rgba(56,189,248,.12), rgba(255,255,255,.04));
+
+    box-shadow:
+        0 0 0 3px rgba(56,189,248,.15),
+        0 12px 30px rgba(0,0,0,.4),
+        0 0 18px rgba(56,189,248,.15);
 }
 
-/* ========================= BUTTON ========================= */
-
-.vr-submit-btn{
-    margin-top:8px;
-
-    padding:14px;
-
-    border:none;
-    border-radius:12px;
-
-    background:linear-gradient(135deg,#0ea5e9,#2563eb);
-    color:white;
-
-    font-size:1rem;
-    font-weight:800;
-
-    cursor:pointer;
-
-    transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
-
-    box-shadow:0 12px 30px rgba(37,99,235,.25);
+/* focus placeholder fade */
+#requestForm input:focus::placeholder{
+    color:rgba(255,255,255,.25);
 }
 
-.vr-submit-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 18px 40px rgba(37,99,235,.35);
-    filter:brightness(1.05);
-}
-
-.vr-submit-btn:active{
-    transform:translateY(0px) scale(.99);
-}
-
-/* ========================= RESULT ========================= */
-
-#result{
-    margin-top:10px;
-    text-align:center;
-    font-weight:600;
-    color:#cbd5e1;
-    min-height:18px;
-    font-size:.9rem;
-}
-
-/* ========================= MOBILE ========================= */
-
-@media (max-width:768px){
-    .vr-request-card{
-        padding:22px;
-        border-radius:16px;
-    }
-
-    .vr-request-header h2{
-        font-size:1.4rem;
-    }
+/* active click feel */
+#requestForm input:active{
+    transform:scale(0.99);
 }
