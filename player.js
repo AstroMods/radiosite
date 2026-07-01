@@ -46,71 +46,63 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================
-   VOLUME
-========================= */
-
-const savedVolume =
-    localStorage.getItem(
-        "vantix_volume"
-    );
-
-if (savedVolume !== null) {
-
-    player.volume =
-        parseFloat(savedVolume);
-
-    volumeSlider.value =
-        savedVolume;
-
-} else {
-
-    player.volume = 1;
-    volumeSlider.value = 1;
-}
-
-function updateVolume() {
-
-    const volume =
-        parseFloat(
-            volumeSlider.value
-        );
-
-    player.volume = volume;
-
-    volumeValue.textContent =
-        Math.round(
-            volume * 100
-        ) + "%";
-
-    localStorage.setItem(
-        "vantix_volume",
-        volume
-    );
-
-    /* =========================
-       FIX: VISUAL SLIDER FILL
+       VOLUME
     ========================= */
 
-    const percent = volume * 100;
+    const savedVolume =
+        localStorage.getItem(
+            "vantix_volume"
+        );
 
-    volumeSlider.style.background =
-        `linear-gradient(
-            to right,
-            #38bdf8 0%,
-            #2563eb ${percent}%,
-            rgba(255,255,255,.15) ${percent}%,
-            rgba(255,255,255,.15) 100%
-        )`;
-}
+    if (savedVolume !== null) {
 
-/* IMPORTANT: initial sync fix */
-updateVolume();
-volumeSlider.dispatchEvent(new Event("input"));
+        player.volume =
+            parseFloat(savedVolume);
 
-volumeSlider.addEventListener(
-    "input",
-    updateVolume
-);
+        volumeSlider.value =
+            savedVolume;
+
+    } else {
+
+        player.volume = 1;
+        volumeSlider.value = 1;
+    }
+
+    function updateVolume() {
+
+        const volume =
+            parseFloat(volumeSlider.value);
+
+        player.volume = volume;
+
+        volumeValue.textContent =
+            Math.round(volume * 100) + "%";
+
+        localStorage.setItem(
+            "vantix_volume",
+            volume
+        );
+
+        const percent = volume * 100;
+
+        volumeSlider.style.background =
+            `linear-gradient(
+                to right,
+                #38bdf8 0%,
+                #2563eb ${percent}%,
+                rgba(255,255,255,.15) ${percent}%,
+                rgba(255,255,255,.15) 100%
+            )`;
+    }
+
+    updateVolume();
+
+    volumeSlider.dispatchEvent(new Event("input"));
+
+    volumeSlider.addEventListener(
+        "input",
+        updateVolume
+    );
 
     /* =========================
        PLAY BUTTON
@@ -178,9 +170,7 @@ volumeSlider.addEventListener(
             playBtn.textContent =
                 "⏹ Stop Radio";
 
-            playBtn.classList.add(
-                "playing"
-            );
+            playBtn.classList.add("playing");
         }
     );
 
@@ -194,9 +184,7 @@ volumeSlider.addEventListener(
             playBtn.textContent =
                 "▶ Play Radio";
 
-            playBtn.classList.remove(
-                "playing"
-            );
+            playBtn.classList.remove("playing");
         }
     );
 
@@ -250,15 +238,11 @@ volumeSlider.addEventListener(
         player.load();
 
         if (wasPlaying) {
-
-            player.play()
-                .catch(() => {});
+            player.play().catch(() => {});
         }
 
         setTimeout(() => {
-
             reconnecting = false;
-
         }, 5000);
     }
 
@@ -271,37 +255,54 @@ volumeSlider.addEventListener(
         if (
             player.readyState === 0 ||
             player.networkState ===
-            HTMLMediaElement
-                .NETWORK_NO_SOURCE
+            HTMLMediaElement.NETWORK_NO_SOURCE
         ) {
-
             reconnectStream();
         }
 
     }, 15000);
 
     /* =========================
-       🎧 NOW PLAYING (ADDED SAFE)
+       🎧 NOW PLAYING (RSS VERSION)
     ========================= */
 
-    const NOW_PLAYING_URL =
-        "/status.json";
+    const RSS_URL =
+        "https://eu8.fastcast4u.com/recentfeed/vantixradio/rss/";
 
     async function updateNowPlaying() {
 
         try {
 
             const res =
-                await fetch(NOW_PLAYING_URL);
+                await fetch(RSS_URL, {
+                    cache: "no-store"
+                });
 
-            const data =
-                await res.json();
+            const text =
+                await res.text();
 
-            if (data && data.nowPlaying) {
+            const parser =
+                new DOMParser();
+
+            const xml =
+                parser.parseFromString(
+                    text,
+                    "application/xml"
+                );
+
+            const item =
+                xml.querySelector("item");
+
+            if (!item) return;
+
+            const title =
+                item.querySelector("title")?.textContent;
+
+            if (title) {
 
                 status.textContent =
                     "🎧 Live Radio Stream: " +
-                    data.nowPlaying;
+                    title;
             }
 
         } catch (err) {
@@ -310,11 +311,11 @@ volumeSlider.addEventListener(
         }
     }
 
+    updateNowPlaying();
+
     setInterval(
         updateNowPlaying,
         15000
     );
-
-    updateNowPlaying();
 
 });
