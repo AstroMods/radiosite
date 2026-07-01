@@ -1,113 +1,213 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f1a;
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at top, #111a33, #070a12);
   color: white;
 }
 
+/* =========================
+   HEADER (GLASS STYLE)
+========================= */
+
 header {
-  text-align: center;
-  padding: 25px;
-  background: #11182a;
-  border-bottom: 2px solid #2b6cff;
+  padding: 30px;
+  background: rgba(17, 24, 42, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(43,108,255,0.25);
 }
 
-header h1 {
+.brand {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2b6cff, #ff2bd6);
+  box-shadow: 0 0 20px rgba(43,108,255,0.5);
+}
+
+h1 {
   margin: 0;
-  color: #2b6cff;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
-/* Tabs */
+header p {
+  margin: 3px 0 0;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* =========================
+   TABS
+========================= */
+
 .tabs {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 20px;
+  gap: 12px;
+  margin: 25px 0;
 }
 
 .tab-btn {
   padding: 10px 18px;
-  border: none;
-  cursor: pointer;
-  background: #121a2f;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
   color: white;
-  border-radius: 6px;
-  transition: 0.2s;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+
+.tab-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(43,108,255,0.5);
 }
 
 .tab-btn.active {
-  background: #2b6cff;
-  box-shadow: 0 0 10px #2b6cff;
+  background: linear-gradient(135deg, #2b6cff, #4a8dff);
+  box-shadow: 0 10px 25px rgba(43,108,255,0.3);
 }
 
-/* Sections */
-.section {
-  display: none;
-  max-width: 1000px;
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+  max-width: 1100px;
   margin: auto;
   padding: 20px;
+}
+
+.section {
+  display: none;
+  animation: fade 0.3s ease-in-out;
 }
 
 .section.active {
   display: block;
 }
 
-/* Schedule cards */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   SCHEDULE CARDS (NEON GLASS)
+========================= */
+
 .card {
-  background: #121a2f;
-  border-left: 4px solid #2b6cff;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  transition: 0.2s;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(#2b6cff, #ff2bd6);
 }
 
 .card:hover {
-  transform: translateX(5px);
+  transform: translateX(6px);
+  border-color: rgba(43,108,255,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .time {
-  color: #2b6cff;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4ea1ff;
+  margin-bottom: 5px;
 }
 
-/* Presenters */
+/* =========================
+   PRESENTERS GRID
+========================= */
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
 }
 
+/* PRESENTER CARD */
 .presenter {
-  background: #121a2f;
-  padding: 15px;
-  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 18px;
   text-align: center;
-  transition: 0.2s;
-  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .presenter:hover {
-  transform: translateY(-5px);
-  border-color: #2b6cff;
-  box-shadow: 0 0 10px rgba(43,108,255,0.3);
+  transform: translateY(-6px);
+  border-color: rgba(255, 43, 214, 0.4);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 
+/* IMAGE */
 .avatar {
-  width: 80px;
-  height: 80px;
+  width: 85px;
+  height: 85px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #2b6cff;
+  border: 2px solid transparent;
+  background: linear-gradient(#2b6cff, #ff2bd6);
+  padding: 2px;
   margin-bottom: 10px;
-  box-shadow: 0 0 10px rgba(43,108,255,0.5);
 }
 
+/* TEXT */
 .name {
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .role {
-  font-size: 13px;
-  color: #aaa;
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+  .brand {
+    flex-direction: column;
+    text-align: center;
+  }
 }
