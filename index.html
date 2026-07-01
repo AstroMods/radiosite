@@ -92,25 +92,10 @@ content="https://radio.vantixurbex.shop/assets/banner1.png">
     </a>
 
 <div class="listener-counter">
-    📡 <span id="listenerCount">0</span> listeners online
+    📡 <span id="listenerCount">Loading...</span> listeners online
 </div>
 
-<script>
-async function updateListeners() {
-    try {
-        const response = await fetch("https://eu8.fastcast4u.com/proxy/vantixradio/stats?json=1");
-        const data = await response.json();
-
-        document.getElementById("listenerCount").textContent =
-            data.currentlisteners || 0;
-    } catch (err) {
-        document.getElementById("listenerCount").textContent = "Offline";
-    }
-}
-
-updateListeners();
-setInterval(updateListeners, 15000);
-</script>
+<script src="js/ls.js"></script>
 
 updateListeners();
 setInterval(updateListeners, 15000);
