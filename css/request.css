@@ -1,5 +1,5 @@
 /* =========================
-   REQUEST SECTION - PREMIUM UI
+   REQUEST SECTION - PREMIUM UI (NO BG WRAPPER)
 ========================= */
 
 .vr-request-wrapper{
@@ -8,10 +8,9 @@
     justify-content:center;
     align-items:center;
     padding:60px 20px;
-    background:
-        radial-gradient(circle at top, rgba(14,165,233,0.25), transparent 60%),
-        radial-gradient(circle at bottom, rgba(99,102,241,0.18), transparent 60%),
-        #050816;
+
+    /* REMOVED BACKGROUND COMPLETELY */
+    background: transparent;
 }
 
 /* CARD */
