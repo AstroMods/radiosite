@@ -1,50 +1,165 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("requestForm");
-    const result = document.getElementById("result");
+// Vantix Radio - Premium Song Request System
 
-    const webhook = "https://discord.com/api/webhooks/1521948838078976200/3yjzbQfZnE1NBzJnBKe9sM9oRXZwS8W6x-0lGtPvIlg1_JYQqDQIcJw2M-PMtCu72gYJ";
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form =
+        document.getElementById("requestForm");
+
+    const result =
+        document.getElementById("result");
+
+    const webhook =
+        "YOUR_DISCORD_WEBHOOK_HERE";
 
     if (!form) return;
 
     form.addEventListener("submit", async (e) => {
+
         e.preventDefault();
 
-        const artist = document.getElementById("artist").value.trim();
-        const title = document.getElementById("title").value.trim();
-        const sender = document.getElementById("sender").value.trim();
+        const artist =
+            document.getElementById("artist")
+            .value
+            .trim();
+
+        const title =
+            document.getElementById("title")
+            .value
+            .trim();
+
+        const sender =
+            document.getElementById("sender")
+            .value
+            .trim();
 
         if (!artist || !title || !sender) {
-            result.textContent = "Please fill in all fields.";
+
+            result.textContent =
+                "⚠️ Please complete all fields.";
+
+            result.style.color =
+                "#f59e0b";
+
             return;
         }
 
-        result.textContent = "Sending request...";
+        result.textContent =
+            "📡 Sending request...";
+
+        result.style.color =
+            "#38bdf8";
 
         const payload = {
-            content:
-`🎵 **New Song Request**
-🎤 Artist: ${artist}
-🎶 Song: ${title}
-👤 Requested by: ${sender}`
+
+            username:
+                "Vantix Radio",
+
+            avatar_url:
+                "https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png",
+
+            embeds: [
+                {
+                    title:
+                        "🎵 New Song Request",
+
+                    description:
+                        "A new listener request has been submitted to Vantix Radio.",
+
+                    color:
+                        961689,
+
+                    thumbnail: {
+                        url:
+                            "https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
+                    },
+
+                    fields: [
+                        {
+                            name:
+                                "🎤 Artist",
+
+                            value:
+                                artist,
+
+                            inline:
+                                true
+                        },
+                        {
+                            name:
+                                "🎶 Song Title",
+
+                            value:
+                                title,
+
+                            inline:
+                                true
+                        },
+                        {
+                            name:
+                                "👤 Requested By",
+
+                            value:
+                                sender,
+
+                            inline:
+                                true
+                        }
+                    ],
+
+                    footer: {
+                        text:
+                            "Vantix Radio • Broadcasting 24/7"
+                    },
+
+                    timestamp:
+                        new Date().toISOString()
+                }
+            ]
         };
 
         try {
-            const res = await fetch(webhook, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
+
+            const res =
+                await fetch(webhook, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body:
+                        JSON.stringify(payload)
+                });
 
             if (res.ok) {
-                result.textContent = "✅ Request sent to Discord!";
+
+                result.textContent =
+                    "✅ Song request submitted successfully!";
+
+                result.style.color =
+                    "#22c55e";
+
                 form.reset();
+
             } else {
-                result.textContent = "❌ Failed to send request.";
+
+                result.textContent =
+                    "❌ Failed to send request.";
+
+                result.style.color =
+                    "#ef4444";
             }
+
         } catch (err) {
-            result.textContent = "❌ Error sending request.";
+
+            console.error(err);
+
+            result.textContent =
+                "❌ Network error while sending request.";
+
+            result.style.color =
+                "#ef4444";
         }
+
     });
+
 });
