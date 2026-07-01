@@ -1,7 +1,7 @@
 async function updateListeners() {
     try {
         const response = await fetch(
-            "http://51.255.235.165:2128/stats?json=1",
+            "https://eu8.fastcast4u.com/proxy/vantixradio/stats?json=1",
             {
                 cache: "no-cache"
             }
