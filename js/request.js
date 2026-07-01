@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("result");
 
     const webhook =
-        "YOUR_DISCORD_WEBHOOK_HERE";
+        "https://discord.com/api/webhooks/1521948838078976200/3yjzbQfZnE1NBzJnBKe9sM9oRXZwS8W6x-0lGtPvIlg1_JYQqDQIcJw2M-PMtCu72gYJ";
 
     if (!form) return;
 
