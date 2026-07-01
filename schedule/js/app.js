@@ -4,11 +4,7 @@
 
 /* 📅 SCHEDULE */
 const scheduleData = [
-  { time: "08:00 - 10:00", title: "Morning Beats with DJ Nova" },
-  { time: "10:00 - 13:00", title: "Chill Zone Mix" },
-  { time: "13:00 - 16:00", title: "Afternoon Drive with DJ Vex" },
-  { time: "16:00 - 20:00", title: "Live Requests & Top Hits" },
-  { time: "20:00 - 00:00", title: "Night EDM Session" }
+  { time: "7PM EST - 9PM EST", title: "EMO NIGHT /w Vantix" }
 ];
 
 /* 🎙️ PRESENTERS */
