@@ -24,14 +24,21 @@
 
     background:linear-gradient(135deg,#0ea5e9,#2563eb);
 
-    transition:.25s ease;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
 
     box-shadow:0 10px 25px rgba(37,99,235,.25);
+
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .play-btn:hover{
     transform:translateY(-3px);
     box-shadow:0 15px 35px rgba(37,99,235,.35);
+}
+
+.play-btn:active{
+    transform:translateY(-1px) scale(0.99);
 }
 
 .play-btn.playing{
@@ -64,7 +71,6 @@
     backdrop-filter:blur(10px);
 }
 
-/* label row */
 .volume-section label{
     display:flex;
     justify-content:space-between;
@@ -78,7 +84,6 @@
     font-size:.95rem;
 }
 
-/* volume value glow */
 #volumeValue{
     color:#38bdf8;
 
@@ -111,12 +116,20 @@
         rgba(255,255,255,.15) 100%
     );
 
-    transition:.2s ease;
+    background-size:100% 100%;
+    background-repeat:no-repeat;
+
+    transition:box-shadow .2s ease;
 }
 
 /* hover glow */
 #volumeSlider:hover{
     box-shadow:0 0 15px rgba(56,189,248,.3);
+}
+
+/* focus fix (keyboard + mobile) */
+#volumeSlider:focus{
+    outline:none;
 }
 
 /* ========================= CHROME / EDGE THUMB ========================= */
@@ -135,7 +148,9 @@
 
     box-shadow:0 0 12px rgba(56,189,248,.8);
 
-    transition:.2s ease;
+    cursor:pointer;
+
+    transition:transform .2s ease;
 }
 
 #volumeSlider::-webkit-slider-thumb:hover{
