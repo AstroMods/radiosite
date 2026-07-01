@@ -58,12 +58,19 @@
 }
 
 /* =========================
-   CUSTOM VOLUME SLIDER
+   VOLUME CONTROL (CLEAN UPGRADE)
 ========================= */
 
 .volume-section{
     margin:25px 0;
-    text-align:left;
+    padding:15px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(10px);
 }
 
 .volume-section label{
@@ -71,23 +78,41 @@
     justify-content:space-between;
     align-items:center;
 
-    margin-bottom:10px;
+    margin-bottom:12px;
 
     font-weight:600;
     color:#cbd5e1;
+
+    font-size:.95rem;
 }
 
-/* Slider track */
+/* Volume value glow */
+#volumeValue{
+    color:#38bdf8;
+    font-weight:700;
+
+    text-shadow:
+        0 0 10px rgba(56,189,248,.8),
+        0 0 20px rgba(37,99,235,.4);
+}
+
+/* Slider base */
 #volumeSlider{
-    appearance:none;
     -webkit-appearance:none;
+    appearance:none;
 
     width:100%;
     height:10px;
 
     border-radius:999px;
 
-    background:rgba(255,255,255,.12);
+    background:linear-gradient(
+        90deg,
+        #38bdf8 0%,
+        #2563eb 50%,
+        rgba(255,255,255,.15) 50%,
+        rgba(255,255,255,.15) 100%
+    );
 
     outline:none;
     cursor:pointer;
@@ -97,15 +122,15 @@
 
 /* Hover glow */
 #volumeSlider:hover{
-    background:rgba(56,189,248,.25);
+    box-shadow:0 0 15px rgba(56,189,248,.3);
 }
 
-/* WebKit Thumb (Chrome / Edge) */
+/* Thumb (Chrome / Edge) */
 #volumeSlider::-webkit-slider-thumb{
     -webkit-appearance:none;
 
-    width:22px;
-    height:22px;
+    width:20px;
+    height:20px;
 
     border-radius:50%;
 
@@ -114,20 +139,19 @@
     border:2px solid white;
 
     box-shadow:
-        0 0 12px rgba(56,189,248,.8),
-        0 0 25px rgba(37,99,235,.4);
+        0 0 12px rgba(56,189,248,.8);
 
     transition:.2s ease;
 }
 
 #volumeSlider::-webkit-slider-thumb:hover{
-    transform:scale(1.2);
+    transform:scale(1.25);
 }
 
-/* Firefox Thumb */
+/* Firefox */
 #volumeSlider::-moz-range-thumb{
-    width:22px;
-    height:22px;
+    width:20px;
+    height:20px;
 
     border-radius:50%;
 
@@ -135,21 +159,7 @@
 
     border:2px solid white;
 
-    box-shadow:
-        0 0 12px rgba(56,189,248,.8),
-        0 0 25px rgba(37,99,235,.4);
+    box-shadow:0 0 12px rgba(56,189,248,.8);
 
     cursor:pointer;
-}
-
-/* Filled track effect (Chrome) */
-#volumeSlider::-webkit-slider-runnable-track{
-    height:10px;
-    border-radius:999px;
-}
-
-#volumeValue{
-    color:#38bdf8;
-    font-weight:700;
-    text-shadow:0 0 10px rgba(56,189,248,.8);
 }
