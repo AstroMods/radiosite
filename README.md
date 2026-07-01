@@ -28,8 +28,7 @@ This website provides a simple and professional way for community members to lis
 * HTML5
 * CSS3
 * JavaScript
-* GitHub Pages
-
+  
 ---
 
 ## 📜 License
