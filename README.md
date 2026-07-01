@@ -1,6 +1,6 @@
 # 📻 Vantix Radio Website
 
-![Vantix Radio Discord Banner](https://radio.vantixurbex.shop/assets/embed-banner.png)
+![Vantix Radio Discord Banner](https://radio.vantixurbex.shop/assets/banner1.png)
 
 A modern radio website built for **Vantix Radio**, the official radio station of the Andreas Initiative Roleplay FiveM server.
 
@@ -10,7 +10,7 @@ A modern radio website built for **Vantix Radio**, the official radio station of
 
 When shared on Discord, the website uses this banner for link previews:
 
-![Discord Embed Banner](https://radio.vantixurbex.shop/assets/embed-banner.png)
+![Discord Embed Banner](https://radio.vantixurbex.shop/assets/banner1.png)
 
 **Recommended size:** 1200 × 630 px  
 Used for Open Graph / Discord / Twitter link previews
