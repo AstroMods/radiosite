@@ -1,0 +1,112 @@
+/* =========================
+   LIVE RADIO BADGE
+========================= */
+
+.now-playing{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:16px 0;
+}
+
+/* badge container */
+.now-playing span{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:10px 16px;
+
+    font-size:.9rem;
+    font-weight:800;
+    letter-spacing:.6px;
+
+    color:#e2e8f0;
+
+    background:rgba(15,23,42,.65);
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:999px;
+
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25),
+        inset 0 0 0 1px rgba(255,255,255,.05);
+
+    position:relative;
+    overflow:hidden;
+
+    animation:fadeInUp .6s ease;
+}
+
+/* glowing red LIVE dot */
+.now-playing span::before{
+    content:"";
+    width:10px;
+    height:10px;
+    border-radius:50%;
+
+    background:#ef4444;
+
+    box-shadow:
+        0 0 10px rgba(239,68,68,.7),
+        0 0 20px rgba(239,68,68,.4);
+
+    animation:livePulse 1.5s infinite;
+}
+
+/* subtle moving shine */
+.now-playing span::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:50%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.12),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+    animation:shine 4s infinite;
+}
+
+/* animations */
+@keyframes livePulse{
+    0%{ transform:scale(1); opacity:1; }
+    50%{ transform:scale(1.4); opacity:.6; }
+    100%{ transform:scale(1); opacity:1; }
+}
+
+@keyframes shine{
+    0%{ left:-60%; }
+    50%{ left:120%; }
+    100%{ left:120%; }
+}
+
+@keyframes fadeInUp{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* hover effect */
+.now-playing span:hover{
+    transform:translateY(-2px);
+    transition:.2s ease;
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3),
+        0 0 20px rgba(239,68,68,.15);
+}
