@@ -79,43 +79,65 @@ fetch("./status.json")
 
 </header>
 
+
 <!-- PLAYER -->
 <div class="player-card">
 
-    <img
-        class="station-logo"
-        src="https://radio.vantixurbex.shop/assets/ChatGPT%20Image%20Jun%2029,%202026,%2012_47_34%20PM.png"
-        alt="Vantix Radio Logo"
-    >
+    <!-- TOP SECTION -->
+    <div class="player-header">
 
-    <div class="live-badge">
-        <span class="live-dot"></span>
-        LIVE 24/7
+        <img
+            class="station-logo"
+            src="https://radio.vantixurbex.shop/assets/ChatGPT%20Image%20Jun%2029,%202026,%2012_47_34%20PM.png"
+            alt="Vantix Radio Logo"
+        >
+
+        <div class="live-badge">
+            <span class="live-dot"></span>
+            LIVE 24/7
+        </div>
+
     </div>
 
-    <h1>Vantix Radio</h1>
+    <!-- TITLE AREA -->
+    <div class="player-info">
 
-    <p class="subtitle">
-        The Official Radio Station of Andreas Initiative Roleplay
-    </p>
+        <h1>Vantix Radio</h1>
 
-    <div class="now-playing">
-        <span>🔴 Live Radio Stream</span>
+        <p class="subtitle">
+            The Official Radio Station of Andreas Initiative Roleplay
+        </p>
+
+        <div class="now-playing">
+            🔴 Live Radio Stream
+        </div>
+
     </div>
 
-    <div class="radio-controls">
-        <button id="playBtn" class="play-btn" type="button">
-            ▶ Play Radio
-        </button>
+    <!-- CONTROLS WRAP -->
+    <div class="player-controls">
+
+        <div class="radio-controls">
+            <button id="playBtn" class="play-btn" type="button">
+                ▶ Play Radio
+            </button>
+        </div>
+
+        <div id="status" class="status">
+            Ready to Play
+        </div>
+
+        <!-- VISUALIZER HOOK (optional but recommended) -->
+        <div class="audio-visualizer" id="visualizer">
+            <div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div><div></div>
+        </div>
+
     </div>
 
-    <audio id="radioPlayer" preload="auto" crossorigin="anonymous"></audio>
-
-    <div id="status" class="status">
-        Ready to Play
-    </div>
-
+    <!-- VOLUME -->
     <div class="volume-section">
+
         <label>
             Volume <span id="volumeValue">100%</span>
         </label>
@@ -128,7 +150,11 @@ fetch("./status.json")
             step="0.01"
             value="1"
         >
+
     </div>
+
+    <!-- AUDIO -->
+    <audio id="radioPlayer" preload="auto" crossorigin="anonymous"></audio>
 
 </div>
 
