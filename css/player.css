@@ -1,28 +1,36 @@
 
 /* =========================
-   SONG REQUEST - PREMIUM FIXED UI
+   PLAYER CARD - PREMIUM RADIO UI
 ========================= */
 
-.vr-request-wrapper{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.player-card{
+    width:clamp(320px, 90vw, 560px);
+    margin:0 auto;
 
-    padding:60px 20px;
+    padding:26px;
+
+    border-radius:22px;
+
+    background:linear-gradient(180deg, rgba(15,23,42,.78), rgba(2,6,23,.55));
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 35px 90px rgba(0,0,0,.6),
+        inset 0 0 0 1px rgba(255,255,255,.04);
 
     position:relative;
+    overflow:hidden;
 
-    /* IMPORTANT: lets it behave like part of layout */
-    flex-direction:column;
-    gap:20px;
+    transition:transform .3s ease, box-shadow .3s ease;
 }
 
-/* animated background (cleaner + lighter performance) */
-.vr-request-wrapper::before{
+/* ambient glow like real radio app */
+.player-card::before{
     content:"";
     position:absolute;
-    inset:0;
+    inset:-40%;
 
     background:
         radial-gradient(circle at 25% 30%, rgba(14,165,233,.18), transparent 60%),
@@ -31,165 +39,149 @@
     filter:blur(30px);
     opacity:.9;
 
-    animation:requestGlow 12s ease-in-out infinite alternate;
+    animation:playerGlow 10s ease-in-out infinite alternate;
+
     pointer-events:none;
 }
 
-@keyframes requestGlow{
-    0%{
-        transform:translateY(-8px) scale(1);
-    }
-    100%{
-        transform:translateY(8px) scale(1.05);
-    }
+@keyframes playerGlow{
+    0%{ transform:translateY(-8px) scale(1); }
+    100%{ transform:translateY(8px) scale(1.05); }
 }
 
-/* ========================= CARD (FIXED RESPONSIVE SYSTEM) ========================= */
+/* hover lift */
+.player-card:hover{
+    transform:translateY(-6px);
+    box-shadow:
+        0 45px 110px rgba(0,0,0,.7),
+        0 0 30px rgba(14,165,233,.15);
+}
 
-.vr-request-card{
-    width:clamp(320px, 90vw, 560px);
+/* ========================= LOGO ========================= */
 
-    padding:26px;
+.station-logo{
+    width:64px;
+    height:64px;
 
-    border-radius:20px;
-
-    background:linear-gradient(180deg, rgba(15,23,42,.72), rgba(2,6,23,.55));
-    border:1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(18px);
+    border-radius:16px;
+    object-fit:cover;
 
     box-shadow:
-        0 25px 60px rgba(0,0,0,.45),
-        inset 0 0 0 1px rgba(255,255,255,.04);
+        0 0 20px rgba(56,189,248,.35),
+        0 15px 40px rgba(0,0,0,.5);
 
-    position:relative;
-    overflow:hidden;
-
-    transition:all .3s ease;
+    transition:transform .25s ease, box-shadow .25s ease;
 }
 
-/* hover lift feels more "app-like" */
-.vr-request-card:hover{
-    transform:translateY(-6px) scale(1.01);
+.station-logo:hover{
+    transform:scale(1.05);
     box-shadow:
-        0 35px 90px rgba(0,0,0,.6),
-        0 0 30px rgba(14,165,233,.18);
+        0 0 28px rgba(56,189,248,.55),
+        0 18px 50px rgba(0,0,0,.6);
 }
 
-/* top glow line */
-.vr-request-card::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:1px;
+/* ========================= LIVE BADGE ========================= */
 
-    background:linear-gradient(90deg,transparent,rgba(56,189,248,.7),transparent);
-}
-
-/* ========================= HEADER ========================= */
-
-.vr-request-header{
-    margin-bottom:14px;
-}
-
-.vr-request-header h2{
-    margin:10px 0 6px;
-    font-size:1.4rem;
-    font-weight:900;
-    color:#e2e8f0;
-    letter-spacing:.2px;
-}
-
-.vr-request-header p{
-    margin:0 0 10px;
-    color:#94a3b8;
-    font-size:.9rem;
-}
-
-/* badge improved */
-.vr-request-badge{
+.live-badge{
     display:inline-flex;
     align-items:center;
-    gap:6px;
+    gap:8px;
 
     padding:6px 12px;
 
     border-radius:999px;
 
-    font-size:.7rem;
+    font-size:.72rem;
     font-weight:900;
-    letter-spacing:1.5px;
+    letter-spacing:1.4px;
 
-    color:white;
+    color:#fff;
+
     background:linear-gradient(135deg,#0ea5e9,#2563eb);
 
+    box-shadow:0 0 18px rgba(14,165,233,.35);
+}
+
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+
+    background:#22c55e;
+
     box-shadow:
-        0 0 18px rgba(14,165,233,.35);
+        0 0 10px rgba(34,197,94,.8),
+        0 0 20px rgba(34,197,94,.4);
+
+    animation:pulseDot 1.5s infinite ease-in-out;
 }
 
-/* ========================= INPUTS (FIXED SPACING SYSTEM) ========================= */
-
-#requestForm{
-    display:flex;
-    flex-direction:column;
-    gap:12px; /* IMPORTANT FIX */
+@keyframes pulseDot{
+    0%,100%{ transform:scale(1); opacity:.7; }
+    50%{ transform:scale(1.4); opacity:1; }
 }
 
-#requestForm input{
-    width:100%;
-    padding:14px 14px;
+/* ========================= TITLE ========================= */
 
-    border-radius:14px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    background:rgba(255,255,255,.04);
-
+.player-card h1{
+    margin:12px 0 6px;
+    font-size:1.6rem;
+    font-weight:900;
     color:#e2e8f0;
-    font-size:.95rem;
-
-    outline:none;
-
-    transition:all .2s ease;
-    backdrop-filter:blur(10px);
+    letter-spacing:.3px;
 }
 
-/* better focus */
-#requestForm input:focus{
-    border-color:rgba(14,165,233,.7);
-    box-shadow:0 0 0 3px rgba(14,165,233,.18);
-    background:rgba(255,255,255,.06);
-    transform:translateY(-1px);
+/* subtitle */
+.subtitle{
+    margin:0 0 10px;
+    font-size:.92rem;
+    color:#94a3b8;
 }
 
-/* placeholder */
-#requestForm input::placeholder{
-    color:rgba(148,163,184,.7);
+/* now playing */
+.now-playing{
+    display:inline-flex;
+    align-items:center;
+
+    padding:6px 10px;
+
+    border-radius:10px;
+
+    font-size:.8rem;
+    font-weight:700;
+
+    color:#38bdf8;
+
+    background:rgba(56,189,248,.08);
+    border:1px solid rgba(56,189,248,.15);
 }
 
-/* ========================= BUTTON (MORE RESPONSIVE FEEL) ========================= */
+/* ========================= CONTROLS ========================= */
 
-.vr-submit-btn{
+.radio-controls{
+    margin-top:16px;
+}
+
+/* PLAY BUTTON (MATCHED PREMIUM STYLE) */
+.play-btn{
     width:100%;
-    padding:14px;
+    padding:16px 18px;
 
     border:none;
-    border-radius:14px;
+    border-radius:16px;
 
     cursor:pointer;
 
+    font-size:1rem;
     font-weight:900;
-    letter-spacing:.5px;
 
-    color:white;
+    color:#fff;
 
     background:linear-gradient(135deg,#0ea5e9,#2563eb);
     background-size:200% 200%;
 
     box-shadow:
-        0 14px 35px rgba(37,99,235,.25),
+        0 20px 45px rgba(37,99,235,.3),
         inset 0 0 0 1px rgba(255,255,255,.08);
 
     position:relative;
@@ -199,21 +191,22 @@
 }
 
 /* hover */
-.vr-submit-btn:hover{
+.play-btn:hover{
     transform:translateY(-3px);
     background-position:right center;
+
     box-shadow:
-        0 20px 60px rgba(37,99,235,.35),
+        0 30px 70px rgba(37,99,235,.4),
         0 0 25px rgba(14,165,233,.25);
 }
 
 /* click */
-.vr-submit-btn:active{
+.play-btn:active{
     transform:scale(.98);
 }
 
 /* shine */
-.vr-submit-btn::after{
+.play-btn::after{
     content:"";
     position:absolute;
     top:0;
@@ -221,34 +214,116 @@
     width:60%;
     height:100%;
 
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
     transform:skewX(-20deg);
 
     transition:0.6s ease;
 }
 
-.vr-submit-btn:hover::after{
+.play-btn:hover::after{
     left:120%;
 }
 
-/* ========================= RESULT ========================= */
+/* ========================= STATUS ========================= */
 
-#result{
-    margin-top:6px;
-    font-size:.85rem;
+.status{
+    margin-top:12px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:.9rem;
+    font-weight:600;
     color:#94a3b8;
-    min-height:18px;
 }
 
-/* ========================= MOBILE FIX ========================= */
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+
+    background:#0ea5e9;
+
+    box-shadow:0 0 10px rgba(14,165,233,.6);
+}
+
+/* ========================= VOLUME ========================= */
+
+.volume-section{
+    margin-top:18px;
+    padding:14px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:blur(14px);
+}
+
+.volume-section label{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:10px;
+
+    font-size:.9rem;
+    font-weight:800;
+
+    color:#e2e8f0;
+}
+
+#volumeValue{
+    color:#38bdf8;
+    font-weight:900;
+}
+
+/* slider */
+#volumeSlider{
+    width:100%;
+    height:10px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.1);
+
+    outline:none;
+    appearance:none;
+}
+
+/* thumb */
+#volumeSlider::-webkit-slider-thumb{
+    -webkit-appearance:none;
+
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    background:#38bdf8;
+
+    box-shadow:
+        0 0 15px rgba(56,189,248,.7),
+        0 0 30px rgba(37,99,235,.3);
+
+    cursor:pointer;
+}
+
+/* ========================= MOBILE ========================= */
 
 @media (max-width:600px){
-    .vr-request-card{
+    .player-card{
         padding:18px;
-        width:95vw;
     }
 
-    .vr-request-header h2{
-        font-size:1.2rem;
+    .player-card h1{
+        font-size:1.3rem;
+    }
+
+    .station-logo{
+        width:52px;
+        height:52px;
     }
 }
