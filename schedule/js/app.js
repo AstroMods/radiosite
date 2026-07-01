@@ -11,13 +11,18 @@ const scheduleData = [
 const presentersData = [
   {
     name: "Vantix",
-    role: "CEO",
+    role: "Chief Executive Officer",
     image: "https://cdn.discordapp.com/avatars/1078071377401221252/c18e95efc45aff8514d1b8f02211d313.png"
   },
   {
     name: "Laffy",
-    role: "COO",
+    role: "Chief Operating Officer",
     image: "https://cdn.discordapp.com/avatars/1418823351312453652/e8317cb908c45a239b00546a3655e791.png"
+  },
+   {
+    name: "Bandit",
+    role: "Directors of Operations",
+    image: "https://cdn.discordapp.com/avatars/1251639383803560019/1972a62b6007c35255ecee92f5ab2203.png"
   }
 ];
 
