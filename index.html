@@ -132,53 +132,36 @@ fetch("./status.json")
 
 </div>
 
-<!-- REQUEST SECTION -->
+<!-- REQUEST SECTION (DISCORD ONLY) -->
 <section class="vr-request-wrapper">
-
-    <div class="vr-request-bg"></div>
 
     <div class="vr-request-card">
 
         <div class="vr-request-header">
 
-            <span class="vr-request-badge">LIVE REQUESTS</span>
+            <span class="vr-request-badge">
+                LIVE REQUESTS
+            </span>
 
             <h2>🎵 Song Request Center</h2>
 
-            <p>Request your favorite song and it could be played live.</p>
+            <p>
+                Send a request directly to our Discord server.
+            </p>
 
         </div>
 
-        <!-- CENTOVA SAFE FORM -->
-        <form method="post" class="cc_request_form" data-username="vantixradio">
+        <form id="requestForm">
 
-            <div data-type="result"></div>
+            <input type="text" id="artist" placeholder="🎤 Artist Name" maxlength="127" required>
+            <input type="text" id="title" placeholder="🎵 Song Title" maxlength="127" required>
+            <input type="text" id="sender" placeholder="👤 Your Name" maxlength="127" required>
 
-            <div class="form-group">
-                <input type="text" name="request[artist]" placeholder="Artist Name" required>
-            </div>
+            <button type="submit" class="vr-submit-btn">
+                Send Request to Discord
+            </button>
 
-            <div class="form-group">
-                <input type="text" name="request[title]" placeholder="Song Title" required>
-            </div>
-
-            <div class="form-group">
-                <input type="text" name="request[dedication]" placeholder="Dedicated To">
-            </div>
-
-            <div class="form-group">
-                <input type="text" name="request[sender]" placeholder="Your Name" required>
-            </div>
-
-            <div class="form-group">
-                <input type="email" name="request[email]" placeholder="Email" required>
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="vr-submit-btn">
-                    Submit Song Request
-                </button>
-            </div>
+            <div id="result"></div>
 
         </form>
 
@@ -196,7 +179,6 @@ fetch("./status.json")
 <script src="js/player.js"></script>
 <script src="js/request.js"></script>
 <script src="js/live.js"></script>
-<script src="https://eu8.fastcast4u.com/system/request.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const year = document.getElementById("year");
