@@ -1,15 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const card =
-        document.querySelector(".about-card");
+    const card = document.querySelector(".about-card");
 
-    card.style.opacity = 0;
+    // safety check (prevents errors if element missing)
+    if (!card) return;
+
+    // initial state (better performance: avoid layout jank)
+    card.style.opacity = "0";
     card.style.transform = "translateY(20px)";
+    card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
 
-    setTimeout(() => {
-        card.style.transition = "0.6s ease";
-        card.style.opacity = 1;
+    // trigger animation
+    requestAnimationFrame(() => {
+        card.style.opacity = "1";
         card.style.transform = "translateY(0)";
-    }, 100);
+    });
 
 });
