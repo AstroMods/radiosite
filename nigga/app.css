@@ -1,38 +1,56 @@
-body {
+* {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at top, #1a1a2e, #000);
-    color: #ff4fd8;
+    padding: 0;
+    min-height: 100vh;
     font-family: monospace;
+    overflow: hidden;
+}
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+
+    /* safer than 100vh on mobile GitHub Pages */
+    min-height: 100svh;
+
+    background: radial-gradient(circle at top, #1a1a2e, #000);
+    color: #ff4fd8;
+
+    transition: filter 0.2s ease;
 }
 
 .box {
     text-align: center;
     padding: 30px;
+    width: min(320px, 90vw);
+
     border: 2px solid #ff4fd8;
     border-radius: 12px;
-    background: rgba(0,0,0,0.7);
+
+    background: rgba(0, 0, 0, 0.7);
     box-shadow: 0 0 25px #ff4fd8;
-    width: 320px;
 }
 
 h1 {
-    font-size: 42px;
+    font-size: clamp(28px, 6vw, 42px);
     margin: 0;
     text-shadow: 0 0 10px #ff4fd8;
+
     animation: glitch 1.2s infinite;
+    will-change: transform;
 }
 
 @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, -1px); }
-    60% { transform: translate(-1px, -2px); }
-    80% { transform: translate(1px, 2px); }
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-2px, 2px); }
+    40%  { transform: translate(2px, -1px); }
+    60%  { transform: translate(-1px, -2px); }
+    80%  { transform: translate(1px, 2px); }
     100% { transform: translate(0); }
 }
 
@@ -45,23 +63,29 @@ p {
 button {
     margin-top: 15px;
     padding: 10px 18px;
+
     border: none;
     cursor: pointer;
+
     font-weight: bold;
     background: #ff4fd8;
     color: black;
+
     border-radius: 6px;
-    transition: 0.2s;
+
+    transition: transform 0.2s ease, background 0.2s ease;
+    transform-origin: center;
 }
 
 button:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
     background: #ff7ae6;
 }
 
 #msg {
     margin-top: 15px;
     min-height: 20px;
+
     color: #fff;
     font-size: 13px;
 }
@@ -69,9 +93,10 @@ button:hover {
 .face {
     font-size: 50px;
     animation: float 2s infinite ease-in-out;
+    will-change: transform;
 }
 
 @keyframes float {
-    0%,100% { transform: translateY(0); }
+    0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
