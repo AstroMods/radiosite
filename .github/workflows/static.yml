@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+name: Scan & Deploy GitHub Pages
 
 on:
   push:
@@ -15,24 +15,63 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  scan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Setup Pages
-      - name: Configure Pages
+      # --- HTML check (basic validation) ---
+      - name: Install htmlhint
+        run: npm install -g htmlhint
+
+      - name: Scan HTML
+        run: htmlhint "**/*.html"
+
+      # --- CSS check ---
+      - name: Install stylelint
+        run: npm install -g stylelint stylelint-config-standard
+
+      - name: Create stylelint config
+        run: |
+          echo '{
+            "extends": "stylelint-config-standard"
+          }' > .stylelintrc.json
+
+      - name: Scan CSS
+        run: stylelint "**/*.css"
+
+      # --- JS check ---
+      - name: Install eslint
+        run: npm install -g eslint
+
+      - name: Init ESLint config
+        run: |
+          echo '{
+            "env": { "browser": true, "es2021": true },
+            "extends": "eslint:recommended",
+            "parserOptions": { "ecmaVersion": "latest" }
+          }' > .eslintrc.json
+
+      - name: Scan JS
+        run: eslint "**/*.js"
+
+  deploy:
+    needs: scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Upload your static site (root folder)
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .   # <-- your HTML/CSS/JS root folder
+          path: .
 
-      # Deploy
       - name: Deploy
-        id: deployment
         uses: actions/deploy-pages@v4
