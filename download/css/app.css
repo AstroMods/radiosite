@@ -1,0 +1,146 @@
+:root{
+    --bg:#070A12;
+    --panel:rgba(15,18,30,0.72);
+    --border:rgba(0,255,255,0.12);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+
+    --cyan:#22d3ee;
+    --blue:#3b82f6;
+    --purple:#8b5cf6;
+    --pink:#ec4899;
+}
+
+body{
+    margin:0;
+    font-family:'Inter', Arial, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(34,211,238,0.15), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(139,92,246,0.18), transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(236,72,153,0.12), transparent 50%),
+        linear-gradient(180deg,#05060c,#070a12);
+}
+
+/* HEADER */
+.top-title{
+    text-align:center;
+    padding:45px 20px 10px;
+}
+
+.top-title h2{
+    font-family:'Orbitron', sans-serif;
+    font-size:2rem;
+    margin:0;
+
+    background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.top-title p{
+    color:var(--muted);
+}
+
+/* BACK BUTTON */
+.back-btn{
+    display:inline-block;
+    margin:10px 20px;
+    color:var(--text);
+    text-decoration:none;
+    font-weight:600;
+    opacity:.8;
+}
+
+.back-btn:hover{
+    color:var(--cyan);
+}
+
+/* GRID */
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:30px 20px 80px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));
+    gap:18px;
+}
+
+/* CARD */
+.card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+
+    backdrop-filter:blur(18px);
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+
+    transition:.25s ease;
+    position:relative;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(34,211,238,0.35);
+}
+
+/* ICON */
+.icon{
+    font-size:34px;
+}
+
+/* TEXT */
+h1{
+    font-family:'Orbitron', sans-serif;
+    font-size:1.1rem;
+    margin:0;
+}
+
+.description{
+    color:var(--muted);
+    font-size:.9rem;
+}
+
+/* FEATURES */
+.features{
+    color:#cbd5e1;
+    font-size:.85rem;
+}
+
+/* STATS */
+.stats{
+    display:flex;
+    justify-content:space-between;
+    font-size:.78rem;
+    color:var(--muted);
+}
+
+/* BUTTON */
+.buttons{
+    margin-top:15px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.download-btn{
+    background:linear-gradient(90deg,var(--cyan),var(--blue));
+    color:#06121a;
+}
