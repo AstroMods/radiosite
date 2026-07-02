@@ -15,8 +15,10 @@
 
 /* LEFT SIDE */
 .main-content{
-    flex:1;
-    min-width:0;
+    flex: 1;
+    min-width: 0;
+
+    margin-left: auto; /* pushes it to the right */
 }
 
 /* RIGHT PANEL */
