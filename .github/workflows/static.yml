@@ -1,35 +1,10 @@
+name: Disabled Workflow
+
+on:
+  workflow_dispatch:
+
 jobs:
-  scan:
+  disabled:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install linters
-        run: |
-          npm install -g htmlhint stylelint stylelint-config-standard eslint
-
-      - name: HTML scan
-        run: htmlhint "**/*.html" --fix
-
-      - name: CSS scan
-        run: |
-          echo '{"extends":"stylelint-config-standard"}' > .stylelintrc.json
-          stylelint "**/*.css" --fix
-
-      - name: JS scan
-        run: |
-          echo '{"env":{"browser":true,"es2021":true},"extends":"eslint:recommended","parserOptions":{"ecmaVersion":"latest"}}' > .eslintrc.json
-          eslint "**/*.js" --fix
-
-      - name: Commit fixes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "fix: auto-fix linting errors"
-          git push
+      - run: echo "This workflow is disabled"
