@@ -1,26 +1,20 @@
 const audio = document.getElementById("miniAudio");
-const play = document.getElementById("miniPlay");
+const playBtn = document.getElementById("miniPlay");
+const volume = document.getElementById("miniVolume");
 
-let playing = false;
+let isPlaying = false;
 
-play.addEventListener("click", () => {
-
-    if (playing) {
-
-        audio.pause();
-
-        play.innerHTML =
-        '<i class="fa-solid fa-play"></i>';
-
+playBtn.addEventListener("click", async () => {
+    if (!isPlaying) {
+        await audio.play();
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
     } else {
-
-        audio.play();
-
-        play.innerHTML =
-        '<i class="fa-solid fa-pause"></i>';
-
+        audio.pause();
+        playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
     }
+    isPlaying = !isPlaying;
+});
 
-    playing = !playing;
-
+volume.addEventListener("input", () => {
+    audio.volume = volume.value;
 });
