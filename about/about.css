@@ -1,6 +1,6 @@
 /* =========================
    VANTIX RADIO ABOUT THEME
-   Dark + Glass + Neon Blue
+   Dark + Glass + Neon Blue (GitHub Pages Safe)
 ========================= */
 
 * {
@@ -8,6 +8,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
 }
 
 body {
@@ -18,26 +22,33 @@ body {
 
     background: #070A12;
     color: #fff;
-    overflow: hidden;
+
+    /* FIX: prevents mobile scroll bugs if content grows */
+    overflow-x: hidden;
 }
 
 /* soft animated glow background */
 .bg-glow {
-    position: absolute;
+    position: fixed;
     inset: 0;
+    pointer-events: none;
+
     background:
         radial-gradient(circle at 20% 20%, rgba(14,165,233,.25), transparent 40%),
         radial-gradient(circle at 80% 60%, rgba(37,99,235,.25), transparent 45%);
+
     filter: blur(40px);
     z-index: 0;
 }
 
+/* layout wrapper */
 .about-wrapper {
     position: relative;
     z-index: 1;
     width: min(800px, 92%);
 }
 
+/* card */
 .about-card {
     padding: 40px 32px;
     border-radius: 22px;
@@ -46,6 +57,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.10);
 
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px); /* FIX: Safari support */
 
     box-shadow:
         0 20px 60px rgba(0,0,0,.6),
@@ -122,10 +134,21 @@ body {
     background: linear-gradient(135deg, #0ea5e9, #2563eb);
     box-shadow: 0 10px 30px rgba(37,99,235,.3);
 
-    transition: 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 15px 40px rgba(37,99,235,.45);
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+    .about-card {
+        padding: 28px 18px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
 }
