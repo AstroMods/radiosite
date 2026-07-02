@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Vantix Radio Player</title>
+
     <style>
-        body{
-            margin:0;
-            background:transparent;
+        body {
+            margin: 0;
+            background: transparent;
         }
 
-        audio{
-            width:100%;
+        audio {
+            width: 100%;
         }
     </style>
 </head>
+
 <body>
 
-<audio id="radioPlayer" autoplay></audio>
+<audio id="radioPlayer" autoplay controls></audio>
 
 <script>
-    const STREAM_URL =
-        "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
+    const STREAM_URL = "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
 
-    const player =
-        document.getElementById("radioPlayer");
+    const player = document.getElementById("radioPlayer");
 
     player.src = STREAM_URL;
     player.volume = 1;
