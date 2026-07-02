@@ -1,29 +1,29 @@
-.layout {
-    display: flex;
-    gap: 22px;
-    align-items: flex-start;
+.layout{
+    display:flex;
+    justify-content:flex-end; /* Push content to the right */
+    align-items:flex-start;
+    gap:22px;
 
-    width: min(1200px, 92%);
-    
-    /* push whole layout to the right */
-    margin-left: auto;
-    margin-right: 0;
+    width:100%;
+    max-width:1600px;
 
-    position: relative;
-    z-index: 10;
+    margin:0 auto;
+
+    padding:0 40px;
+
+    position:relative;
+    z-index:10;
 }
 
-/* LEFT SIDE */
 .main-content{
-    flex: 1;
-    min-width: 0;
-
-    margin-left: auto; /* pushes it to the right */
+    flex:0 1 900px;
+    max-width:900px;
 }
 
 /* RIGHT PANEL */
 .announcements{
     width:320px;
+    flex-shrink:0;
 
     position:sticky;
     top:110px;
