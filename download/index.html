@@ -12,7 +12,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- SAFE RELATIVE PATH -->
 <link rel="stylesheet" href="./css/app.css">
 </head>
 
@@ -31,21 +30,19 @@
 
 <main class="container">
 
+    <!-- MAIN CARD -->
     <section class="card">
         <div class="icon">📻</div>
         <h1>Vantix Radio</h1>
 
-        <p class="description">FiveM standalone live radio system.</p>
+        <p class="description">FiveM Server Standalone live radio system.</p>
 
         <div class="stats">
             <span>v1.0</span>
             <span>Free</span>
-            <span>Live</span>
         </div>
 
         <div class="features">
-            <div>🎵 Live Stream</div>
-            <div>🚗 Vehicle Support</div>
             <div>⚡ Optimized</div>
         </div>
 
@@ -54,9 +51,58 @@
         </div>
     </section>
 
+    <!-- FARMING SIMULATOR SECTION -->
+    <section class="card">
+        <div class="icon">🚜</div>
+        <h2>Farming Simulator Setup</h2>
+
+        <p class="description">
+            Add Vantix Radio to Farming Simulator using custom internet radio support.
+        </p>
+
+        <div class="features">
+            <div>📁 Open XML File</div>
+            <div>🎧 Add Stream Entry</div>
+            <div>🎮 In-Game Radio Support</div>
+        </div>
+
+        <div class="code-box">
+            <p><strong>Path:</strong></p>
+            <code>Documents\My Games\FarmingSimulator2025\music\streamingInternetRadios.xml</code>
+
+            <p><strong>Add this line:</strong></p>
+            <code>&lt;streamingInternetRadio href="https://eu8.fastcast4u.com/proxy/vantixradio/stream" /&gt;</code>
+        </div>
+    </section>
+
+    <!-- ETS / ATS SECTION -->
+    <section class="card">
+        <div class="icon">🚛</div>
+        <h2>ETS2 / American Truck Simulator Setup</h2>
+
+        <p class="description">
+            Add Vantix Radio to SCS Software games using live_streams.sii.
+        </p>
+
+        <div class="features">
+            <div>📄 Edit live_streams.sii</div>
+            <div>🎧 Add Stream Entry</div>
+            <div>🚚 In-Game Radio List</div>
+        </div>
+
+        <div class="code-box">
+            <p><strong>Path:</strong></p>
+            <code>Documents\Euro Truck Simulator 2\live_streams.sii</code>
+
+            <p><strong>Add this line:</strong></p>
+            <code>stream_data[0]: "https://eu8.fastcast4u.com/proxy/vantixradio/stream|Vantix Radio|Variety|EN|128"</code>
+
+            <p><strong>Note:</strong> Increase index if you already have stations installed.</p>
+        </div>
+    </section>
+
 </main>
 
-<!-- SAFE SCRIPT LOAD -->
 <script src="./js/app.js" defer></script>
 
 </body>
