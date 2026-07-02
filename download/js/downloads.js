@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // BUTTON CLICK EFFECTS
+    const downloadURL =
+        "https://github.com/Vantix-Development/VRRadio/releases/latest";
+
+    // BUTTON CLICK EFFECTS (safe + reusable)
     document.querySelectorAll("button").forEach(btn => {
         btn.addEventListener("click", () => {
 
@@ -13,13 +16,52 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // OPTIONAL: Download button behavior
+    // DOWNLOAD BUTTON (UX IMPROVED)
     const downloadBtn = document.querySelector(".download-btn");
 
     if (downloadBtn) {
+
+        let isDownloading = false;
+
         downloadBtn.addEventListener("click", () => {
-            // replace with your real file later
-            window.open("https://github.com/Vantix-Development/VRRadio/releases/latest", "_blank");
+
+            if (isDownloading) return;
+            isDownloading = true;
+
+            const originalText = downloadBtn.textContent;
+
+            // UI FEEDBACK
+            downloadBtn.textContent = "Preparing Download...";
+            downloadBtn.disabled = true;
+            downloadBtn.style.opacity = "0.7";
+            downloadBtn.style.cursor = "not-allowed";
+
+            // small delay = feels like real action
+            setTimeout(() => {
+
+                downloadBtn.textContent = "Downloading...";
+
+                // trigger download
+                const a = document.createElement("a");
+                a.href = downloadURL;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                // reset after short UX delay
+                setTimeout(() => {
+                    downloadBtn.textContent = originalText;
+                    downloadBtn.disabled = false;
+                    downloadBtn.style.opacity = "";
+                    downloadBtn.style.cursor = "";
+
+                    isDownloading = false;
+
+                }, 1200);
+
+            }, 600);
         });
     }
 
