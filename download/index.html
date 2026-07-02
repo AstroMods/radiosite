@@ -12,25 +12,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- YOUR CSS -->
-<link rel="stylesheet" href="css/app.css">
-
+<!-- SAFE RELATIVE PATH -->
+<link rel="stylesheet" href="./css/app.css">
 </head>
 
 <body>
 
 <div class="background"></div>
 
-<div class="top-title">
+<header class="top-title">
     <h2>🎧 Vantix Game Setup Hub</h2>
     <p>Connect Vantix Radio to your favorite games</p>
-</div>
+</header>
 
-<a href="/" class="back-btn">← Back to Home</a>
+<nav>
+    <a class="back-btn" href="./index.html">← Back to Home</a>
+</nav>
 
 <main class="container">
 
-    <div class="card">
+    <section class="card">
         <div class="icon">📻</div>
         <h1>Vantix Radio</h1>
 
@@ -49,14 +50,14 @@
         </div>
 
         <div class="buttons">
-            <button class="download-btn">Download</button>
+            <button class="download-btn" type="button">Download</button>
         </div>
-    </div>
+    </section>
 
 </main>
 
-<!-- YOUR JS -->
-<script src="js/app.js"></script>
+<!-- SAFE SCRIPT LOAD -->
+<script src="./js/app.js" defer></script>
 
 </body>
 </html>
