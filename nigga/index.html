@@ -2,23 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MYRO.EXE</title>
 
 <link rel="stylesheet" href="app.css">
+
+<script src="app.js" defer></script>
 </head>
 
 <body>
+
+<noscript>
+    <div style="color:red; text-align:center; padding:20px;">
+        JavaScript is required to summon Myro.exe.
+    </div>
+</noscript>
 
 <div class="box">
     <div class="face">😎</div>
     <h1>MYRO.EXE</h1>
     <p>Warning: This user has too much main character energy.</p>
 
-    <button onclick="summonMyro()">Summon Myro</button>
+    <button id="summonBtn">Summon Myro</button>
 
     <div id="msg"></div>
 </div>
 
-<script src="app.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("summonBtn");
+
+    if (btn) {
+        btn.addEventListener("click", () => {
+            if (typeof summonMyro === "function") {
+                summonMyro();
+            } else {
+                console.warn("summonMyro is not defined");
+            }
+        });
+    }
+});
+</script>
+
 </body>
 </html>
