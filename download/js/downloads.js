@@ -1,27 +1,26 @@
-const githubDownload =
-'https://github.com/Vantix-Development/VRRadio/releases/latest';
+document.addEventListener("DOMContentLoaded", () => {
 
-const radioWebsite =
-'https://radio.vantixurbex.shop';
+    // BUTTON CLICK EFFECTS
+    document.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
 
-document
-.getElementById('downloadBtn')
-.addEventListener('click', () => {
+            btn.style.transform = "scale(0.96)";
 
-    window.open(
-        githubDownload,
-        '_blank'
-    );
+            setTimeout(() => {
+                btn.style.transform = "";
+            }, 120);
 
-});
+        });
+    });
 
-document
-.getElementById('radioBtn')
-.addEventListener('click', () => {
+    // OPTIONAL: Download button behavior
+    const downloadBtn = document.querySelector(".download-btn");
 
-    window.open(
-        radioWebsite,
-        '_blank'
-    );
+    if (downloadBtn) {
+        downloadBtn.addEventListener("click", () => {
+            // replace with your real file later
+            window.open("https://github.com/Vantix-Development/VRRadio/releases/latest", "_blank");
+        });
+    }
 
 });
