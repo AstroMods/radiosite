@@ -22,7 +22,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # --- HTML check (basic validation) ---
+      # ✅ FIX: explicitly use Node 20 (removes GitHub warning)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # --- HTML check ---
       - name: Install htmlhint
         run: npm install -g htmlhint
 
@@ -64,6 +71,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # (optional but keeps environments consistent)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
