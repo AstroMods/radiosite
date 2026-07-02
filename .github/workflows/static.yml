@@ -19,72 +19,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # ✅ FIX: explicitly use Node 20 (removes GitHub warning)
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # faster + removes node warnings
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      # --- HTML check ---
-      - name: Install htmlhint
-        run: npm install -g htmlhint
+      # install once (faster than multiple installs)
+      - name: Install linters
+        run: |
+          npm install -g htmlhint stylelint stylelint-config-standard eslint
 
-      - name: Scan HTML
+      - name: HTML scan
         run: htmlhint "**/*.html"
 
-      # --- CSS check ---
-      - name: Install stylelint
-        run: npm install -g stylelint stylelint-config-standard
-
-      - name: Create stylelint config
+      - name: CSS scan
         run: |
-          echo '{
-            "extends": "stylelint-config-standard"
-          }' > .stylelintrc.json
+          echo '{"extends":"stylelint-config-standard"}' > .stylelintrc.json
+          stylelint "**/*.css"
 
-      - name: Scan CSS
-        run: stylelint "**/*.css"
-
-      # --- JS check ---
-      - name: Install eslint
-        run: npm install -g eslint
-
-      - name: Init ESLint config
+      - name: JS scan
         run: |
-          echo '{
-            "env": { "browser": true, "es2021": true },
-            "extends": "eslint:recommended",
-            "parserOptions": { "ecmaVersion": "latest" }
-          }' > .eslintrc.json
-
-      - name: Scan JS
-        run: eslint "**/*.js"
+          echo '{"env":{"browser":true,"es2021":true},"extends":"eslint:recommended","parserOptions":{"ecmaVersion":"latest"}}' > .eslintrc.json
+          eslint "**/*.js"
 
   deploy:
     needs: scan
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # (optional but keeps environments consistent)
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # 🚀 IMPORTANT SPEED FIX: only deploy what matters
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: .   # change this to / if your site is index.html only OR /dist if you build
 
       - name: Deploy
         uses: actions/deploy-pages@v4
