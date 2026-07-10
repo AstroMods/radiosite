@@ -1,100 +1,247 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+// Vantix Radio - Cloudflare Live Visitor Counter
 
-const supabase = createClient(
-  "https://roxffpgzusrbynuuehwd.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJveGZmcGd6dXNyYnludXVlaHdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4OTMzMTYsImV4cCI6MjA5ODQ2OTMxNn0.hd1S7IO_BfeQH6fY5bBRrxBQODVETu0FlqwDaVBAwQg"
-);
+const WORKER_URL =
+    "https://api.vantixradio.online";
+
 
 let userId = localStorage.getItem("uid");
 
+
 if (!userId) {
-  userId = crypto.randomUUID();
-  localStorage.setItem("uid", userId);
+
+    userId = crypto.randomUUID();
+
+    localStorage.setItem(
+        "uid",
+        userId
+    );
+
 }
 
-// smooth counter animation
+
+// Smooth counter animation
+
 let currentDisplayed = 0;
 
+
 function animateCount(target) {
-  const step = () => {
-    if (currentDisplayed === target) return;
 
-    const diff = target - currentDisplayed;
-    currentDisplayed += Math.sign(diff);
+    const counter =
+        document.getElementById(
+            "listenerCount"
+        );
 
-    document.getElementById("listenerCount").textContent = currentDisplayed;
 
-    requestAnimationFrame(step);
-  };
+    if (!counter) return;
 
-  step();
+
+    function step() {
+
+        if (currentDisplayed === target)
+            return;
+
+
+        currentDisplayed +=
+            Math.sign(
+                target - currentDisplayed
+            );
+
+
+        counter.textContent =
+            currentDisplayed;
+
+
+        requestAnimationFrame(step);
+
+    }
+
+
+    step();
+
 }
 
-// LIVE badge toggle
+
+
+// Live badge
+
 function updateLiveBadge(count) {
-  let badge = document.getElementById("liveBadge");
 
-  if (!badge) {
-    badge = document.createElement("span");
-    badge.id = "liveBadge";
-    badge.style.marginLeft = "8px";
-    badge.style.padding = "2px 6px";
-    badge.style.fontSize = "10px";
-    badge.style.background = "red";
-    badge.style.color = "white";
-    badge.style.borderRadius = "4px";
-    document.querySelector(".listener-counter").appendChild(badge);
-  }
+    const container =
+        document.querySelector(
+            ".listener-counter"
+        );
 
-  badge.textContent = count > 0 ? "LIVE" : "OFFLINE";
-  badge.style.background = count > 0 ? "red" : "gray";
+
+    if (!container)
+        return;
+
+
+
+    let badge =
+        document.getElementById(
+            "liveBadge"
+        );
+
+
+    if (!badge) {
+
+        badge =
+        document.createElement(
+            "span"
+        );
+
+
+        badge.id =
+            "liveBadge";
+
+
+        badge.style.marginLeft =
+            "8px";
+
+
+        badge.style.padding =
+            "3px 8px";
+
+
+        badge.style.fontSize =
+            "11px";
+
+
+        badge.style.color =
+            "#fff";
+
+
+        badge.style.borderRadius =
+            "5px";
+
+
+        container.appendChild(
+            badge
+        );
+
+    }
+
+
+
+    badge.textContent =
+        count > 0
+        ? "LIVE"
+        : "OFFLINE";
+
+
+    badge.style.background =
+        count > 0
+        ? "red"
+        : "gray";
+
 }
 
-async function goOnline() {
-  try {
-    await supabase.from("online_users").upsert({
-      id: userId,
-      last_seen: Date.now()
-    });
-  } catch (err) {
-    console.error("goOnline error:", err);
-  }
+
+
+// Send heartbeat
+
+async function heartbeat() {
+
+    try {
+
+        await fetch(
+            WORKER_URL + "/heartbeat",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                JSON.stringify({
+                    id:userId
+                })
+            }
+        );
+
+
+    } catch(err) {
+
+        console.error(
+            "Heartbeat failed:",
+            err
+        );
+
+    }
+
 }
 
-async function updateCount() {
-  try {
-    const { data, error } = await supabase
-      .from("online_users")
-      .select("id");
 
-    if (error) throw error;
 
-    const count = data?.length || 0;
+// Get visitor count
 
-    animateCount(count);
-    updateLiveBadge(count);
+async function getVisitors() {
 
-  } catch (err) {
-    console.error("updateCount error:", err);
-    animateCount(0);
-    updateLiveBadge(0);
-  }
+    try {
+
+        const response =
+            await fetch(
+                WORKER_URL + "/online"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        animateCount(
+            data.online || 0
+        );
+
+
+        updateLiveBadge(
+            data.online || 0
+        );
+
+
+    } catch(err) {
+
+
+        console.error(
+            "Visitor count failed:",
+            err
+        );
+
+
+        animateCount(0);
+
+        updateLiveBadge(0);
+
+    }
+
 }
 
-window.addEventListener("beforeunload", async () => {
-  try {
-    await supabase.from("online_users").delete().eq("id", userId);
-  } catch (err) {}
-});
 
-async function start() {
-  await goOnline();
-  await updateCount();
 
-  setInterval(async () => {
-    await goOnline();
-    await updateCount();
-  }, 5000);
+// Start
+
+async function startTracker() {
+
+    await heartbeat();
+
+    await getVisitors();
+
+
+
+    setInterval(
+        async () => {
+
+            await heartbeat();
+
+            await getVisitors();
+
+        },
+        10000
+    );
+
 }
 
-start();
+
+startTracker();
