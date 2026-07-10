@@ -20,9 +20,9 @@ const presentersData = [
     image: "https://cdn.discordapp.com/avatars/1418823351312453652/e8317cb908c45a239b00546a3655e791.png"
   },
    {
-    name: "Bandit",
-    role: "Directors of Operations",
-    image: "https://cdn.discordapp.com/avatars/1251639383803560019/1972a62b6007c35255ecee92f5ab2203.png"
+    name: "Frost",
+    role: "Station Presenter",
+    image: "https://cdn.discordapp.com/avatars/1433554476899504243/32d591af6da05ff81023ed1e8c02d256.png"
   },
   {
     name: "Ghost",
