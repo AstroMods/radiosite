@@ -25,9 +25,9 @@ const presentersData = [
     image: "https://cdn.discordapp.com/avatars/1251639383803560019/1972a62b6007c35255ecee92f5ab2203.png"
   },
   {
-    name: "Dom T.",
+    name: "Ghost",
     role: "Station Presenter",
-    image: "https://cdn.discordapp.com/avatars/1125549199308627988/492503f9c495b7a57e88f2d661fda641.png"
+    image: "https://cdn.discordapp.com/avatars/1173825128384180285/06dc93f066151148530d650da90936c7.png"
   },
    {
     name: "ghostdakid",
