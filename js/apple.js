@@ -7,7 +7,7 @@ function setupAppleMediaSession() {
     // iOS / Safari Media Session support check
     if (!("mediaSession" in navigator)) return;
 
-    const artworkURL = "https://radio.vantixurbex.shop/assets/v1sg.png";
+    const artworkURL = "https://vantixradio.online/assets/v1sg.png";
 
     try {
         navigator.mediaSession.metadata = new MediaMetadata({
