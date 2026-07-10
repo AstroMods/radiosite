@@ -4,7 +4,7 @@
 
 /* 📅 SCHEDULE */
 const scheduleData = [
-  { time: "7PM EST - 9PM EST", title: "EMO NIGHT /w Vantix" }
+  { time: "COMING SOON", title: "EMO NIGHT /w Vantix" }
 ];
 
 /* 🎙️ PRESENTERS */
