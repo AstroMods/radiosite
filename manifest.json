@@ -1,21 +1,81 @@
 {
+  "id": "/",
   "name": "Vantix Radio",
-  "short_name": "Vantix Radio",
-  "start_url": "/",
+  "short_name": "Vantix",
+  "description": "Listen to Vantix Radio live 24/7.",
+  "lang": "en-US",
+  "dir": "ltr",
+
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+
+  "orientation": "portrait",
+
   "background_color": "#0f172a",
   "theme_color": "#0ea5e9",
-  "description": "Live 24/7 Radio for Andreas Initiative Roleplay",
+
+  "categories": [
+    "music",
+    "entertainment"
+  ],
+
+  "prefer_related_applications": false,
+
   "icons": [
     {
-      "src": "assets/icon.png",
-      "sizes": "192x192",
+      "src": "/assets/icon-72.png",
+      "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "assets/icon.png",
-      "sizes": "512x512",
+      "src": "/assets/icon-96.png",
+      "sizes": "96x96",
       "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
