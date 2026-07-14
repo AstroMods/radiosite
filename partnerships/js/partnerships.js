@@ -23,7 +23,7 @@ document.getElementById("discord");
 if(discord){
 
 discord.href =
-"https://discord.gg/YOUR-LA-ROLEPLAY-INVITE";
+"https://discord.gg/8gp37Ek6tj";
 
 }
 
