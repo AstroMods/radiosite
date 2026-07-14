@@ -1,4 +1,5 @@
-// Vantix Radio - Premium Song Request System
+// Vantix Radio - Secure Song Request System
+// Cloudflare Worker Version
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -8,158 +9,432 @@ document.addEventListener("DOMContentLoaded", () => {
     const result =
         document.getElementById("result");
 
-    const webhook =
-        "https://discord.com/api/webhooks/1521948838078976200/3yjzbQfZnE1NBzJnBKe9sM9oRXZwS8W6x-0lGtPvIlg1_JYQqDQIcJw2M-PMtCu72gYJ";
+
+    /*
+    ============================
+    CLOUDFLARE WORKER URL
+    ============================
+    */
+
+    const WORKER_URL =
+        "https://vantixradio.vincentyusko-cfalls.workers.dev";
+
+
 
     if (!form) return;
 
-    form.addEventListener("submit", async (e) => {
+
+
+    /*
+    ============================
+    SETTINGS
+    ============================
+    */
+
+
+    const COOLDOWN =
+        5 * 60 * 1000;
+
+
+
+    /*
+    ============================
+    HELPERS
+    ============================
+    */
+
+
+    function setMessage(message,color){
+
+        if(!result) return;
+
+        result.textContent =
+            message;
+
+        result.style.color =
+            color;
+
+    }
+
+
+
+    function cooldownActive(){
+
+        const last =
+            localStorage.getItem(
+                "vantix_request_time"
+            );
+
+
+        if(!last)
+            return false;
+
+
+
+        return (
+            Date.now() -
+            Number(last)
+        ) < COOLDOWN;
+
+    }
+
+
+
+
+    function remainingTime(){
+
+        const last =
+            Number(
+                localStorage.getItem(
+                    "vantix_request_time"
+                )
+            );
+
+
+        const remaining =
+            COOLDOWN -
+            (
+                Date.now()
+                -
+                last
+            );
+
+
+        return Math.ceil(
+            remaining / 60000
+        );
+
+    }
+
+
+
+
+
+    /*
+    ============================
+    SUBMIT FORM
+    ============================
+    */
+
+
+    form.addEventListener(
+    "submit",
+    async (e)=>{
+
 
         e.preventDefault();
 
+
+
         const artist =
-            document.getElementById("artist")
+            document
+            .getElementById("artist")
             .value
             .trim();
+
+
 
         const title =
-            document.getElementById("title")
+            document
+            .getElementById("title")
             .value
             .trim();
+
+
 
         const sender =
-            document.getElementById("sender")
+            document
+            .getElementById("sender")
             .value
             .trim();
 
-        if (!artist || !title || !sender) {
 
-            result.textContent =
-                "⚠️ Please complete all fields.";
 
-            result.style.color =
-                "#f59e0b";
+
+
+        if(
+            !artist ||
+            !title ||
+            !sender
+        ){
+
+            setMessage(
+                "⚠️ Please complete all fields.",
+                "#f59e0b"
+            );
 
             return;
+
         }
 
-        result.textContent =
-            "📡 Sending request...";
 
-        result.style.color =
-            "#38bdf8";
+
+
+
+        /*
+        ============================
+        LENGTH CHECK
+        ============================
+        */
+
+
+        if(
+
+            artist.length > 60 ||
+            title.length > 100 ||
+            sender.length > 40
+
+        ){
+
+            setMessage(
+                "⚠️ Your request is too long.",
+                "#ef4444"
+            );
+
+            return;
+
+        }
+
+
+
+
+
+        /*
+        ============================
+        COOLDOWN
+        ============================
+        */
+
+
+        if(
+            cooldownActive()
+        ){
+
+            setMessage(
+
+                `⏳ Please wait ${remainingTime()} minute(s) before requesting again.`,
+
+                "#f59e0b"
+
+            );
+
+
+            return;
+
+        }
+
+
+
+
+
+        setMessage(
+            "📡 Sending request...",
+            "#38bdf8"
+        );
+
+
+
+
+
+        /*
+        ============================
+        TURNSTILE TOKEN
+        ============================
+        */
+
+
+        let turnstileToken = "";
+
+
+
+        if(
+            window.turnstile
+        ){
+
+            const token =
+                document.querySelector(
+                    "[name='cf-turnstile-response']"
+                );
+
+
+            if(token){
+
+                turnstileToken =
+                    token.value;
+
+            }
+
+        }
+
+
+
+
 
         const payload = {
 
-            username:
-                "Vantix Radio",
 
-            avatar_url:
-                "https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png",
+            artist:
+                artist,
 
-            embeds: [
-                {
-                    title:
-                        "🎵 New Song Request",
 
-                    description:
-                        "A new listener request has been submitted to Vantix Radio.",
+            title:
+                title,
 
-                    color:
-                        961689,
 
-                    thumbnail: {
-                        url:
-                            "https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png"
-                    },
+            sender:
+                sender,
 
-                    fields: [
-                        {
-                            name:
-                                "🎤 Artist",
 
-                            value:
-                                artist,
+            turnstile:
+                turnstileToken
 
-                            inline:
-                                true
-                        },
-                        {
-                            name:
-                                "🎶 Song Title",
 
-                            value:
-                                title,
-
-                            inline:
-                                true
-                        },
-                        {
-                            name:
-                                "👤 Requested By",
-
-                            value:
-                                sender,
-
-                            inline:
-                                true
-                        }
-                    ],
-
-                    footer: {
-                        text:
-                            "Vantix Radio • Broadcasting 24/7"
-                    },
-
-                    timestamp:
-                        new Date().toISOString()
-                }
-            ]
         };
+
+
+
+
+
+
 
         try {
 
-            const res =
-                await fetch(webhook, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body:
-                        JSON.stringify(payload)
-                });
 
-            if (res.ok) {
 
-                result.textContent =
-                    "✅ Song request submitted successfully!";
+            const response =
+            await fetch(
 
-                result.style.color =
-                    "#22c55e";
+                WORKER_URL,
+
+                {
+
+                method:
+                    "POST",
+
+
+                headers:
+                {
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+
+                body:
+                    JSON.stringify(payload)
+
+                }
+
+            );
+
+
+
+
+
+            const data =
+                await response.json();
+
+
+
+
+
+
+
+            if(
+                response.ok &&
+                data.success
+            ){
+
+
+                localStorage.setItem(
+
+                    "vantix_request_time",
+
+                    Date.now()
+
+                );
+
+
+
+                setMessage(
+
+                    "✅ Song request submitted successfully!",
+
+                    "#22c55e"
+
+                );
+
 
                 form.reset();
 
-            } else {
 
-                result.textContent =
-                    "❌ Failed to send request.";
 
-                result.style.color =
-                    "#ef4444";
+
+                if(
+                    window.turnstile
+                ){
+
+                    turnstile.reset();
+
+                }
+
+
+
             }
 
-        } catch (err) {
+            else {
 
-            console.error(err);
 
-            result.textContent =
-                "❌ Network error while sending request.";
 
-            result.style.color =
-                "#ef4444";
+                setMessage(
+
+                    "❌ " +
+                    (
+                        data.error ||
+                        "Request failed."
+                    ),
+
+                    "#ef4444"
+
+                );
+
+
+            }
+
+
+
+
+
         }
 
+        catch(error){
+
+
+
+            console.error(
+                "Request Error:",
+                error
+            );
+
+
+
+            setMessage(
+
+                "❌ Unable to connect to request server.",
+
+                "#ef4444"
+
+            );
+
+
+
+        }
+
+
+
+
     });
+
 
 });
