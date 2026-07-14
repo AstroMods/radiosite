@@ -1,244 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Vantix Radio Status</title>
-
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        body{
-            min-height:100vh;
-            font-family:Inter,Arial,sans-serif;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #0f172a,
-                    #111827,
-                    #1e293b
-                );
-
-            color:white;
-
-            display:flex;
-            justify-content:center;
-            align-items:center;
-
-            padding:20px;
-        }
-
-        .container{
-            width:100%;
-            max-width:900px;
-        }
-
-        .status-card{
-            background:rgba(255,255,255,.05);
-
-            border:1px solid rgba(255,255,255,.08);
-            border-radius:24px;
-
-            padding:40px;
-
-            backdrop-filter:blur(20px);
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.4);
-        }
-
-        .logo{
-            text-align:center;
-            font-size:2.2rem;
-            font-weight:900;
-            margin-bottom:10px;
-        }
-
-        .subtitle{
-            text-align:center;
-            color:#94a3b8;
-            margin-bottom:35px;
-        }
-
-        .overall-status{
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:12px;
-
-            margin-bottom:35px;
-
-            font-size:1.2rem;
-            font-weight:700;
-            color:#22c55e;
-        }
-
-        .dot{
-            width:14px;
-            height:14px;
-
-            border-radius:50%;
-            background:#22c55e;
-
-            animation:pulse 2s infinite;
-        }
-
-        .services{
-            display:grid;
-            gap:15px;
-        }
-
-        .service{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-
-            padding:18px 20px;
-
-            background:rgba(255,255,255,.04);
-
-            border:1px solid rgba(255,255,255,.06);
-            border-radius:16px;
-        }
-
-        .service-name{
-            font-weight:600;
-        }
-
-        .service-status{
-            color:#22c55e;
-            font-weight:700;
-        }
-
-        .footer{
-            margin-top:30px;
-            text-align:center;
-            color:#64748b;
-            font-size:.9rem;
-        }
-
-        .home-btn{
-            display:inline-block;
-
-            margin-top:25px;
-            padding:12px 24px;
-
-            text-decoration:none;
-            color:white;
-
-            border-radius:12px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #38bdf8,
-                    #f97316
-                );
-
-            font-weight:700;
-        }
-
-        @keyframes pulse{
-            0%{
-                transform:scale(1);
-                opacity:1;
-            }
-
-            50%{
-                transform:scale(1.3);
-                opacity:.6;
-            }
-
-            100%{
-                transform:scale(1);
-                opacity:1;
-            }
-        }
-
-        @media(max-width:768px){
-            .status-card{
-                padding:25px;
-            }
-
-            .service{
-                flex-direction:column;
-                gap:8px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-
-    <div class="status-card">
-
-        <div class="logo">
-            🎵 Vantix Radio
-        </div>
-
-        <div class="subtitle">
-            Real-time service monitoring
-        </div>
-
-        <div class="overall-status">
-            <span class="dot"></span>
-            All Systems Operational
-        </div>
-
-        <div class="services">
-
-            <div class="service">
-                <span class="service-name">Radio Stream</span>
-                <span class="service-status">Operational</span>
-            </div>
-
-            <div class="service">
-                <span class="service-name">Website</span>
-                <span class="service-status">Operational</span>
-            </div>
-
-            <div class="service">
-                <span class="service-name">Song Requests</span>
-                <span class="service-status">Operational</span>
-            </div>
-
-            <div class="service">
-                <span class="service-name">Discord Bot</span>
-                <span class="service-status">Operational</span>
-            </div>
-
-            <div class="service">
-                <span class="service-name">Download Services</span>
-                <span class="service-status">Operational</span>
-            </div>
-
-        </div>
-
-        <div style="text-align:center;">
-            <a href="/" class="home-btn">
-                Return Home
-            </a>
-        </div>
-
-        <div class="footer">
-            Last Updated: <span id="lastUpdated"></span>
-        </div>
-
-    </div>
-
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vantix Radio Status</title>
+<link rel="stylesheet" href="css/status.css">
+</head><body>
+<div class="bg"></div>
+<main class="wrap">
+<header class="hero">
+<h1>🎵 Vantix Radio</h1>
+<p>System Status Dashboard</p>
+<div class="overall"><span class="dot"></span>All Systems Operational</div>
+<div class="cards">
+<div class="card"><h3>99.99%</h3><span>Uptime</span></div>
+<div class="card"><h3>24/7</h3><span>Monitoring</span></div>
+<div class="card"><h3 id="latency">28ms</h3><span>Response</span></div>
 </div>
-
-<script>
-document.getElementById("lastUpdated").textContent =
-    new Date().toLocaleString();
-</script>
-
-</body>
-</html>
+</header>
+<section class="panel">
+<div class="row"><b>📻 Radio Stream</b><span class="ok">Operational</span></div>
+<div class="row"><b>🌐 Website</b><span class="ok">Operational</span></div>
+<div class="row"><b>🎵 Song Requests</b><span class="ok">Operational</span></div>
+<div class="row"><b>🤖 Discord Bot</b><span class="ok">Operational</span></div>
+<div class="row"><b>⬇ Downloads</b><span class="ok">Operational</span></div>
+</section>
+<section class="panel">
+<h2>Recent Incidents</h2>
+<p>✅ No incidents reported in the last 90 days.</p>
+</section>
+<footer>
+<a class="btn" href="/">Return Home</a>
+<p>Last Updated: <span id="lastUpdated"></span></p>
+</footer>
+</main>
+<script src="js/status.js"></script>
+</body></html>
