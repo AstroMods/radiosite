@@ -2,126 +2,125 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const player =
-        document.getElementById("radioPlayer");
+   const player =
+      document.getElementById("radioPlayer");
 
-    const playBtn =
-        document.getElementById("playBtn");
+   const playBtn =
+      document.getElementById("playBtn");
 
-    const volumeSlider =
-        document.getElementById("volumeSlider");
+   const volumeSlider =
+      document.getElementById("volumeSlider");
 
-    const volumeValue =
-        document.getElementById("volumeValue");
+   const volumeValue =
+      document.getElementById("volumeValue");
 
-    const statusText =
-        document.getElementById("statusText");
-
-
-    if (!player || !playBtn || !volumeSlider || !volumeValue || !statusText) {
-        console.error("Vantix Radio Player: Missing required HTML elements");
-        return;
-    }
+   const statusText =
+      document.getElementById("statusText");
 
 
-    const STREAM_URL =
-        "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
+   if (!player || !playBtn || !volumeSlider || !volumeValue || !statusText) {
+      console.error("Vantix Radio Player: Missing required HTML elements");
+      return;
+   }
 
 
-    let reconnecting = false;
+   const STREAM_URL =
+      "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
 
 
-    player.src = STREAM_URL;
-    player.preload = "auto";
+   let reconnecting = false;
 
 
-    /* =========================
-       CROSS PAGE MEMORY
-    ========================= */
-
-    const WAS_PLAYING =
-        sessionStorage.getItem("vantix_playing") === "true";
+   player.src = STREAM_URL;
+   player.preload = "auto";
 
 
-    if (WAS_PLAYING) {
+   /* =========================
+      CROSS PAGE MEMORY
+   ========================= */
 
-        setTimeout(() => {
-
-            player.play()
-                .catch(() => {});
-
-        }, 300);
-
-    }
+   const WAS_PLAYING =
+      sessionStorage.getItem("vantix_playing") === "true";
 
 
-    function savePlayState(isPlaying) {
+   if (WAS_PLAYING) {
 
-        sessionStorage.setItem(
-            "vantix_playing",
-            isPlaying ? "true" : "false"
-        );
+      setTimeout(() => {
 
-    }
+         player.play()
+            .catch(() => {});
 
+      }, 300);
 
-    function setStatus(text) {
-
-        statusText.textContent = text;
-
-    }
+   }
 
 
+   function savePlayState(isPlaying) {
 
-    /* =========================
-       VOLUME
-    ========================= */
+      sessionStorage.setItem(
+         "vantix_playing",
+         isPlaying ? "true" : "false"
+      );
 
-    const savedVolume =
-        localStorage.getItem("vantix_volume");
-
-
-    if (savedVolume !== null) {
-
-        player.volume =
-            parseFloat(savedVolume);
-
-        volumeSlider.value =
-            savedVolume;
-
-    } else {
-
-        player.volume = 1;
-        volumeSlider.value = 1;
-
-    }
+   }
 
 
-    function updateVolume() {
+   function setStatus(text) {
 
-        const volume =
-            parseFloat(volumeSlider.value);
+      statusText.textContent = text;
 
-
-        player.volume = volume;
+   }
 
 
-        volumeValue.textContent =
-            Math.round(volume * 100) + "%";
+   /* =========================
+      VOLUME
+   ========================= */
+
+   const savedVolume =
+      localStorage.getItem("vantix_volume");
 
 
-        localStorage.setItem(
-            "vantix_volume",
-            volume
-        );
+   if (savedVolume !== null) {
+
+      player.volume =
+         parseFloat(savedVolume);
+
+      volumeSlider.value =
+         savedVolume;
+
+   } else {
+
+      player.volume = 1;
+      volumeSlider.value = 1;
+
+   }
 
 
-        const percent =
-            volume * 100;
+   function updateVolume() {
+
+      const volume =
+         parseFloat(volumeSlider.value);
 
 
-        volumeSlider.style.background =
-            `linear-gradient(
+      player.volume = volume;
+
+
+      volumeValue.textContent =
+         Math.round(volume * 100) + "%";
+
+
+      localStorage.setItem(
+         "vantix_volume",
+         volume
+      );
+
+
+      const percent =
+         volume * 100;
+
+
+      volumeSlider.style.background =
+         `linear-gradient(
                 to right,
                 #38bdf8 0%,
                 #2563eb ${percent}%,
@@ -129,272 +128,264 @@ document.addEventListener("DOMContentLoaded", () => {
                 rgba(255,255,255,.15) 100%
             )`;
 
-    }
+   }
 
 
-    updateVolume();
+   updateVolume();
 
 
-    volumeSlider.addEventListener(
-        "input",
-        updateVolume
-    );
+   volumeSlider.addEventListener(
+      "input",
+      updateVolume
+   );
 
 
+   /* =========================
+      PLAY BUTTON
+   ========================= */
 
-    /* =========================
-       PLAY BUTTON
-    ========================= */
+   async function playRadio() {
 
-    async function playRadio() {
+      try {
 
-        try {
+         await player.play();
 
-            await player.play();
+         savePlayState(true);
 
-            savePlayState(true);
+      } catch (err) {
 
-        } catch (err) {
+         console.error(err);
 
-            console.error(err);
+         setStatus(
+            "Unable to Start Stream"
+         );
 
-            setStatus(
-                "Unable to Start Stream"
-            );
+      }
 
-        }
-
-    }
-
-
-    function stopRadio() {
-
-        player.pause();
-
-        savePlayState(false);
-
-    }
+   }
 
 
+   function stopRadio() {
 
-    playBtn.addEventListener(
-        "click",
-        async () => {
+      player.pause();
 
-            if (player.paused) {
+      savePlayState(false);
 
-                await playRadio();
-
-            } else {
-
-                stopRadio();
-
-            }
-
-        }
-    );
+   }
 
 
+   playBtn.addEventListener(
+      "click",
+      async () => {
 
-    /* =========================
-       PLAYER EVENTS
-    ========================= */
+         if (player.paused) {
 
-    player.addEventListener(
-        "loadstart",
-        () => {
+            await playRadio();
 
-            setStatus(
-                "Connecting..."
-            );
+         } else {
 
-        }
-    );
+            stopRadio();
+
+         }
+
+      }
+   );
 
 
-player.addEventListener(
-    "playing",
-    () => {
+   /* =========================
+      PLAYER EVENTS
+   ========================= */
 
-        playBtn.textContent =
+   player.addEventListener(
+      "loadstart",
+      () => {
+
+         setStatus(
+            "Connecting..."
+         );
+
+      }
+   );
+
+
+   player.addEventListener(
+      "playing",
+      () => {
+
+         playBtn.textContent =
             "⏹ Stop Radio";
 
 
-        playBtn.classList.add(
+         playBtn.classList.add(
             "playing"
-        );
+         );
 
 
-        // Immediately show current song
-        updateNowPlaying();
+         // Immediately show current song
+         updateNowPlaying();
 
-    }
-);
+      }
+   );
 
-    player.addEventListener(
-        "pause",
-        () => {
+   player.addEventListener(
+      "pause",
+      () => {
 
-            setStatus(
-                "Stopped"
-            );
+         setStatus(
+            "Stopped"
+         );
 
 
-            playBtn.textContent =
-                "▶ Play Radio";
+         playBtn.textContent =
+            "▶ Play Radio";
 
 
-            playBtn.classList.remove(
-                "playing"
-            );
+         playBtn.classList.remove(
+            "playing"
+         );
 
-        }
-    );
+      }
+   );
 
 
-    player.addEventListener(
-        "waiting",
-        () => {
+   player.addEventListener(
+      "waiting",
+      () => {
 
-            setStatus(
-                "Buffering..."
-            );
+         setStatus(
+            "Buffering..."
+         );
 
-        }
-    );
+      }
+   );
 
 
-    player.addEventListener(
-        "stalled",
-        reconnectStream
-    );
+   player.addEventListener(
+      "stalled",
+      reconnectStream
+   );
 
 
-    player.addEventListener(
-        "error",
-        reconnectStream
-    );
+   player.addEventListener(
+      "error",
+      reconnectStream
+   );
 
 
+   /* =========================
+      RECONNECT
+   ========================= */
 
-    /* =========================
-       RECONNECT
-    ========================= */
+   function reconnectStream() {
 
-    function reconnectStream() {
+      if (reconnecting)
+         return;
 
-        if (reconnecting)
-            return;
 
+      reconnecting = true;
 
-        reconnecting = true;
 
+      setStatus(
+         "Reconnecting..."
+      );
 
-        setStatus(
-            "Reconnecting..."
-        );
 
+      const wasPlaying = !player.paused;
 
-        const wasPlaying =
-            !player.paused;
 
+      player.src =
+         STREAM_URL +
+         "?t=" +
+         Date.now();
 
-        player.src =
-            STREAM_URL +
-            "?t=" +
-            Date.now();
 
+      player.load();
 
-        player.load();
 
+      if (wasPlaying) {
 
-        if (wasPlaying) {
+         player.play()
+            .catch(() => {});
 
-            player.play()
-                .catch(() => {});
+      }
 
-        }
 
+      setTimeout(() => {
 
-        setTimeout(() => {
+         reconnecting = false;
 
-            reconnecting = false;
+      }, 5000);
 
-        }, 5000);
+   }
 
-    }
 
+   /* =========================
+      HEALTH CHECK
+   ========================= */
 
+   setInterval(() => {
 
-    /* =========================
-       HEALTH CHECK
-    ========================= */
+      if (
+         player.readyState === 0
+      ) {
 
-    setInterval(() => {
+         reconnectStream();
 
-        if (
-            player.readyState === 0
-        ) {
+      }
 
-            reconnectStream();
+   }, 15000);
 
-        }
 
-    }, 15000);
+   /* =========================
+      🎧 NOW PLAYING
+      CENTOVA VERSION
+   ========================= */
 
+   /* =========================
+      🎧 NOW PLAYING
+      CENTOVA VERSION
+   ========================= */
 
+   function updateNowPlaying() {
 
+      const songElement =
+         document.querySelector(".cc_streaminfo");
 
-    /* =========================
-       🎧 NOW PLAYING
-       CENTOVA VERSION
-    ========================= */
 
-/* =========================
-   🎧 NOW PLAYING
-   CENTOVA VERSION
-========================= */
+      if (!songElement)
+         return;
 
-function updateNowPlaying() {
 
-    const songElement =
-        document.querySelector(".cc_streaminfo");
+      const title =
+         songElement.textContent.trim();
 
 
-    if (!songElement)
-        return;
+      if (
+         title &&
+         title !== "Loading ..."
+      ) {
 
-
-    const title =
-        songElement.textContent.trim();
-
-
-    if (
-        title &&
-        title !== "Loading ..."
-    ) {
-
-        statusText.textContent =
+         statusText.textContent =
             "🔴 " + title;
 
 
-    } else {
+      } else {
 
-        statusText.textContent =
+         statusText.textContent =
             "🔴 Live Radio Stream";
 
-    }
+      }
 
-}
-
-
-    updateNowPlaying();
+   }
 
 
-    setInterval(
-    updateNowPlaying,
-    10000
-);
+   updateNowPlaying();
+
+
+   setInterval(
+      updateNowPlaying,
+      10000
+   );
 
 
 });
