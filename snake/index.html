@@ -1,4 +1,194 @@
-<!doctype html><html><head>
-<meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
-<link rel='stylesheet' href='css/main.css'><title>Advanced Snake</title></head>
-<body><canvas id='game' width='600' height='600'></canvas><script src='js/main.js'></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Character Encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- SEO -->
+    <title>Advanced Snake | Ultimate HTML5 Snake Game</title>
+
+    <meta name="description"
+        content="Play Advanced Snake - a modern HTML5 Snake game with animations, particles, achievements, power-ups, and beautiful neon graphics.">
+
+    <meta name="keywords"
+        content="Snake Game, HTML5 Game, JavaScript Game, Canvas Game, Arcade Game, Neon Snake">
+
+    <meta name="author" content="Vantix Development">
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#00eaff">
+    <meta name="color-scheme" content="dark">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Advanced Snake">
+    <meta property="og:description"
+        content="The ultimate browser-based Snake experience.">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background"></div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+
+        <h1>ADVANCED SNAKE</h1>
+
+        <div class="loader">
+            <div class="loader-bar"></div>
+        </div>
+
+        <p>Loading Assets...</p>
+
+    </div>
+
+    <!-- Main Container -->
+    <main class="game-container">
+
+        <!-- Header -->
+        <header class="game-header">
+
+            <h1 class="game-title">
+                🐍 Advanced Snake
+            </h1>
+
+            <p class="subtitle">
+                Modern HTML5 Snake Experience
+            </p>
+
+        </header>
+
+        <!-- HUD -->
+        <section class="hud">
+
+            <div class="stat">
+
+                <span>🏆 Score</span>
+
+                <strong id="score">0</strong>
+
+            </div>
+
+            <div class="stat">
+
+                <span>⭐ High Score</span>
+
+                <strong id="highScore">0</strong>
+
+            </div>
+
+            <div class="stat">
+
+                <span>🎯 Level</span>
+
+                <strong id="level">1</strong>
+
+            </div>
+
+            <div class="stat">
+
+                <span>⚡ Speed</span>
+
+                <strong id="speed">1x</strong>
+
+            </div>
+
+        </section>
+
+        <!-- Game Area -->
+        <section class="game-area">
+
+            <canvas
+                id="game"
+                width="600"
+                height="600"
+                aria-label="Snake Game"
+                role="img">
+            </canvas>
+
+            <!-- Overlay -->
+            <div id="overlay">
+
+                <h2>Press SPACE to Start</h2>
+
+                <button id="startButton">
+                    Play Game
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- Controls -->
+        <section class="controls">
+
+            <button id="pauseButton">
+                ⏸ Pause
+            </button>
+
+            <button id="restartButton">
+                🔄 Restart
+            </button>
+
+            <button id="fullscreenButton">
+                ⛶ Fullscreen
+            </button>
+
+            <button id="settingsButton">
+                ⚙ Settings
+            </button>
+
+        </section>
+
+        <!-- Instructions -->
+        <section class="instructions">
+
+            <h2>Controls</h2>
+
+            <ul>
+
+                <li>⬆️ Move Up</li>
+
+                <li>⬇️ Move Down</li>
+
+                <li>⬅️ Move Left</li>
+
+                <li>➡️ Move Right</li>
+
+                <li>SPACE = Pause</li>
+
+            </ul>
+
+        </section>
+
+        <!-- Footer -->
+        <footer>
+
+            <p>
+                Built with HTML5 Canvas • JavaScript • CSS3
+            </p>
+
+        </footer>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
