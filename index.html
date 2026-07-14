@@ -118,7 +118,7 @@ window.location.href="maintenance.html";
 
 if("serviceWorker" in navigator){
 
-navigator.serviceWorker.register("/sw.js")
+navigator.serviceWorker.register("/js/service-worker.js")
 .then(()=>console.log("Service Worker Registered"))
 .catch(err=>console.log(err));
 
