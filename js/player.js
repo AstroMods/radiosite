@@ -212,26 +212,24 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    player.addEventListener(
-        "playing",
-        () => {
+player.addEventListener(
+    "playing",
+    () => {
 
-            setStatus(
-                "🔴 Live Now Playing"
-            );
-
-
-            playBtn.textContent =
-                "⏹ Stop Radio";
+        playBtn.textContent =
+            "⏹ Stop Radio";
 
 
-            playBtn.classList.add(
-                "playing"
-            );
+        playBtn.classList.add(
+            "playing"
+        );
 
-        }
-    );
 
+        // Immediately show current song
+        updateNowPlaying();
+
+    }
+);
 
     player.addEventListener(
         "pause",
@@ -352,42 +350,42 @@ document.addEventListener("DOMContentLoaded", () => {
        CENTOVA VERSION
     ========================= */
 
-    function updateNowPlaying() {
+/* =========================
+   🎧 NOW PLAYING
+   CENTOVA VERSION
+========================= */
+
+function updateNowPlaying() {
+
+    const songElement =
+        document.querySelector(".cc_streaminfo");
 
 
-        const songElement =
-            document.querySelector(".cc_streaminfo");
+    if (!songElement)
+        return;
 
 
-        if (!songElement)
-            return;
+    const title =
+        songElement.textContent.trim();
 
 
+    if (
+        title &&
+        title !== "Loading ..."
+    ) {
 
-        const title =
-            songElement.textContent.trim();
-
-
-
-        if (
-            title &&
-            title !== "Loading ..."
-        ) {
-
-            setStatus(
-                "🎧 " + title
-            );
+        statusText.textContent =
+            "🔴 " + title;
 
 
-        } else {
+    } else {
 
-            setStatus(
-                "Ready to Play"
-            );
-
-        }
+        statusText.textContent =
+            "🔴 Live Radio Stream";
 
     }
+
+}
 
 
     updateNowPlaying();
