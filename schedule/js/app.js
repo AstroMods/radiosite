@@ -4,13 +4,13 @@
 
 /* 📅 SCHEDULE */
 const scheduleData = [
-  { time: "COMING SOON", title: "EMO NIGHT /w Vantix" }
+  { time: "TBD", title: "EMO NIGHT /w Vantix" }
 ];
 
 /* 🎙️ PRESENTERS */
 const presentersData = [
   {
-    name: "Vantix",
+    name: "Vinnie",
     role: "Chief Executive Officer",
     image: "https://cdn.discordapp.com/avatars/1078071377401221252/c18e95efc45aff8514d1b8f02211d313.png"
   },
@@ -28,6 +28,11 @@ const presentersData = [
     name: "Ghost",
     role: "Station Presenter",
     image: "https://cdn.discordapp.com/avatars/1173825128384180285/06dc93f066151148530d650da90936c7.png"
+  },
+  {
+    name: "Vincent",
+    role: "Station Presenter",
+    image: "https://cdn.discordapp.com/avatars/1356141977107955774/616d97e1f4147da7e545a6fc5d3ed713.png"
   },
    {
     name: "ghostdakid",
