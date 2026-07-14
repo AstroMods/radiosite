@@ -1,427 +1,330 @@
 export default {
+    async fetch(request, env) {
 
-async fetch(request, env) {
+        if (request.method !== "POST") {
+            return new Response(
+                "Method Not Allowed",
+                {
+                    status: 405
+                }
+            );
+        }
 
 
-if(request.method !== "POST") {
+        try {
 
-return new Response(
-"Method Not Allowed",
-{
-status:405
-});
+            const data =
+                await request.json();
 
-}
 
+            const ip =
+                request.headers.get(
+                    "CF-Connecting-IP"
+                );
 
 
-try {
+            const artist =
+                String(data.artist || "")
+                .trim();
 
 
-const data =
-await request.json();
+            const title =
+                String(data.title || "")
+                .trim();
 
 
+            const sender =
+                String(data.sender || "")
+                .trim();
 
-const ip =
-request.headers.get(
-"CF-Connecting-IP"
-);
 
+            const turnstile =
+                data.turnstile;
 
 
-/*
-========================
-INPUT CLEANING
-========================
-*/
 
+            if (!artist || !title || !sender) {
 
-const artist =
-String(data.artist || "")
-.trim();
+                return Response.json({
+                    error:
+                    "Missing fields"
+                },{
+                    status:400
+                });
 
+            }
 
-const title =
-String(data.title || "")
-.trim();
 
 
-const sender =
-String(data.sender || "")
-.trim();
+            /*
+            ====================
+            BAD WORD FILTER
+            ====================
+            */
 
 
-const captcha =
-data.turnstile;
+            const blocked = [
+                "fuck",
+                "shit",
+                "bitch",
+                "porn",
+                "sex",
+                "discord.gg",
+                "http://",
+                "https://"
+            ];
 
 
+            const text =
+            `${artist} ${title} ${sender}`
+            .toLowerCase();
 
-if(!artist || !title || !sender){
 
-return Response.json({
 
-error:
-"Missing information"
+            if(
+                blocked.some(word =>
+                    text.includes(word)
+                )
+            ){
 
-},{
-status:400
-});
+                return Response.json({
 
-}
+                    error:
+                    "Blocked content"
 
+                },{
+                    status:403
+                });
 
+            }
 
-/*
-========================
-LIMIT LENGTH
-========================
-*/
 
 
-if(
 
-artist.length > 60 ||
-title.length > 100 ||
-sender.length > 40
+            /*
+            ====================
+            TURNSTILE
+            ====================
+            */
 
-){
 
-return Response.json({
+            const verify =
+            await fetch(
 
-error:
-"Input too long"
+            "https://challenges.cloudflare.com/turnstile/v0/api/siteverify",
 
-},{
-status:400
-});
+            {
+                method:"POST",
 
-}
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
 
+                body:
+                JSON.stringify({
 
+                    secret:
+                    env.TURNSTILE_SECRET,
 
+                    response:
+                    turnstile,
 
-/*
-========================
-BAD WORD FILTER
-========================
-*/
+                    remoteip:
+                    ip
 
+                })
 
-const blockedWords=[
+            });
 
-"fuck",
-"shit",
-"bitch",
-"cunt",
-"nigger",
-"faggot",
-"porn",
-"sex",
-"discord.gg",
-"http://",
-"https://"
 
-];
 
+            const captcha =
+            await verify.json();
 
-const combined =
-`${artist} ${title} ${sender}`
-.toLowerCase();
 
 
+            if(!captcha.success){
 
-for(
-const word of blockedWords
-){
+                return Response.json({
 
-if(
-combined.includes(word)
-){
+                    error:
+                    "Captcha failed"
 
-return Response.json({
+                },{
+                    status:403
+                });
 
-error:
-"Blocked content"
+            }
 
-},{
-status:403
-});
 
-}
 
-}
 
 
+            /*
+            ====================
+            RATE LIMIT
+            ====================
+            */
 
 
-/*
-========================
-TURNSTILE VERIFY
-========================
-*/
+            const key =
+            `request-${ip}`;
 
 
-const captchaCheck =
-await fetch(
+            const used =
+            await env.RATE_LIMIT.get(key);
 
-"https://challenges.cloudflare.com/turnstile/v0/siteverify",
 
-{
 
-method:"POST",
+            if(used){
 
-headers:{
-"Content-Type":
-"application/json"
-},
+                return Response.json({
 
-body:
-JSON.stringify({
+                    error:
+                    "Please wait before requesting again"
 
-secret:
-env.TURNSTILE_SECRET,
+                },{
+                    status:429
+                });
 
-response:
-captcha,
+            }
 
-remoteip:
-ip
 
-})
 
-}
+            await env.RATE_LIMIT.put(
 
-);
+                key,
 
+                "true",
 
+                {
+                    expirationTtl:
+                    300
+                }
 
-const captchaResult =
-await captchaCheck.json();
+            );
 
 
 
-if(
-!captchaResult.success
-){
 
-return Response.json({
 
-error:
-"Captcha failed"
 
-},{
-status:403
-});
+            /*
+            ====================
+            SEND DISCORD
+            ====================
+            */
 
-}
 
+            const discord =
+            await fetch(
 
+                env.DISCORD_WEBHOOK,
 
+                {
 
+                method:"POST",
 
-/*
-========================
-RATE LIMIT
-========================
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
 
-1 request every 5 minutes
-per IP
 
-*/
+                body:
+                JSON.stringify({
 
+                    username:
+                    "Vantix Radio",
 
-const key =
-`request:${ip}`;
 
+                    embeds:[{
 
+                        title:
+                        "🎵 New Song Request",
 
-const exists =
-await env.RATE_LIMIT.get(key);
 
+                        color:
+                        961689,
 
 
-if(exists){
+                        fields:[
 
+                        {
+                            name:
+                            "🎤 Artist",
 
-return Response.json({
+                            value:
+                            artist
+                        },
 
-error:
-"Please wait before requesting again"
 
-},{
-status:429
-});
+                        {
+                            name:
+                            "🎶 Song",
 
+                            value:
+                            title
+                        },
 
-}
 
+                        {
+                            name:
+                            "👤 Requested By",
 
+                            value:
+                            sender
+                        }
 
-await env.RATE_LIMIT.put(
+                        ],
 
-key,
 
-"true",
+                        footer:{
+                            text:
+                            "Vantix Radio • Secure Requests"
+                        }
 
-{
+                    }]
 
-expirationTtl:
-300
+                })
 
-}
+            });
 
-);
 
 
+            if(!discord.ok){
 
+                throw new Error(
+                    "Discord failed"
+                );
 
+            }
 
-/*
-========================
-SEND DISCORD
-========================
-*/
 
 
-const discord =
-await fetch(
+            return Response.json({
 
-env.DISCORD_WEBHOOK,
+                success:true
 
-{
+            });
 
-method:"POST",
 
-headers:{
 
-"Content-Type":
-"application/json"
+        } catch(error){
 
-},
 
-body:
+            return Response.json({
 
-JSON.stringify({
+                error:
+                "Server error"
 
-username:
-"Vantix Radio",
+            },{
+                status:500
+            });
 
 
-avatar_url:
+        }
 
-"https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png",
-
-
-embeds:[{
-
-
-title:
-"🎵 New Song Request",
-
-
-color:
-961689,
-
-
-fields:[
-
-{
-name:
-"🎤 Artist",
-
-value:
-artist,
-
-inline:true
-},
-
-{
-name:
-"🎶 Song",
-
-value:
-title,
-
-inline:true
-},
-
-{
-name:
-"👤 Requested By",
-
-value:
-sender,
-
-inline:true
-}
-
-],
-
-
-footer:{
-
-text:
-"Vantix Radio • Secure Request System"
-
-},
-
-
-timestamp:
-
-new Date()
-
-}]
-
-
-})
-
-}
-
-);
-
-
-
-if(!discord.ok){
-
-throw new Error(
-"Discord failed"
-);
-
-}
-
-
-
-
-return Response.json({
-
-success:true
-
-});
-
-
-
-}
-
-catch(error){
-
-
-console.error(error);
-
-
-return Response.json({
-
-error:
-"Server Error"
-
-},{
-status:500
-});
-
-
-}
-
-
-}
-
+    }
 };
