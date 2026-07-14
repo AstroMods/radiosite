@@ -1,0 +1,283 @@
+* {
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+
+body {
+
+background:#05070d;
+color:white;
+
+}
+
+
+.background {
+
+position:fixed;
+inset:0;
+
+background:
+radial-gradient(circle at top,#008cff55,transparent 40%),
+radial-gradient(circle bottom,#0066ff33,transparent 50%);
+
+z-index:-1;
+
+}
+
+
+
+header {
+
+text-align:center;
+padding:40px;
+
+}
+
+
+header h1 {
+
+font-size:42px;
+color:#00aaff;
+
+}
+
+
+
+main {
+
+max-width:1000px;
+margin:auto;
+padding:20px;
+
+}
+
+
+
+.hero,
+.card,
+.join {
+
+
+background:
+rgba(255,255,255,.07);
+
+
+border:
+1px solid rgba(255,255,255,.15);
+
+
+backdrop-filter:
+blur(15px);
+
+
+border-radius:20px;
+
+
+padding:35px;
+
+
+margin-bottom:25px;
+
+
+}
+
+
+
+.hero {
+
+text-align:center;
+
+}
+
+
+
+.hero h1 {
+
+font-size:42px;
+margin:20px;
+
+}
+
+
+.badge {
+
+
+background:#008cff;
+
+padding:8px 20px;
+
+border-radius:50px;
+
+display:inline-block;
+
+margin:15px;
+
+}
+
+
+
+.card h2,
+.join h2 {
+
+color:#00aaff;
+
+margin-bottom:15px;
+
+}
+
+
+
+.card p,
+.hero p {
+
+color:#ccc;
+
+line-height:1.7;
+
+}
+
+
+
+.partners {
+
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+}
+
+
+
+.partner-card {
+
+
+text-decoration:none;
+
+color:white;
+
+
+background:
+rgba(255,255,255,.07);
+
+
+padding:30px;
+
+
+border-radius:20px;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.partner-card:hover {
+
+
+transform:translateY(-8px);
+
+
+box-shadow:
+0 0 25px #008cff;
+
+
+}
+
+
+
+.icon {
+
+font-size:50px;
+
+}
+
+
+.partner-card span {
+
+color:#00aaff;
+
+}
+
+
+
+.features {
+
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(200px,1fr));
+
+
+gap:20px;
+
+
+}
+
+
+
+.features div {
+
+
+background:#ffffff10;
+
+padding:20px;
+
+border-radius:15px;
+
+text-align:center;
+
+}
+
+
+
+.join {
+
+text-align:center;
+
+}
+
+
+
+.join a {
+
+
+display:inline-block;
+
+margin-top:20px;
+
+padding:14px 35px;
+
+
+background:#008cff;
+
+color:white;
+
+border-radius:30px;
+
+
+text-decoration:none;
+
+
+}
+
+
+
+footer {
+
+text-align:center;
+
+padding:30px;
+
+color:#777;
+
+}
