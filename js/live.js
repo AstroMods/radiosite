@@ -2,51 +2,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const counter = document.getElementById("listenerCount");
 
-    const STATS_URL =
-        "https://eu8.fastcast4u.com/proxy/vantixradio/stats?json=1";
+    if (!counter) return;
 
-    let intervalStarted = false;
+    // Change this to your Cloudflare Worker or API endpoint
+    const STATS_URL = "https://eu8.fastcast4u.com/proxy/vantixradio/stats?json=1";
+
+    const REFRESH_TIME = 10000;
+    const REQUEST_TIMEOUT = 5000;
+
+    let isFetching = false;
 
     async function updateListeners() {
+
+        if (isFetching) return;
+
+        isFetching = true;
+
+        const controller = new AbortController();
+
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, REQUEST_TIMEOUT);
+
         try {
-            const res = await fetch(STATS_URL, {
-                cache: "no-store"
+
+            const response = await fetch(STATS_URL, {
+                method: "GET",
+                cache: "no-store",
+                signal: controller.signal,
+                headers: {
+                    "Accept": "application/json"
+                }
             });
 
-            if (!res.ok) {
-                throw new Error("HTTP Error: " + res.status);
+            clearTimeout(timeout);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
             }
 
-            const data = await res.json();
+            const data = await response.json();
 
-            const listenersRaw =
-                data?.currentlisteners ??
-                data?.listeners ??
-                data?.active_listeners;
+            const listeners =
+                Number(
+                    data.currentlisteners ??
+                    data.listeners ??
+                    data.active_listeners ??
+                    data.current_listeners ??
+                    data.listener_count ??
+                    0
+                );
 
-            const listeners = Number(listenersRaw);
+            counter.textContent = Number.isFinite(listeners)
+                ? listeners.toLocaleString()
+                : "0";
 
-            if (counter) {
-                counter.textContent =
-                    Number.isFinite(listeners) ? listeners : 0;
-            }
+            counter.classList.remove("offline");
+            counter.classList.add("online");
 
-        } catch (err) {
-            if (counter) {
-                counter.textContent = "0";
-            }
+        } catch (error) {
+
+            console.warn("Listener update failed:", error.message);
+
+            counter.textContent = "Offline";
+
+            counter.classList.remove("online");
+            counter.classList.add("offline");
+
+        } finally {
+
+            clearTimeout(timeout);
+
+            isFetching = false;
+
         }
+
     }
 
-    // initial run
-    updateListeners();
+    // Prevent duplicate intervals
+    if (!window.__vantixListenerInterval) {
 
-    // prevent multiple intervals if script loads twice
-    if (!intervalStarted) {
-        intervalStarted = true;
+        updateListeners();
 
-        setInterval(() => {
-            updateListeners();
-        }, 10000);
+        window.__vantixListenerInterval = setInterval(
+            updateListeners,
+            REFRESH_TIME
+        );
+
     }
+
 });
