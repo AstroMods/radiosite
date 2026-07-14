@@ -1,247 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-      <title>📻 Vantix Radio | Non-Stop Music 24/7</title>
-      <meta name="theme-color" content="#0EA5E9">
-      <!-- Open Graph (Discord / Facebook / iMessage) -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="📻 Vantix Radio | 24/7 Live Music">
-      <meta property="og:description" content="Non-stop music streaming, live requests, and community radio vibes. Listen now on Vantix Radio.">
-      <meta property="og:url" content="https://vantixradio.online">
-      <meta property="og:image" content="https://vantixradio.online/assets/v1sg.png">
-      <meta property="og:image:width" content="1200">
-      <meta property="og:image:height" content="630">
-      <!-- ===== APPLE / iOS SUPPORT ===== -->
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-      <meta name="apple-mobile-web-app-title" content="Vantix Radio">
-      <!-- Home screen icon -->
-      <link rel="apple-touch-icon" href="https://listen.vantixurbex.shop/assets/v1sg.png">
-      <!-- Splash screen (optional but recommended) -->
-      <link rel="apple-touch-startup-image" href="https://vantixradio.online/assets/banner1.png">
-      <!-- Twitter / X Card -->
-      <meta name="twitter:card" content="summary_large_image">
-      <meta name="twitter:title" content="📻 Vantix Radio | 24/7 Live Music">
-      <meta name="twitter:description" content="Non-stop music streaming, live requests, and community radio vibes.">
-      <meta name="twitter:image" content="https://vantixradio.online/assets/v1sg.png">
-      <!-- Optional: Discord embed optimization -->
-      <meta name="twitter:site" content="@vantixradio">
-      <meta name="twitter:creator" content="@vantixradio">
-      <!-- ===== PWA MANIFEST ===== -->
-      <link rel="manifest" href="/manifest.json">
-      <!-- Theme Color -->
-      <meta name="theme-color" content="#0ea5e9">
-      <!-- Android -->
-      <meta name="mobile-web-app-capable" content="yes">
-      <!-- iPhone / iPad -->
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-title" content="Vantix Radio">
-      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-      <!-- Home Screen Icon -->
-      <link rel="apple-touch-icon" href="https://vantixradio.online/assets/v1sg.png">
-      <!-- Favicon -->
-      <link rel="icon" type="image/png" href="https://vantixradio.online/assets/v1sg.png">
-      <!-- Prevent automatic phone number detection -->
-      <meta name="format-detection" content="telephone=no">
-      <!-- Better mobile experience -->
-      <meta name="mobile-web-app-capable" content="yes">
-      <meta name="apple-touch-fullscreen" content="yes">
-      <link
-         id="favicon"
-         rel="icon"
-         type="image/png"
-         href="https://vantixradio.online/assets/v1sg.png"
-         />
-      <!-- CSS -->
-      <link rel="stylesheet" href="css/page.css">
-      <link rel="stylesheet" href="css/player.css">
-      <link rel="stylesheet" href="css/request.css">
-      <link rel="stylesheet" href="css/live.css">
-      <link rel="stylesheet" href="css/foot.css">
-      <link rel="stylesheet" href="css/head.css">
-      <link rel="stylesheet" href="css/an.css">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-      <link rel="manifest" href="/manifest.json">
-      <!-- Maintenance check -->
-      <script>
-         fetch("./status.json")
-             .then(res => res.json())
-             .then(data => {
-                 if (
-                     data.mode === "maintenance" &&
-                     !window.location.pathname.endsWith("maintenance.html")
-                 ) {
-                     window.location.href = "maintenance.html";
-                 }
-             })
-             .catch(console.error);
-      </script>
-      <script>
-         if ("serviceWorker" in navigator) {
-             navigator.serviceWorker.register("/sw.js")
-             .then(() => console.log("Service Worker Registered"))
-             .catch(err => console.log("SW Error:", err));
-         }
-      </script>
-   </head>
-   <body>
-      <!-- BACKGROUND -->
-      <div class="background" aria-hidden="true">
-         <div class="gradient-orb orb-1"></div>
-         <div class="gradient-orb orb-2"></div>
-         <div class="gradient-orb orb-3"></div>
-         <canvas id="particles"></canvas>
-      </div>
-      <!-- HEADER -->
-      <header class="site-header">
-         <a href="/" class="logo-link">
-         <img
-            src="https://vantixradio.online/assets/v1sg.png"
-            alt="Vantix Radio"
-            >
-         <span>Vantix Radio</span>
-         </a>
-         <div class="listener-counter" aria-label="Current live listeners">
-            <span class="listener-icon">🎧</span>
-            <span id="listenerCount" class="online">
-            0
-            </span>
-            <span class="listener-text">
-            Live Listeners
-            </span>
-         </div>
-         <nav class="site-nav">
-            <a href="/">Home</a>
-            <a href="/about">About Us</a>
-            <a href="/schedule">Schedule</a>
-            <a href="/contact">Contact</a>
-            <a href="/partnerships">Contact</a>
-            <a href="/download">Download</a>
-         </nav>
-      </header>
-      <!-- MAIN CONTENT -->
-      <main class="page-content">
-      <!-- LEFT SIDE -->
-      <div class="main-content">
-         <!-- PLAYER -->
-         <div class="player-card">
-            <div class="player-top">
-               <img
-                  class="station-logo"
-                  src="https://vantixradio.online/assets/v1sg.png"
-                  alt="Vantix Radio Logo"
-                  >
-               <div class="live-badge">
-                  <span class="live-dot"></span>
-                  <span id="liveStatus">LIVE 24/7</span>
-               </div>
-            </div>
-            <div class="player-info">
-               <h1 id="stationName">Vantix Radio</h1>
-               <p class="subtitle">
-                  Your Home for Music, Entertainment, and Live Radio
-               </p>
-            </div>
-            <audio id="radioPlayer" preload="auto" crossorigin="anonymous"></audio>
-            <div class="player-controls">
-               <button id="playBtn" class="play-btn" type="button">
-               ▶ <span id="playText">Play Radio</span>
-               </button>
-               <div id="status" class="status">
-                  <span class="status-dot"></span>
-                  <span id="statusText">Ready to Play</span>
-               </div>
-            </div>
-            <div class="volume-section">
-               <label>
-               Volume <span id="volumeValue">100%</span>
-               </label>
-               <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
-            </div>
-         </div>
-         <!-- REQUEST -->
-         <section class="vr-request-wrapper">
-            <div class="vr-request-card">
-               <div class="vr-request-header">
-                  <span class="vr-request-badge">LIVE REQUESTS</span>
-                  <h2>🎵 Song Request Center</h2>
-                  <p>Send a request directly to our Discord server.</p>
-               </div>
-               <form id="requestForm" class="vr-form">
-                  <input type="text" id="artist" placeholder="🎤 Artist Name" required>
-                  <input type="text" id="title" placeholder="🎵 Song Title" required>
-                  <input type="text" id="sender" placeholder="👤 Your Name" required>
-                  <button type="submit" class="vr-submit-btn">
-                  Send Request
-                  </button>
-                  <div id="result"></div>
-               </form>
-            </div>
-         </section>
-      </div>
-      <!-- RIGHT SIDEBAR -->
-      <aside class="radio-sidebar">
-         <!-- ANNOUNCEMENTS -->
-         <div class="announcements">
-            <div class="announcements-header">
-               📢 Live Announcements
-            </div>
-            <div id="announcementList">
-               <div class="announcement-item">
-                  Loading announcements...
-               </div>
-            </div>
-         </div>
-         <!-- RECENT TRACKS -->
-         <div class="sidebar-card">
-            <div class="sidebar-title">
-               🎵 Recently Played
-            </div>
-            <div class="recent-tracks">
-               <script 
-                  language="javascript"
-                  type="text/javascript"
-                  src="https://eu8.fastcast4u.com/system/recenttracks.js"></script>
-            </div>
-         </div>
-         </div>
-      </aside>
-      </div>
-      <!-- FOOTER -->
-      <footer class="site-footer">
-         <div class="footer-glow"></div>
-         <div class="footer-content">
-            <div class="footer-left">
-               <div class="footer-brand">Vantix Radio</div>
-               <div class="footer-sub">Broadcasting 24/7 • High Quality Live Stream</div>
-               <div class="footer-mini">Your Home for Music • Live Radio Entertainment</div>
-            </div>
-            <div class="footer-center">
-               © <span id="year"></span> Vantix Radio. All Rights Reserved.
-               <br>
-               <span class="footer-note">Made with passion for immersive radio experiences</span>
-            </div>
-            <div class="footer-right">
-               <a href="/schedule" class="footer-link">Schedule</a>
-               <a href="/contact" class="footer-link">Contact</a>
-            </div>
-         </div>
-      </footer>
-      <!-- SCRIPTS -->
-      <script src="js/background.js"></script>
-      <script src="js/player.js"></script>
-      <script src="js/request.js"></script>
-      <script src="js/live.js"></script>
-      <script src="https://eu8.fastcast4u.com/system/streaminfo.js"></script>
-      <script src="js/announcements.js"></script>
-      <script src="js/apple.js"></script>
-      <script>
-         document.getElementById("year").textContent =
-             new Date().getFullYear();
-      </script>
-   </body>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>📻 Vantix Radio | Non-Stop Music 24/7</title>
+
+
+<meta name="theme-color" content="#0EA5E9">
+
+
+<!-- SEO -->
+<meta name="description" content="Vantix Radio - Non-stop music streaming, live requests, and community radio vibes. Listen live 24/7.">
+
+
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="📻 Vantix Radio | 24/7 Live Music">
+<meta property="og:description" content="Non-stop music streaming, live requests, and community radio vibes. Listen now on Vantix Radio.">
+<meta property="og:url" content="https://vantixradio.online">
+<meta property="og:image" content="https://vantixradio.online/assets/v1sg.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="📻 Vantix Radio | 24/7 Live Music">
+<meta name="twitter:description" content="Non-stop music streaming, live requests, and community radio vibes.">
+<meta name="twitter:image" content="https://vantixradio.online/assets/v1sg.png">
+<meta name="twitter:site" content="@vantixradio">
+<meta name="twitter:creator" content="@vantixradio">
+
+
+
+<!-- Apple iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vantix Radio">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<link rel="apple-touch-icon" href="https://vantixradio.online/assets/v1sg.png">
+
+<link rel="apple-touch-startup-image" href="https://vantixradio.online/assets/banner1.png">
+
+
+
+<!-- Android / PWA -->
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="manifest" href="/manifest.json">
+
+
+
+<!-- Icons -->
+
+<link rel="icon" type="image/png" href="https://vantixradio.online/assets/v1sg.png">
+
+<meta name="format-detection" content="telephone=no">
+
+
+
+<!-- CSS -->
+
+<link rel="stylesheet" href="css/page.css">
+<link rel="stylesheet" href="css/player.css">
+<link rel="stylesheet" href="css/request.css">
+<link rel="stylesheet" href="css/live.css">
+<link rel="stylesheet" href="css/foot.css">
+<link rel="stylesheet" href="css/head.css">
+<link rel="stylesheet" href="css/an.css">
+
+
+
+<!-- Fonts -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+<!-- Maintenance -->
+
+<script>
+
+fetch("./status.json")
+.then(res => res.json())
+.then(data => {
+
+if(
+data.mode === "maintenance" &&
+!window.location.pathname.endsWith("maintenance.html")
+){
+
+window.location.href="maintenance.html";
+
+}
+
+})
+.catch(()=>{});
+
+
+</script>
+
+
+
+<!-- Service Worker -->
+
+<script>
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register("/sw.js")
+.then(()=>console.log("Service Worker Registered"))
+.catch(err=>console.log(err));
+
+}
+
+</script>
+
+
+</head>
+
+
+
+
+<body>
+
+
+
+<div class="background" aria-hidden="true">
+
+<div class="gradient-orb orb-1"></div>
+<div class="gradient-orb orb-2"></div>
+<div class="gradient-orb orb-3"></div>
+
+<canvas id="particles"></canvas>
+
+</div>
+
+
+
+
+
+<header class="site-header">
+
+
+<a href="/" class="logo-link">
+
+<img src="https://vantixradio.online/assets/v1sg.png"
+alt="Vantix Radio Logo">
+
+<span>
+Vantix Radio
+</span>
+
+</a>
+
+
+
+
+<div class="listener-counter">
+
+<span class="listener-icon">
+🎧
+</span>
+
+
+<span id="listenerCount">
+0
+</span>
+
+
+<span class="listener-text">
+Live Listeners
+</span>
+
+</div>
+
+
+
+
+
+<nav class="site-nav">
+
+<a href="/">
+Home
+</a>
+
+<a href="/about">
+About Us
+</a>
+
+<a href="/schedule">
+Schedule
+</a>
+
+<a href="/partnerships">
+Partnerships
+</a>
+
+<a href="/contact">
+Contact
+</a>
+
+<a href="/download">
+Download
+</a>
+
+
+</nav>
+
+
+
+</header>
+
+
+
+
+
+
+
+<main class="page-content">
+
+
+<div class="main-content">
+
+
+
+<div class="player-card">
+
+
+<div class="player-top">
+
+
+<img class="station-logo"
+src="https://vantixradio.online/assets/v1sg.png"
+alt="Vantix Radio">
+
+
+<div class="live-badge">
+
+<span class="live-dot"></span>
+
+<span id="liveStatus">
+LIVE 24/7
+</span>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="player-info">
+
+<h1 id="stationName">
+Vantix Radio
+</h1>
+
+
+<p class="subtitle">
+
+Your Home for Music, Entertainment, and Live Radio
+
+</p>
+
+
+</div>
+
+
+
+
+
+<audio id="radioPlayer"
+preload="auto"
+crossorigin="anonymous">
+</audio>
+
+
+
+
+
+<div class="player-controls">
+
+
+<button id="playBtn"
+class="play-btn"
+type="button">
+
+▶
+<span id="playText">
+Play Radio
+</span>
+
+</button>
+
+
+
+<div id="status"
+class="status">
+
+<span class="status-dot"></span>
+
+<span id="statusText">
+Ready to Play
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="volume-section">
+
+
+<label>
+
+Volume
+<span id="volumeValue">
+100%
+</span>
+
+</label>
+
+
+
+<input
+type="range"
+id="volumeSlider"
+min="0"
+max="1"
+step="0.01"
+value="1">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<section class="vr-request-wrapper">
+
+
+<div class="vr-request-card">
+
+
+<div class="vr-request-header">
+
+
+<span class="vr-request-badge">
+LIVE REQUESTS
+</span>
+
+
+<h2>
+🎵 Song Request Center
+</h2>
+
+
+<p>
+Send a request directly to our Discord server.
+</p>
+
+
+</div>
+
+
+
+
+
+<form id="requestForm"
+class="vr-form">
+
+
+<input id="artist"
+type="text"
+placeholder="🎤 Artist Name"
+required>
+
+
+
+<input id="title"
+type="text"
+placeholder="🎵 Song Title"
+required>
+
+
+
+<input id="sender"
+type="text"
+placeholder="👤 Your Name"
+required>
+
+
+
+
+<button class="vr-submit-btn"
+type="submit">
+
+Send Request
+
+</button>
+
+
+
+<div id="result"></div>
+
+
+</form>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<aside class="radio-sidebar">
+
+
+<div class="announcements">
+
+
+<div class="announcements-header">
+
+📢 Live Announcements
+
+</div>
+
+
+<div id="announcementList">
+
+
+<div class="announcement-item">
+
+Loading announcements...
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="sidebar-card">
+
+
+<div class="sidebar-title">
+
+🎵 Recently Played
+
+</div>
+
+
+
+<div class="recent-tracks">
+
+
+<script src="https://eu8.fastcast4u.com/system/recenttracks.js"></script>
+
+
+</div>
+
+
+</div>
+
+
+
+</aside>
+
+
+
+</main>
+
+
+
+
+
+
+
+
+<footer class="site-footer">
+
+
+<div class="footer-content">
+
+
+<div class="footer-left">
+
+<div class="footer-brand">
+
+Vantix Radio
+
+</div>
+
+
+<div class="footer-sub">
+
+Broadcasting 24/7 • High Quality Live Stream
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="footer-center">
+
+© <span id="year"></span>
+Vantix Radio. All Rights Reserved.
+
+</div>
+
+
+
+<div class="footer-right">
+
+
+<a href="/schedule">
+Schedule
+</a>
+
+
+<a href="/contact">
+Contact
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+<script src="js/background.js"></script>
+
+<script src="js/player.js"></script>
+
+<script src="js/request.js"></script>
+
+<script src="js/live.js"></script>
+
+<script src="https://eu8.fastcast4u.com/system/streaminfo.js"></script>
+
+<script src="js/announcements.js"></script>
+
+<script src="js/apple.js"></script>
+
+
+
+<script>
+
+document.getElementById("year").textContent =
+new Date().getFullYear();
+
+</script>
+
+
+
+</body>
+
 </html>
