@@ -392,9 +392,9 @@ function updateNowPlaying() {
 
 
     setInterval(
-        updateNowPlaying,
-        10000
-    );
+    updateNowPlaying,
+    10000
+);
 
 
 });
