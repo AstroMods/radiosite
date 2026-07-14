@@ -1,0 +1,12 @@
+name = "vantix-radio-request"
+
+main = "index.js"
+
+compatibility_date = "2026-07-14"
+
+
+[[kv_namespaces]]
+
+binding = "RATE_LIMIT"
+
+id = "YOUR_KV_ID"
