@@ -130,13 +130,17 @@ if ("serviceWorker" in navigator) {
         <span>Vantix Radio</span>
     </a>
 
-    <div class="listener-box">
-    🎧
-    <span id="listenerCount">
+<div class="listener-counter" aria-label="Current live listeners">
+    <span class="listener-icon">🎧</span>
+
+    <span id="listenerCount" class="online">
         0
     </span>
-    Live Listeners
-    </div>
+
+    <span class="listener-text">
+        Live Listeners
+    </span>
+</div>
 
     <nav class="site-nav">
         <a href="/">Home</a>
