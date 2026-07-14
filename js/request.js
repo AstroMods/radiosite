@@ -1,440 +1,146 @@
-// Vantix Radio - Secure Song Request System
-// Cloudflare Worker Version
+// Vantix Radio - Song Request System (Direct Discord Webhook)
 
 document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("requestForm");
+    const result = document.getElementById("result");
 
-    const form =
-        document.getElementById("requestForm");
+    // Replace with your NEW webhook.
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1521948838078976200/3yjzbQfZnE1NBzJnBKe9sM9oRXZwS8W6x-0lGtPvIlg1_JYQqDQIcJw2M-PMtCu72gYJ";
 
-    const result =
-        document.getElementById("result");
+    if (!form || !result) return;
 
+    const COOLDOWN_MS = 5 * 60 * 1000;
 
-    /*
-    ============================
-    CLOUDFLARE WORKER URL
-    ============================
-    */
+    const BLOCKED = [
+        "discord.gg",
+        "http://",
+        "https://",
+        "porn",
+        "fuck",
+        "shit",
+        "bitch",
+        "cunt",
+        "faggot",
+        "nigger",
+        "pedo"
+    ];
 
-    const WORKER_URL =
-        "https://vantixradio.vincentyusko-cfalls.workers.dev";
-
-
-
-    if (!form) return;
-
-
-
-    /*
-    ============================
-    SETTINGS
-    ============================
-    */
-
-
-    const COOLDOWN =
-        5 * 60 * 1000;
-
-
-
-    /*
-    ============================
-    HELPERS
-    ============================
-    */
-
-
-    function setMessage(message,color){
-
-        if(!result) return;
-
-        result.textContent =
-            message;
-
-        result.style.color =
-            color;
-
+    function setStatus(text, color) {
+        result.textContent = text;
+        result.style.color = color;
     }
 
-
-
-    function cooldownActive(){
-
-        const last =
-            localStorage.getItem(
-                "vantix_request_time"
-            );
-
-
-        if(!last)
-            return false;
-
-
-
-        return (
-            Date.now() -
-            Number(last)
-        ) < COOLDOWN;
-
+    function normalize(text) {
+        return text
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
     }
 
-
-
-
-    function remainingTime(){
-
-        const last =
-            Number(
-                localStorage.getItem(
-                    "vantix_request_time"
-                )
-            );
-
-
-        const remaining =
-            COOLDOWN -
-            (
-                Date.now()
-                -
-                last
-            );
-
-
-        return Math.ceil(
-            remaining / 60000
-        );
-
+    function containsBlocked(text) {
+        const value = normalize(text);
+        return BLOCKED.some(word => value.includes(word));
     }
 
+    function getCooldownRemaining() {
+        const last = Number(localStorage.getItem("vr_last_request") || 0);
+        const remaining = COOLDOWN_MS - (Date.now() - last);
+        return Math.max(0, remaining);
+    }
 
-
-
-
-    /*
-    ============================
-    SUBMIT FORM
-    ============================
-    */
-
-
-    form.addEventListener(
-    "submit",
-    async (e)=>{
-
-
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
+        const artist = document.getElementById("artist").value.trim();
+        const title = document.getElementById("title").value.trim();
+        const sender = document.getElementById("sender").value.trim();
 
-
-        const artist =
-            document
-            .getElementById("artist")
-            .value
-            .trim();
-
-
-
-        const title =
-            document
-            .getElementById("title")
-            .value
-            .trim();
-
-
-
-        const sender =
-            document
-            .getElementById("sender")
-            .value
-            .trim();
-
-
-
-
-
-        if(
-            !artist ||
-            !title ||
-            !sender
-        ){
-
-            setMessage(
-                "⚠️ Please complete all fields.",
-                "#f59e0b"
-            );
-
+        if (!artist || !title || !sender) {
+            setStatus("⚠️ Please complete all fields.", "#f59e0b");
             return;
-
         }
 
-
-
-
-
-        /*
-        ============================
-        LENGTH CHECK
-        ============================
-        */
-
-
-        if(
-
-            artist.length > 60 ||
-            title.length > 100 ||
-            sender.length > 40
-
-        ){
-
-            setMessage(
-                "⚠️ Your request is too long.",
-                "#ef4444"
-            );
-
+        if (artist.length > 60 || title.length > 100 || sender.length > 40) {
+            setStatus("⚠️ One or more fields are too long.", "#ef4444");
             return;
-
         }
 
+        const combined = `${artist} ${title} ${sender}`;
 
-
-
-
-        /*
-        ============================
-        COOLDOWN
-        ============================
-        */
-
-
-        if(
-            cooldownActive()
-        ){
-
-            setMessage(
-
-                `⏳ Please wait ${remainingTime()} minute(s) before requesting again.`,
-
-                "#f59e0b"
-
-            );
-
-
+        if (containsBlocked(combined)) {
+            setStatus("🚫 Your request contains blocked words or links.", "#ef4444");
             return;
-
         }
 
+        const cooldown = getCooldownRemaining();
 
-
-
-
-        setMessage(
-            "📡 Sending request...",
-            "#38bdf8"
-        );
-
-
-
-
-
-        /*
-        ============================
-        TURNSTILE TOKEN
-        ============================
-        */
-
-
-        let turnstileToken = "";
-
-
-
-        if(
-            window.turnstile
-        ){
-
-            const token =
-                document.querySelector(
-                    "[name='cf-turnstile-response']"
-                );
-
-
-            if(token){
-
-                turnstileToken =
-                    token.value;
-
-            }
-
+        if (cooldown > 0) {
+            const minutes = Math.ceil(cooldown / 60000);
+            setStatus(`⏳ Please wait ${minutes} minute(s) before sending another request.`, "#f59e0b");
+            return;
         }
 
+        const requestHash = normalize(`${artist}|${title}|${sender}`);
 
+        if (requestHash === localStorage.getItem("vr_last_hash")) {
+            setStatus("⚠️ You already submitted this request.", "#f59e0b");
+            return;
+        }
 
-
+        setStatus("📡 Sending request...", "#38bdf8");
 
         const payload = {
-
-
-            artist:
-                artist,
-
-
-            title:
-                title,
-
-
-            sender:
-                sender,
-
-
-            turnstile:
-                turnstileToken
-
-
+            username: "Vantix Radio",
+            avatar_url: "https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png",
+            embeds: [{
+                title: "🎵 New Song Request",
+                color: 961689,
+                fields: [
+                    {
+                        name: "🎤 Artist",
+                        value: artist,
+                        inline: true
+                    },
+                    {
+                        name: "🎶 Song",
+                        value: title,
+                        inline: true
+                    },
+                    {
+                        name: "👤 Requested By",
+                        value: sender,
+                        inline: true
+                    }
+                ],
+                footer: {
+                    text: "Vantix Radio • Broadcasting 24/7"
+                },
+                timestamp: new Date().toISOString()
+            }]
         };
 
-
-
-
-
-
-
         try {
-
-
-
-            const response =
-            await fetch(
-
-                WORKER_URL,
-
-                {
-
-                method:
-                    "POST",
-
-
-                headers:
-                {
-
-                    "Content-Type":
-                    "application/json"
-
+            const response = await fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
+                body: JSON.stringify(payload)
+            });
 
-
-                body:
-                    JSON.stringify(payload)
-
-                }
-
-            );
-
-
-
-
-
-            const data =
-                await response.json();
-
-
-
-
-
-
-
-            if(
-                response.ok &&
-                data.success
-            ){
-
-
-                localStorage.setItem(
-
-                    "vantix_request_time",
-
-                    Date.now()
-
-                );
-
-
-
-                setMessage(
-
-                    "✅ Song request submitted successfully!",
-
-                    "#22c55e"
-
-                );
-
-
-                form.reset();
-
-
-
-
-                if(
-                    window.turnstile
-                ){
-
-                    turnstile.reset();
-
-                }
-
-
-
+            if (!response.ok) {
+                throw new Error(`Discord returned ${response.status}`);
             }
 
-            else {
+            localStorage.setItem("vr_last_request", Date.now().toString());
+            localStorage.setItem("vr_last_hash", requestHash);
 
+            setStatus("✅ Song request submitted successfully!", "#22c55e");
+            form.reset();
 
-
-                setMessage(
-
-                    "❌ " +
-                    (
-                        data.error ||
-                        "Request failed."
-                    ),
-
-                    "#ef4444"
-
-                );
-
-
-            }
-
-
-
-
-
+        } catch (err) {
+            console.error(err);
+            setStatus("❌ Failed to send request.", "#ef4444");
         }
-
-        catch(error){
-
-
-
-            console.error(
-                "Request Error:",
-                error
-            );
-
-
-
-            setMessage(
-
-                "❌ Unable to connect to request server.",
-
-                "#ef4444"
-
-            );
-
-
-
-        }
-
-
-
-
     });
-
-
 });
