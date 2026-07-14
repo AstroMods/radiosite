@@ -251,24 +251,100 @@ if ("serviceWorker" in navigator) {
 
     </div>
 
-    <!-- RIGHT SIDE -->
-    <aside class="announcements">
+<!-- PAGE LAYOUT -->
+<div class="radio-layout">
 
-        <div class="announcements-header">
-            📢 Live Announcements
-        </div>
 
-        <div id="announcementList">
-            <div class="announcement-item">
-                Loading announcements...
+    <!-- MAIN CONTENT -->
+    <main class="radio-main">
+
+        <!-- Your player/content goes here -->
+
+
+    </main>
+
+
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="radio-sidebar">
+
+
+        <!-- ANNOUNCEMENTS -->
+        <div class="announcements">
+
+            <div class="announcements-header">
+                📢 Live Announcements
             </div>
+
+
+            <div id="announcementList">
+
+                <div class="announcement-item">
+                    Loading announcements...
+                </div>
+
+            </div>
+
         </div>
+
+
+
+        <!-- RECENT TRACKS -->
+        <div class="sidebar-card">
+
+            <div class="sidebar-title">
+                🎵 Recently Played
+            </div>
+
+
+            <div class="recent-tracks">
+
+                <script 
+                    language="javascript"
+                    type="text/javascript"
+                    src="https://eu8.fastcast4u.com/system/recenttracks.js">
+                </script>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- LIVE LISTENERS -->
+        <div class="sidebar-card">
+
+            <div class="sidebar-title">
+                🎧 Live Status
+            </div>
+
+
+            <div class="listener-counter">
+
+                <span class="listener-icon">
+                    🎧
+                </span>
+
+
+                <span id="listenerCount">
+                    0
+                </span>
+
+
+                <span class="listener-text">
+                    Live Listeners
+                </span>
+
+
+            </div>
+
+        </div>
+
 
     </aside>
 
-</div>
 
-</main>
+</div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
