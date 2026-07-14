@@ -262,60 +262,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }, 15000);
 
-    /* =========================
-       🎧 NOW PLAYING (RSS VERSION)
-    ========================= */
+/* =========================
+   🎧 NOW PLAYING (CENTOVA VERSION)
+========================= */
 
-    const RSS_URL =
-        "https://eu8.fastcast4u.com/recentfeed/vantixradio/rss/";
+function updateNowPlaying() {
 
-    async function updateNowPlaying() {
+    const songElement =
+        document.querySelector(".cc_streaminfo");
 
-        try {
-
-            const res =
-                await fetch(RSS_URL, {
-                    cache: "no-store"
-                });
-
-            const text =
-                await res.text();
-
-            const parser =
-                new DOMParser();
-
-            const xml =
-                parser.parseFromString(
-                    text,
-                    "application/xml"
-                );
-
-            const item =
-                xml.querySelector("item");
-
-            if (!item) return;
-
-            const title =
-                item.querySelector("title")?.textContent;
-
-            if (title) {
-
-                status.textContent =
-                    "🎧 Live Radio Stream: " +
-                    title;
-            }
-
-        } catch (err) {
-
-            // silent fail
-        }
+    if (!songElement) {
+        return;
     }
 
-    updateNowPlaying();
 
-    setInterval(
-        updateNowPlaying,
-        15000
-    );
+    const title =
+        songElement.textContent.trim();
 
-});
+
+    if (title && title !== "Loading ...") {
+
+        status.textContent =
+            "🎧 Live Radio Stream: " + title;
+
+    } else {
+
+        status.textContent =
+            "🎧 Live Radio Stream";
+
+    }
+
+}
+
+
+/* Initial update */
+updateNowPlaying();
+
+
+/* Refresh every 10 seconds */
+setInterval(
+    updateNowPlaying,
+    10000
+);
