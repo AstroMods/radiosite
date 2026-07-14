@@ -1,33 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Vantix Radio Player</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            background: transparent;
-        }
+<title>Vantix Radio Player</title>
 
-        audio {
-            width: 100%;
-        }
-    </style>
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.player {
+    width: 100%;
+    max-width: 420px;
+    padding: 18px;
+
+    background:
+    rgba(15,15,25,.85);
+
+    backdrop-filter: blur(15px);
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(0,140,255,.4);
+
+    box-shadow:
+    0 0 25px rgba(0,140,255,.35);
+}
+
+
+.logo {
+    text-align:center;
+    color:white;
+    font-size:26px;
+    font-weight:bold;
+}
+
+
+.live {
+
+    margin:10px auto;
+
+    width:max-content;
+
+    padding:5px 14px;
+
+    border-radius:20px;
+
+    background:#ff0033;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+
+.status {
+
+    text-align:center;
+
+    color:#aaa;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+}
+
+
+.controls {
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+}
+
+
+button {
+
+    background:#008cff;
+
+    border:none;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+
+button:hover {
+
+    background:#00b7ff;
+
+}
+
+
+input[type="range"] {
+
+    flex:1;
+
+}
+
+
+.loading {
+
+    text-align:center;
+
+    color:#00aaff;
+
+    display:none;
+
+}
+
+
+</style>
+
 </head>
+
 
 <body>
 
-<audio id="radioPlayer" autoplay controls></audio>
+
+<div class="player">
+
+
+<div class="logo">
+🎧 Vantix Radio
+</div>
+
+
+<div class="live">
+● LIVE 24/7
+</div>
+
+
+<div class="status" id="status">
+Connecting...
+</div>
+
+
+<div class="loading" id="loading">
+Loading Stream...
+</div>
+
+
+
+<div class="controls">
+
+
+<button id="play">
+▶
+</button>
+
+
+<input 
+type="range"
+id="volume"
+min="0"
+max="100"
+value="100">
+
+
+</div>
+
+
+
+</div>
+
+
+
+<audio id="radioPlayer"
+preload="none">
+</audio>
+
+
 
 <script>
-    const STREAM_URL = "https://eu8.fastcast4u.com/proxy/vantixradio/stream";
 
-    const player = document.getElementById("radioPlayer");
 
-    player.src = STREAM_URL;
-    player.volume = 1;
+const STREAM_URL =
+"https://eu8.fastcast4u.com/proxy/vantixradio/stream";
+
+
+const player =
+document.getElementById("radioPlayer");
+
+
+const playBtn =
+document.getElementById("play");
+
+
+const volume =
+document.getElementById("volume");
+
+
+const status =
+document.getElementById("status");
+
+
+const loading =
+document.getElementById("loading");
+
+
+
+let reconnectTimer;
+
+
+
+player.src = STREAM_URL;
+
+
+
+// Load saved volume
+
+volume.value =
+localStorage.getItem("vantixVolume") || 100;
+
+
+player.volume =
+volume.value / 100;
+
+
+
+volume.addEventListener(
+"input",
+()=>{
+
+player.volume =
+volume.value / 100;
+
+
+localStorage.setItem(
+"vantixVolume",
+volume.value
+);
+
+
+});
+
+
+
+
+
+async function playRadio(){
+
+
+try {
+
+
+loading.style.display="block";
+
+
+await player.play();
+
+
+
+playBtn.innerHTML="⏸";
+
+
+status.innerHTML=
+"Now Playing • Vantix Radio";
+
+loading.style.display="none";
+
+
+}
+catch(error){
+
+status.innerHTML=
+"Click play to start";
+
+console.log(error);
+
+}
+
+
+}
+
+
+
+
+
+function pauseRadio(){
+
+
+player.pause();
+
+
+playBtn.innerHTML="▶";
+
+
+status.innerHTML=
+"Paused";
+
+
+}
+
+
+
+
+
+playBtn.onclick=()=>{
+
+
+if(player.paused){
+
+playRadio();
+
+}
+else{
+
+pauseRadio();
+
+}
+
+
+};
+
+
+
+
+
+
+player.onplaying=()=>{
+
+
+loading.style.display="none";
+
+
+status.innerHTML=
+"Live • Vantix Radio";
+
+
+};
+
+
+
+
+
+player.onerror=()=>{
+
+
+status.innerHTML=
+"Stream Error - Reconnecting";
+
+
+reconnect();
+
+};
+
+
+
+
+
+function reconnect(){
+
+
+clearTimeout(reconnectTimer);
+
+
+
+reconnectTimer =
+setTimeout(()=>{
+
+
+player.load();
+
+
+playRadio();
+
+
+
+},5000);
+
+
+}
+
+
+
+
+
+
+// Media Controls (iPhone / Android)
+
+
+if("mediaSession" in navigator){
+
+
+navigator.mediaSession.metadata =
+new MediaMetadata({
+
+title:
+"Vantix Radio",
+
+artist:
+"Broadcasting 24/7",
+
+album:
+"Vantix Radio",
+
+artwork:[
+
+{
+src:
+"https://i.ibb.co/G4YSyXFc/Chat-GPT-Image-Jun-29-2026-12-47-34-PM.png",
+sizes:
+"512x512",
+type:
+"image/png"
+}
+
+]
+
+});
+
+
+
+navigator.mediaSession.setActionHandler(
+"play",
+playRadio
+);
+
+
+
+navigator.mediaSession.setActionHandler(
+"pause",
+pauseRadio
+);
+
+
+
+}
+
+
+
+
+
+// Start automatically
+
+window.onload=()=>{
+
+
+playRadio();
+
+
+};
+
+
+
 </script>
+
 
 </body>
 </html>
