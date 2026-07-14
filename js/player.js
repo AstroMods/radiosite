@@ -271,7 +271,11 @@ function updateNowPlaying() {
     const songElement =
         document.querySelector(".cc_streaminfo");
 
-    if (!songElement) {
+    const statusText =
+        document.getElementById("statusText");
+
+
+    if (!songElement || !statusText) {
         return;
     }
 
@@ -282,24 +286,22 @@ function updateNowPlaying() {
 
     if (title && title !== "Loading ...") {
 
-        status.textContent =
-            "🎧 Live Radio Stream: " + title;
+        statusText.textContent =
+            "🎧 " + title;
 
     } else {
 
-        status.textContent =
-            "🎧 Live Radio Stream";
+        statusText.textContent =
+            "Ready to Play";
 
     }
 
 }
 
 
-/* Initial update */
 updateNowPlaying();
 
 
-/* Refresh every 10 seconds */
 setInterval(
     updateNowPlaying,
     10000
