@@ -30,7 +30,7 @@ const presentersData = [
     image: "https://cdn.discordapp.com/avatars/1173825128384180285/06dc93f066151148530d650da90936c7.png"
   },
   {
-    name: "Vincent",
+    name: "DJ Vinnie",
     role: "Station Presenter",
     image: "https://cdn.discordapp.com/avatars/1356141977107955774/616d97e1f4147da7e545a6fc5d3ed713.png"
   },
