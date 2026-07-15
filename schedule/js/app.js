@@ -33,11 +33,6 @@ const presentersData = [
     name: "DJ Vinnie",
     role: "Station Presenter",
     image: "https://cdn.discordapp.com/avatars/1356141977107955774/616d97e1f4147da7e545a6fc5d3ed713.png"
-  },
-   {
-    name: "ghostdakid",
-    role: "Station Partner",
-    image: "https://vantixradio.online/assets/channels4_profile.jpg"
   }
 ];
 
