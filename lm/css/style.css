@@ -1,0 +1,234 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Segoe UI,Arial,sans-serif;
+
+    background:#090c13;
+
+    color:white;
+
+    min-height:100vh;
+
+    overflow:hidden;
+
+}
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle at top,#2563eb55,transparent 50%),
+    radial-gradient(circle at bottom,#0f172a,black);
+
+}
+
+.container{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+
+    padding:30px;
+
+}
+
+.card{
+
+    width:100%;
+
+    max-width:650px;
+
+    background:#111827;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    padding:35px;
+
+    backdrop-filter:blur(25px);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.45);
+
+}
+
+h1{
+
+    margin-bottom:10px;
+
+}
+
+p{
+
+    color:#94a3b8;
+
+    margin-bottom:25px;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1f2937;
+
+    color:white;
+
+    font-size:16px;
+
+    margin-bottom:20px;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    background:#2563eb;
+
+    color:white;
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+
+.loader{
+
+    display:none;
+
+    width:42px;
+
+    height:42px;
+
+    border:4px solid #444;
+
+    border-top:4px solid #3b82f6;
+
+    border-radius:50%;
+
+    margin:25px auto;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.message{
+
+    margin-top:20px;
+
+    text-align:center;
+
+}
+
+.result{
+
+    display:none;
+
+    margin-top:35px;
+
+}
+
+.output{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:10px;
+
+}
+
+.output input{
+
+    margin:0;
+
+}
+
+#copyBtn{
+
+    width:130px;
+
+    background:#10b981;
+
+}
+
+#copyBtn:hover{
+
+    background:#059669;
+
+}
+
+#qr{
+
+    margin-top:30px;
+
+    text-align:center;
+
+}
+
+details{
+
+    margin-top:25px;
+
+}
+
+pre{
+
+    margin-top:10px;
+
+    background:#0f172a;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    overflow:auto;
+
+}
