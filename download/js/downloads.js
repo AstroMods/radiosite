@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Download button — replace href="#" above with the real file URL
   const downloadBtn = document.querySelector('[data-download]');
-  if (downloadBtn && downloadBtn.getAttribute('href') === '#') {
+  if (downloadBtn && downloadBtn.getAttribute('href') === 'https://github.com/Vantix-Development/VRRadio/archive/refs/tags/v1.0.2.zip') {
     downloadBtn.addEventListener('click', (e) => {
       e.preventDefault();
       console.warn('Vantix: set a real download URL on the [data-download] link in game-setup-hub.html');
