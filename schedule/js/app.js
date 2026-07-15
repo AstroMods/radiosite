@@ -12,7 +12,7 @@ const presentersData = [
   {
     name: "Vinnie",
     role: "Chief Executive Officer",
-    image: "https://cdn.discordapp.com/avatars/1078071377401221252/c18e95efc45aff8514d1b8f02211d313.png"
+    image: "https://cdn.discordapp.com/avatars/1078071377401221252/defc69405a475bf27da54e589f9c09f6.png"
   },
   {
     name: "Laffy",
