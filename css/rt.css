@@ -1,0 +1,192 @@
+/* =========================
+   RECENT TRACKS CARD
+========================= */
+
+.recent-card {
+
+    width:100%;
+
+    background:
+    rgba(15, 23, 42, 0.75);
+
+    backdrop-filter:
+    blur(15px);
+
+    border:
+    1px solid rgba(91,206,250,.25);
+
+    border-radius:20px;
+
+    padding:20px;
+
+    box-shadow:
+
+    0 10px 35px
+    rgba(0,0,0,.35);
+
+    overflow:hidden;
+
+    transition:
+    .3s ease;
+
+}
+
+
+.recent-card:hover {
+
+    transform:
+    translateY(-5px);
+
+    border-color:
+    #5BCEFA;
+
+    box-shadow:
+
+    0 15px 45px
+    rgba(91,206,250,.25);
+
+}
+
+
+
+/* Title */
+
+.sidebar-title {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:white;
+
+    padding-bottom:15px;
+
+    margin-bottom:15px;
+
+
+    border-bottom:
+
+    1px solid
+    rgba(255,255,255,.15);
+
+}
+
+
+
+/* Recent Tracks Area */
+
+.recent-tracks {
+
+    color:white;
+
+    font-size:15px;
+
+    line-height:1.6;
+
+}
+
+
+
+/* FastCast Generated Track List */
+
+.recent-tracks table {
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+.recent-tracks tr {
+
+    background:
+
+    rgba(255,255,255,.05);
+
+    border-radius:12px;
+
+    transition:.25s ease;
+
+}
+
+
+
+.recent-tracks tr:hover {
+
+    background:
+
+    rgba(91,206,250,.15);
+
+    transform:
+    translateX(5px);
+
+}
+
+
+
+.recent-tracks td {
+
+    padding:12px;
+
+    color:#e5e7eb;
+
+}
+
+
+
+/* Song Text */
+
+.recent-tracks a {
+
+    color:#5BCEFA;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+
+.recent-tracks a:hover {
+
+    color:#F5A9B8;
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+
+.recent-card {
+
+    padding:15px;
+
+}
+
+
+.sidebar-title {
+
+    font-size:18px;
+
+}
+
+
+.recent-tracks {
+
+    font-size:14px;
+
+}
+
+
+}
