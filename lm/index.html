@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vantix Link Creator</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🔗 Link Creator</h1>
+
+        <p>Create shortened links instantly.</p>
+
+        <input
+            type="url"
+            id="url"
+            placeholder="https://example.com"
+            autocomplete="off">
+
+        <button id="createBtn">
+            Create Link
+        </button>
+
+        <div class="loader" id="loader"></div>
+
+        <div class="message" id="message"></div>
+
+        <div class="result" id="result">
+
+            <label>Short URL</label>
+
+            <div class="output">
+
+                <input
+                    id="shortLink"
+                    readonly>
+
+                <button id="copyBtn">
+                    Copy
+                </button>
+
+            </div>
+
+            <div id="qr"></div>
+
+            <details>
+
+                <summary>API Response</summary>
+
+                <pre id="json"></pre>
+
+            </details>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
