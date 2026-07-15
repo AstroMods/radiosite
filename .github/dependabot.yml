@@ -1,0 +1,44 @@
+# Vantix Radio - Dependabot Configuration
+# Automatically keeps dependencies updated
+
+version: 2
+
+updates:
+
+  # JavaScript / Node.js Dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "vantix-radio"
+    commit-message:
+      prefix: "deps"
+    reviewers:
+      - "Vantix-Development"
+
+  # GitHub Actions Updates
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "github-actions"
+      - "vantix-radio"
+    commit-message:
+      prefix: "actions"
+
+  # Docker Updates (if hosting with containers later)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    labels:
+      - "docker"
+      - "vantix-radio"
+    commit-message:
+      prefix: "docker"
