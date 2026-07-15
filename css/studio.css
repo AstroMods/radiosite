@@ -1,0 +1,95 @@
+/* Vantix Radio Studio Contact */
+
+.studio-contact {
+    background: rgba(10, 10, 18, 0.85);
+    border: 1px solid rgba(0, 140, 255, 0.35);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 25px auto;
+    max-width: 420px;
+    text-align: center;
+    box-shadow:
+        0 0 20px rgba(0, 140, 255, 0.15),
+        inset 0 0 20px rgba(0, 140, 255, 0.05);
+    backdrop-filter: blur(12px);
+    transition: 0.3s ease;
+}
+
+.studio-contact:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 170, 255, 0.8);
+    box-shadow:
+        0 0 30px rgba(0, 140, 255, 0.35);
+}
+
+
+/* Title */
+
+.studio-contact h3 {
+    color: #00aaff;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+
+/* Text */
+
+.studio-contact p {
+    color: #d9eaff;
+    font-size: 1rem;
+    margin: 12px 0;
+    line-height: 1.6;
+}
+
+
+/* Links */
+
+.studio-contact a {
+    color: #00c8ff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+
+.studio-contact a:hover {
+    color: #ffffff;
+    text-shadow:
+        0 0 8px #00c8ff,
+        0 0 18px #00c8ff;
+}
+
+
+/* Call / Text Highlight */
+
+.studio-contact a[href^="tel"],
+.studio-contact a[href^="sms"] {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-top: 5px;
+    border-radius: 10px;
+    background: rgba(0, 170, 255, 0.12);
+    border: 1px solid rgba(0, 170, 255, 0.35);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .studio-contact {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .studio-contact h3 {
+        font-size: 1.35rem;
+    }
+
+    .studio-contact p {
+        font-size: 0.95rem;
+    }
+
+}
