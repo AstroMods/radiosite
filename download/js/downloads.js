@@ -1,68 +1,42 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   Game Setup Hub — interactions
+========================= */
+document.addEventListener('DOMContentLoaded', () => {
 
-    const downloadURL =
-        "https://github.com/Vantix-Development/VRRadio/releases/latest";
+  // Copy-to-clipboard for every code line's copy button
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        // fallback for browsers/contexts without Clipboard API access
+        const tmp = document.createElement('textarea');
+        tmp.value = text;
+        tmp.style.position = 'fixed';
+        tmp.style.opacity = '0';
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+      }
 
-    // BUTTON CLICK EFFECTS (safe + reusable)
-    document.querySelectorAll("button").forEach(btn => {
-        btn.addEventListener("click", () => {
-
-            btn.style.transform = "scale(0.96)";
-
-            setTimeout(() => {
-                btn.style.transform = "";
-            }, 120);
-
-        });
+      const original = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1600);
     });
+  });
 
-    // DOWNLOAD BUTTON (UX IMPROVED)
-    const downloadBtn = document.querySelector(".download-btn");
-
-    if (downloadBtn) {
-
-        let isDownloading = false;
-
-        downloadBtn.addEventListener("click", () => {
-
-            if (isDownloading) return;
-            isDownloading = true;
-
-            const originalText = downloadBtn.textContent;
-
-            // UI FEEDBACK
-            downloadBtn.textContent = "Preparing Download...";
-            downloadBtn.disabled = true;
-            downloadBtn.style.opacity = "0.7";
-            downloadBtn.style.cursor = "not-allowed";
-
-            // small delay = feels like real action
-            setTimeout(() => {
-
-                downloadBtn.textContent = "Downloading...";
-
-                // trigger download
-                const a = document.createElement("a");
-                a.href = downloadURL;
-                a.target = "_blank";
-                a.rel = "noopener noreferrer";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-
-                // reset after short UX delay
-                setTimeout(() => {
-                    downloadBtn.textContent = originalText;
-                    downloadBtn.disabled = false;
-                    downloadBtn.style.opacity = "";
-                    downloadBtn.style.cursor = "";
-
-                    isDownloading = false;
-
-                }, 1200);
-
-            }, 600);
-        });
-    }
-
+  // Download button — replace href="#" above with the real file URL
+  const downloadBtn = document.querySelector('[data-download]');
+  if (downloadBtn && downloadBtn.getAttribute('href') === '#') {
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.warn('Vantix: set a real download URL on the [data-download] link in game-setup-hub.html');
+    });
+  }
 });
