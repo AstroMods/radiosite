@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pookie 💗 | A Special Place</title>
+
+<meta name="description" content="A special page made for Pookie 💗">
+
+<style>
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+
+body {
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        120deg,
+        #5BCEFA,
+        #F5A9B8,
+        #FFFFFF,
+        #F5A9B8,
+        #5BCEFA
+    );
+
+    background-size:500% 500%;
+
+    animation:
+    gradientMove 15s ease infinite;
+
+}
+
+
+/* Animated Background */
+
+@keyframes gradientMove {
+
+    0% {
+        background-position:0% 50%;
+    }
+
+    50% {
+        background-position:100% 50%;
+    }
+
+    100% {
+        background-position:0% 50%;
+    }
+
+}
+
+
+/* Floating Items */
+
+.floating {
+
+    position:absolute;
+
+    bottom:-100px;
+
+    font-size:35px;
+
+    animation:
+    floatUp linear infinite;
+
+    opacity:.7;
+
+    pointer-events:none;
+
+}
+
+
+@keyframes floatUp {
+
+    from {
+
+        transform:
+        translateY(0)
+        rotate(0deg);
+
+        opacity:0;
+
+    }
+
+    20% {
+        opacity:.8;
+    }
+
+
+    to {
+
+        transform:
+        translateY(-120vh)
+        rotate(360deg);
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* Main Glass */
+
+.container {
+
+    width:90%;
+
+    max-width:900px;
+
+
+    padding:45px;
+
+
+    text-align:center;
+
+
+    border-radius:35px;
+
+
+    background:
+    rgba(255,255,255,.35);
+
+
+    backdrop-filter:
+    blur(20px);
+
+
+    border:
+    1px solid rgba(255,255,255,.5);
+
+
+    box-shadow:
+
+    0 25px 60px
+    rgba(0,0,0,.25);
+
+
+    animation:
+    entrance 1.5s ease;
+
+
+}
+
+
+@keyframes entrance {
+
+    from {
+
+        opacity:0;
+
+        transform:
+        translateY(80px)
+        scale(.9);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+
+/* Logo */
+
+.logo {
+
+    font-size:90px;
+
+    animation:
+    heartbeat 2s infinite;
+
+}
+
+
+@keyframes heartbeat {
+
+    0%,100% {
+
+        transform:scale(1);
+
+    }
+
+
+    50% {
+
+        transform:scale(1.15);
+
+    }
+
+}
+
+
+
+/* Title */
+
+h1 {
+
+    margin-top:15px;
+
+    font-size:60px;
+
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #5BCEFA,
+        #F5A9B8,
+        white,
+        #F5A9B8,
+        #5BCEFA
+    );
+
+
+    background-size:300%;
+
+
+    animation:
+    textMove 6s infinite;
+
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+
+
+@keyframes textMove {
+
+    from {
+        background-position:0%;
+    }
+
+    to {
+        background-position:300%;
+    }
+
+}
+
+
+.subtitle {
+
+    font-size:22px;
+
+    margin-top:10px;
+
+    color:#444;
+
+}
+
+
+
+/* Message Card */
+
+.message {
+
+    margin-top:35px;
+
+
+    padding:30px;
+
+
+    border-radius:25px;
+
+
+    background:
+
+    rgba(255,255,255,.55);
+
+
+    box-shadow:
+
+    inset 0 0 30px
+    rgba(255,255,255,.5);
+
+}
+
+
+
+.message h2 {
+
+    color:#d85b8a;
+
+    margin-bottom:15px;
+
+    font-size:30px;
+
+}
+
+
+.message p {
+
+    font-size:19px;
+
+    line-height:1.8;
+
+}
+
+
+
+/* Tags */
+
+
+.tags {
+
+    margin-top:30px;
+
+}
+
+
+.tag {
+
+    display:inline-block;
+
+
+    padding:12px 22px;
+
+
+    margin:8px;
+
+
+    border-radius:50px;
+
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #5BCEFA,
+        #F5A9B8
+    );
+
+
+    color:white;
+
+    font-weight:bold;
+
+    box-shadow:
+
+    0 8px 20px
+    rgba(0,0,0,.15);
+
+}
+
+
+/* Footer */
+
+
+footer {
+
+    margin-top:35px;
+
+    color:#555;
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+
+.container {
+
+    padding:25px;
+
+}
+
+
+h1 {
+
+    font-size:42px;
+
+}
+
+
+.logo {
+
+    font-size:65px;
+
+}
+
+
+.subtitle {
+
+    font-size:18px;
+
+}
+
+
+.message p {
+
+    font-size:16px;
+
+}
+
+
+.tag {
+
+    display:block;
+
+    margin:12px auto;
+
+    width:80%;
+
+}
+
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<!-- Floating Pride / Hearts -->
+
+<div class="floating" style="left:5%;animation-duration:12s;">💗</div>
+
+<div class="floating" style="left:20%;animation-duration:9s;">🏳️‍⚧️</div>
+
+<div class="floating" style="left:40%;animation-duration:14s;">✨</div>
+
+<div class="floating" style="left:65%;animation-duration:11s;">💙</div>
+
+<div class="floating" style="left:85%;animation-duration:10s;">💗</div>
+
+
+
+<div class="container">
+
+
+<div class="logo">
+🏳️‍⚧️
+</div>
+
+
+<h1>
+Pookie 💗
+</h1>
+
+
+<div class="subtitle">
+A special little corner made with love ✨
+</div>
+
+
+
+<div class="message">
+
+<h2>
+Dear Pookie 💕
+</h2>
+
+
+<p>
+
+You are unique, powerful, and absolutely amazing.
+
+Your journey matters.
+Your identity matters.
+Your happiness matters.
+
+Never stop being the incredible person you are.
+
+You deserve love, kindness, respect, and endless support. 🏳️‍⚧️💗
+
+</p>
+
+
+</div>
+
+
+
+<div class="tags">
+
+<span class="tag">
+💙 Proud
+</span>
+
+
+<span class="tag">
+💗 Loved
+</span>
+
+
+<span class="tag">
+🤍 Valid
+</span>
+
+
+<span class="tag">
+🏳️‍⚧️ Always You
+</span>
+
+</div>
+
+
+
+<footer>
+
+Made especially for Pookie 💗
+
+</footer>
+
+
+</div>
+
+
+</body>
+
+</html>
